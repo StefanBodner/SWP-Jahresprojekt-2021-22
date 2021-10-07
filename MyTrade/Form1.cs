@@ -16,5 +16,15 @@ namespace MyTrade
         {
             InitializeComponent();
         }
+
+        private void frm_main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_data_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
