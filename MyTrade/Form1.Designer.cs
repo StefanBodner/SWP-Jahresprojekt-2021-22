@@ -30,12 +30,17 @@ namespace MyTrade
         private void InitializeComponent()
         {
             this.btn_data = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_ticker = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tb_bid = new System.Windows.Forms.TextBox();
+            this.tb_ask = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_data
             // 
-            this.btn_data.Location = new System.Drawing.Point(357, 285);
+            this.btn_data.Location = new System.Drawing.Point(12, 106);
             this.btn_data.Name = "btn_data";
             this.btn_data.Size = new System.Drawing.Size(75, 23);
             this.btn_data.TabIndex = 0;
@@ -43,20 +48,65 @@ namespace MyTrade
             this.btn_data.UseVisualStyleBackColor = true;
             this.btn_data.Click += new System.EventHandler(this.btn_data_Click);
             // 
-            // textBox1
+            // tb_ticker
             // 
-            this.textBox1.Location = new System.Drawing.Point(173, 86);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(444, 148);
-            this.textBox1.TabIndex = 1;
+            this.tb_ticker.Location = new System.Drawing.Point(12, 80);
+            this.tb_ticker.Name = "tb_ticker";
+            this.tb_ticker.Size = new System.Drawing.Size(209, 20);
+            this.tb_ticker.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(119, 173);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(25, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Bid:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(119, 200);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Ask:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(69, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Insert Ticker:";
+            // 
+            // tb_bid
+            // 
+            this.tb_bid.Location = new System.Drawing.Point(167, 170);
+            this.tb_bid.Name = "tb_bid";
+            this.tb_bid.Size = new System.Drawing.Size(209, 20);
+            this.tb_bid.TabIndex = 5;
+            // 
+            // tb_ask
+            // 
+            this.tb_ask.Location = new System.Drawing.Point(167, 197);
+            this.tb_ask.Name = "tb_ask";
+            this.tb_ask.Size = new System.Drawing.Size(209, 20);
+            this.tb_ask.TabIndex = 6;
             // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_ask);
+            this.Controls.Add(this.tb_bid);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tb_ticker);
             this.Controls.Add(this.btn_data);
             this.Name = "frm_main";
             this.Text = "MyTrade";
@@ -69,7 +119,12 @@ namespace MyTrade
         #endregion
 
         private System.Windows.Forms.Button btn_data;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb_ticker;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tb_bid;
+        private System.Windows.Forms.TextBox tb_ask;
     }
 }
 
