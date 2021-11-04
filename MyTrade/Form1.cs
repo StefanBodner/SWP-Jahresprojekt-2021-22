@@ -4,10 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YahooFinanceApi;
+using YahooFinanceClient;
+
 
 namespace MyTrade
 {
@@ -15,6 +18,7 @@ namespace MyTrade
     {
         #region Variables
         string ticker = "";
+        
         #endregion
 
         public frm_main()
@@ -27,23 +31,35 @@ namespace MyTrade
 
         }
 
-        private async void btn_data_Click(object sender, EventArgs e)
+        private void btn_data_Click(object sender, EventArgs e)
         {
-            ticker = tb_ticker.Text;
+            var i = getStockData();
+        }
 
-            var yahooFinanceClient = new YahooFinance.YahooFinance();
-            var stock = yahooFinanceClient.RetrieveStock("AAPL");
+        public async Task<int> getStockData()
+        {
+            //https://www.yahoofinanceapi.com/dashboard
 
-            tb_ask.Text = stock.PricingData.Ask.ToString();
 
-            //--------------------------- TWO DIFFERENT METHODS ------------------------------
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols="+ tb_ticker.Text))
+                    {
+                        request.Headers.TryAddWithoutValidation("accept", "application/json");
+                        request.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
 
-            //var history = await Yahoo.GetHistoricalAsync("AAPL", new DateTime(2021, 1, 1), new DateTime(2021, 5, 3), Period.Daily);
-
-            //foreach (var candle in history)
-            //{
-            //    tb_ask.Text = candle.Close.ToString();
-            //}
+                        var response = await httpClient.SendAsync(request);
+                        tb_data.Text = response.ToString();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                tb_data.Text += "Failed to get symbol: " + "AAPL";
+            }
+            return 1;
         }
     }
 }

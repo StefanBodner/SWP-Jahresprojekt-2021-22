@@ -36,6 +36,7 @@ namespace MyTrade
             this.label3 = new System.Windows.Forms.Label();
             this.tb_bid = new System.Windows.Forms.TextBox();
             this.tb_ask = new System.Windows.Forms.TextBox();
+            this.tb_data = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_data
@@ -54,11 +55,12 @@ namespace MyTrade
             this.tb_ticker.Name = "tb_ticker";
             this.tb_ticker.Size = new System.Drawing.Size(209, 20);
             this.tb_ticker.TabIndex = 1;
+            this.tb_ticker.Text = "AAPL";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(119, 173);
+            this.label1.Location = new System.Drawing.Point(669, 83);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(25, 13);
             this.label1.TabIndex = 2;
@@ -67,7 +69,7 @@ namespace MyTrade
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(119, 200);
+            this.label2.Location = new System.Drawing.Point(669, 110);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 3;
@@ -84,23 +86,32 @@ namespace MyTrade
             // 
             // tb_bid
             // 
-            this.tb_bid.Location = new System.Drawing.Point(167, 170);
+            this.tb_bid.Location = new System.Drawing.Point(717, 80);
             this.tb_bid.Name = "tb_bid";
             this.tb_bid.Size = new System.Drawing.Size(209, 20);
             this.tb_bid.TabIndex = 5;
             // 
             // tb_ask
             // 
-            this.tb_ask.Location = new System.Drawing.Point(167, 197);
+            this.tb_ask.Location = new System.Drawing.Point(717, 107);
             this.tb_ask.Name = "tb_ask";
             this.tb_ask.Size = new System.Drawing.Size(209, 20);
             this.tb_ask.TabIndex = 6;
+            // 
+            // tb_data
+            // 
+            this.tb_data.Location = new System.Drawing.Point(12, 157);
+            this.tb_data.Multiline = true;
+            this.tb_data.Name = "tb_data";
+            this.tb_data.Size = new System.Drawing.Size(914, 560);
+            this.tb_data.TabIndex = 7;
             // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(938, 729);
+            this.Controls.Add(this.tb_data);
             this.Controls.Add(this.tb_ask);
             this.Controls.Add(this.tb_bid);
             this.Controls.Add(this.label3);
@@ -125,6 +136,7 @@ namespace MyTrade
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tb_bid;
         private System.Windows.Forms.TextBox tb_ask;
+        private System.Windows.Forms.TextBox tb_data;
     }
 }
 
