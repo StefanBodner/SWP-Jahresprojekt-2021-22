@@ -37,6 +37,7 @@ namespace MyTrade
             this.tb_bid = new System.Windows.Forms.TextBox();
             this.tb_ask = new System.Windows.Forms.TextBox();
             this.tb_data = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_data
@@ -106,11 +107,22 @@ namespace MyTrade
             this.tb_data.Size = new System.Drawing.Size(914, 560);
             this.tb_data.TabIndex = 7;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(93, 109);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(159, 18);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Maximum 100 Calls!";
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 729);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.tb_data);
             this.Controls.Add(this.tb_ask);
             this.Controls.Add(this.tb_bid);
@@ -137,6 +149,7 @@ namespace MyTrade
         private System.Windows.Forms.TextBox tb_bid;
         private System.Windows.Forms.TextBox tb_ask;
         private System.Windows.Forms.TextBox tb_data;
+        private System.Windows.Forms.Label label4;
     }
 }
 

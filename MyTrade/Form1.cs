@@ -43,17 +43,18 @@ namespace MyTrade
 
             try
             {
-                using (var httpClient = new HttpClient())
-                {
-                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols="+ tb_ticker.Text))
-                    {
-                        request.Headers.TryAddWithoutValidation("accept", "application/json");
-                        request.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
+                var httpClient = new HttpClient();
+                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text + ",TSLA");
 
-                        var response = await httpClient.SendAsync(request);
-                        tb_data.Text = response.ToString();
-                    }
-                }
+                webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
+
+                var webResponse = await httpClient.SendAsync(webRequest);
+
+                webResponse.EnsureSuccessStatusCode();
+
+                var webData = await webResponse.Content.ReadAsStringAsync();
+                tb_data.Text = webData;
             }
             catch (Exception e)
             {
