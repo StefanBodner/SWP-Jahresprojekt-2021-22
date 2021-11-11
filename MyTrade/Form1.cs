@@ -49,12 +49,16 @@ namespace MyTrade
 
         private void btn_getdata_Click(object sender, EventArgs e)
         {
-            
+            frm_login ch = new frm_login();
+            this.Hide();
+            ch.ShowDialog();
+            this.Show();
         }
 
         private void ch_line_Click(object sender, EventArgs e)
         {
 
         }
+      
     }
 }

@@ -178,7 +178,7 @@ namespace MyTrade
         {
             try
             {
-                string temp = CMDExecuteScalar("SELECT [pwd] FROM caradmin_login WHERE [user] = '" + username + "';");
+                string temp = CMDExecuteScalar("SELECT [pwd] FROM mytrade_login WHERE [user] = '" + username + "';");
                 if (BCrypt.CheckPassword(password, temp))
                 {
                     return true;
@@ -203,7 +203,7 @@ namespace MyTrade
             try
             {
                 con.Open();
-                cmd.CommandText = "INSERT INTO caradmin_login VALUES ('" + surname + "', '" + prename + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', '" + hasAdmin + "');";
+                cmd.CommandText = "INSERT INTO mytrade_login VALUES ('" + surname + "', '" + prename + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', '" + hasAdmin + "');";
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -280,11 +280,11 @@ namespace MyTrade
                 con.Open();
                 if (alreadyHashed)
                 {
-                    cmd.CommandText = "UPDATE caradmin_login SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + password + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
+                    cmd.CommandText = "UPDATE mytrade_login SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + password + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
                 }
                 else
                 {
-                    cmd.CommandText = "UPDATE caradmin_login SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
+                    cmd.CommandText = "UPDATE mytrade_login SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
                 }
                 cmd.ExecuteNonQuery();
                 con.Close();
