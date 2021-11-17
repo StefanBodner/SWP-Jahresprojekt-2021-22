@@ -8,8 +8,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YahooFinanceApi;
-using YahooFinanceClient;
 
 
 namespace MyTrade
@@ -44,7 +42,8 @@ namespace MyTrade
             try
             {
                 var httpClient = new HttpClient();
-                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text + ",TSLA");
+                //var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text + ",TSLA");
+                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text);
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
                 webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
@@ -54,7 +53,20 @@ namespace MyTrade
                 webResponse.EnsureSuccessStatusCode();
 
                 var webData = await webResponse.Content.ReadAsStringAsync();
-                tb_data.Text = webData;
+
+                string[] splittedWebData = webData.Split(',');
+
+                foreach(string s in splittedWebData)
+                {
+                    tb_data.Text += s;
+                    tb_data.Text += Environment.NewLine;
+                }
+
+                tb_data.Text += Environment.NewLine;
+                tb_data.Text += Environment.NewLine;
+                tb_data.Text += Environment.NewLine;
+                tb_data.Text += Environment.NewLine;
+                //tb_data.Text = webData;
             }
             catch (Exception e)
             {

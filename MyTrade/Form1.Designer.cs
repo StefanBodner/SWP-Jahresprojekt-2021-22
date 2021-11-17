@@ -29,6 +29,7 @@ namespace MyTrade
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_main));
             this.btn_data = new System.Windows.Forms.Button();
             this.tb_ticker = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -106,6 +107,7 @@ namespace MyTrade
             this.tb_data.Name = "tb_data";
             this.tb_data.Size = new System.Drawing.Size(914, 560);
             this.tb_data.TabIndex = 7;
+            this.tb_data.Text = resources.GetString("tb_data.Text");
             // 
             // label4
             // 
