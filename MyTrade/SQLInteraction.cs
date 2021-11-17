@@ -178,7 +178,7 @@ namespace MyTrade
         {
             try
             {
-                string temp = CMDExecuteScalar("SELECT [pwd] FROM mytrade_login WHERE [user] = '" + username + "';");
+                string temp = CMDExecuteScalar("SELECT [pwd] FROM mytrade_UserData WHERE [user] = '" + username + "';");
                 if (BCrypt.CheckPassword(password, temp))
                 {
                     return true;
@@ -198,12 +198,12 @@ namespace MyTrade
 
 
         //Create new login easily
-        public static void uCreateNewUser(string surname, string prename, string username, string password, string hasAdmin)
+        public static void uCreateNewUser(string surname, string prename, string username, string password, string hasAdmin, string ticker)
         {
             try
             {
                 con.Open();
-                cmd.CommandText = "INSERT INTO mytrade_login VALUES ('" + surname + "', '" + prename + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', '" + hasAdmin + "');";
+                cmd.CommandText = "INSERT INTO mytrade_UserData VALUES ('" + surname + "', '" + prename + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', '" + hasAdmin + "', '" + ticker + "');";
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -280,11 +280,11 @@ namespace MyTrade
                 con.Open();
                 if (alreadyHashed)
                 {
-                    cmd.CommandText = "UPDATE mytrade_login SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + password + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
+                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + password + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
                 }
                 else
                 {
-                    cmd.CommandText = "UPDATE mytrade_login SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
+                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
                 }
                 cmd.ExecuteNonQuery();
                 con.Close();

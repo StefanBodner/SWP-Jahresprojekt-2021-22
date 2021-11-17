@@ -28,26 +28,26 @@ namespace MyTrade
 
                 SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
 
-                SQLInteraction.CMDExecuteNonQuery("CREATE TABLE mytrade_login(UID int IDENTITY(1, 1), [surname] varchar(50) NOT NULL, [prename] varchar(50) NOT NULL, [user] varchar(80) NOT NULL, [pwd] varchar(70) NOT NULL, [hasAdmin] bit NOT NULL, PRIMARY KEY(UID)); ");
+                SQLInteraction.CMDExecuteNonQuery("CREATE TABLE mytrade_UserData(UID int IDENTITY(1, 1), [surname] varchar(50) NOT NULL, [prename] varchar(50) NOT NULL, [user] varchar(80) NOT NULL, [pwd] varchar(70) NOT NULL, [hasAdmin] bit NOT NULL, [ticker] varchar(250) NOT NULL, PRIMARY KEY(UID)); ");
 
             }
 
             SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
 
 
-            if (!SQLInteraction.CMDExecuteScalar("SELECT [user] FROM mytrade_login WHERE [user] = 'admin';").ToString().Equals("admin"))
+            if (!SQLInteraction.CMDExecuteScalar("SELECT [user] FROM mytrade_UserData WHERE [user] = 'admin';").ToString().Equals("admin"))
             {
                 //Create Admin User
-                SQLInteraction.uCreateNewUser("admin", "admin", "admin", "admin", "1");
+                SQLInteraction.uCreateNewUser("admin", "admin", "admin", "admin", "1", "AAPL");
                 //SQLInteraction.CMDExecuteNonQuery("INSERT INTO swp3_Login VALUES ('admin', '"+ BCrypt.HashPassword("admin", BCrypt.GenerateSalt()) + "', 1)");
 
                 //Create More Users to fill Database
-                SQLInteraction.uCreateNewUser("noadmin", "noadmin", "noadmin", "noadmin", "0");
+                SQLInteraction.uCreateNewUser("noadmin", "noadmin", "noadmin", "noadmin", "0", "AAPL");
 
             }
             else
             {
-                SQLInteraction.CMDExecuteNonQuery("UPDATE mytrade_login SET hasAdmin = 1 WHERE [user] = 'admin';");
+                SQLInteraction.CMDExecuteNonQuery("UPDATE mytrade_UserData SET hasAdmin = 1 WHERE [user] = 'admin';");
             }
         }
         
@@ -83,10 +83,10 @@ namespace MyTrade
             {
                 SQLInteraction.SetuUsernameLogin(tb_username.Text);
 
-                SQLInteraction.SetuEditID(SQLInteraction.CMDExecuteScalarInt("SELECT [UID] FROM mytrade_login WHERE [user] = '" + tb_username.Text + "';"));
+                SQLInteraction.SetuEditID(SQLInteraction.CMDExecuteScalarInt("SELECT [UID] FROM mytrade_UserData WHERE [user] = '" + tb_username.Text + "';"));
                 SQLInteraction.SetAddUser(false);
 
-                if (SQLInteraction.CMDExecuteScalarBool("SELECT [hasAdmin] FROM mytrade_login WHERE [uid] = " + SQLInteraction.GetuEditID() + ";"))
+                if (SQLInteraction.CMDExecuteScalarBool("SELECT [hasAdmin] FROM mytrade_UserData WHERE [uid] = " + SQLInteraction.GetuEditID() + ";"))
                 {
                     frm_main ch = new frm_main();
                     this.Hide();
