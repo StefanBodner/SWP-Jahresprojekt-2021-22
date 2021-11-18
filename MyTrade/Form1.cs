@@ -56,16 +56,13 @@ namespace MyTrade
 
                 string[] splittedWebData = webData.Split(',');
 
+                tb_data.Clear();
+
                 foreach(string s in splittedWebData)
                 {
-                    tb_data.Text += s;
-                    tb_data.Text += Environment.NewLine;
+                    tb_data.Text += s + Environment.NewLine;
                 }
 
-                tb_data.Text += Environment.NewLine;
-                tb_data.Text += Environment.NewLine;
-                tb_data.Text += Environment.NewLine;
-                tb_data.Text += Environment.NewLine;
                 //tb_data.Text = webData;
             }
             catch (Exception e)
@@ -73,6 +70,26 @@ namespace MyTrade
                 tb_data.Text += "Failed to get symbol: " + "AAPL";
             }
             return 1;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            
+            StringSplitOptions st = StringSplitOptions.RemoveEmptyEntries;
+            string tempStr = tb_data.Text;
+            //string[] tempArr = tempStr.Split(new char[] {':', '"', '{', '[', ']', '}'}, StringSplitOptions.RemoveEmptyEntries);
+            tempStr.Replace("\",\"", ";");
+            string[] tempArr = tempStr.Replace("\":\"", ";").Split(';');
+            string tempStr2 = string.Join("", tempArr);
+            string[] tempArr2 = tempStr2.Split(':');
+
+            for (var s = 2; s < tempArr.Length; s++)
+            {
+                tb_output.Text += tempArr[s].ToString() + Environment.NewLine;
+            }
+
+            //Stock s = new Stock()
         }
     }
 }

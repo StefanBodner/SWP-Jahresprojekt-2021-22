@@ -39,6 +39,8 @@ namespace MyTrade
             this.tb_ask = new System.Windows.Forms.TextBox();
             this.tb_data = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.tb_output = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_data
@@ -119,11 +121,32 @@ namespace MyTrade
             this.label4.TabIndex = 8;
             this.label4.Text = "Maximum 100 Calls!";
             // 
+            // tb_output
+            // 
+            this.tb_output.Location = new System.Drawing.Point(940, 157);
+            this.tb_output.Multiline = true;
+            this.tb_output.Name = "tb_output";
+            this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tb_output.Size = new System.Drawing.Size(337, 560);
+            this.tb_output.TabIndex = 9;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1202, 128);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Split Data";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(938, 729);
+            this.ClientSize = new System.Drawing.Size(1289, 729);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tb_output);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tb_data);
             this.Controls.Add(this.tb_ask);
@@ -152,6 +175,8 @@ namespace MyTrade
         private System.Windows.Forms.TextBox tb_ask;
         private System.Windows.Forms.TextBox tb_data;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tb_output;
+        private System.Windows.Forms.Button button1;
     }
 }
 
