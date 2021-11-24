@@ -17,5 +17,7 @@ namespace MyTrade
 
         //public Stock() { }
         #endregion
+
+        // aktueller Kurs; 
     }
 }

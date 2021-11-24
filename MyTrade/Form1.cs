@@ -74,15 +74,16 @@ namespace MyTrade
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            
-            StringSplitOptions st = StringSplitOptions.RemoveEmptyEntries;
             string tempStr = tb_data.Text;
-            //string[] tempArr = tempStr.Split(new char[] {':', '"', '{', '[', ']', '}'}, StringSplitOptions.RemoveEmptyEntries);
-            tempStr.Replace("\",\"", ";");
-            string[] tempArr = tempStr.Replace("\":\"", ";").Split(';');
-            string tempStr2 = string.Join("", tempArr);
-            string[] tempArr2 = tempStr2.Split(':');
+
+            tempStr = tempStr.Replace(",\"", ";");
+            tempStr = tempStr.Replace("\"", "");
+            tempStr = tempStr.Replace("[", "");
+            tempStr = tempStr.Replace("]", "");
+            tempStr = tempStr.Replace("},", "");
+            tempStr = tempStr.Replace("{", "");
+            tempStr = tempStr.Replace("}", "");
+            string[] tempArr = tempStr.Split(new[] { ';', '{', ':' }, StringSplitOptions.RemoveEmptyEntries);
 
             for (var s = 2; s < tempArr.Length; s++)
             {
