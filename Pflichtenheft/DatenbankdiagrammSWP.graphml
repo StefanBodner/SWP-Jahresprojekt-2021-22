@@ -57,6 +57,7 @@
 									<sys:String><![CDATA[pwd: varchar(70)]]></sys:String>
 									<sys:String><![CDATA[hasAdmin: bit]]></sys:String>
 									<sys:String><![CDATA[ticker: varchar(100)]]></sys:String>
+									<sys:String><![CDATA[securityquest: varchar(50)]]></sys:String>
 								</x:Array>
 							</x0:EntityRelationshipModel.attributes>
 						</x0:EntityRelationshipModel>
