@@ -8,16 +8,38 @@ namespace MyTrade
 {
     class Stock
     {
-        #region Private Variables
-        //private string _sdf;
-        //#endregion
+        private string _region;
+        public string region
+        {
+            get { return _region; }
+            set { _region = value; }
+        }
 
-        //#region Constructor
-        //public Stock() { }
+        private string _quoteType;
+        public string quoteType
+        {
+            get { return _quoteType; }
+            set { _quoteType = value; }
+        }
 
-        //public Stock() { }
+        private string _currency;
+        public string currency
+        {
+            get { return _currency; }
+            set { _currency = value; }
+        }
+
+
+
+        #region Constructor
+        public Stock(string region, string quoteType, string currency) 
+        {
+            this._region = region;
+            this._quoteType = quoteType;
+            this._currency = currency;
+        }
+
+        public Stock() { }
         #endregion
-
-        // aktueller Kurs; 
     }
 }
