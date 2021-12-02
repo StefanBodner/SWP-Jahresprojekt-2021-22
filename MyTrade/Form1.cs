@@ -74,6 +74,8 @@ namespace MyTrade
 
         private void button1_Click(object sender, EventArgs e)
         {
+            tb_output.Clear();
+            
             string tempStr = tb_data.Text;
 
             tempStr = tempStr.Replace(",\"", ";");
