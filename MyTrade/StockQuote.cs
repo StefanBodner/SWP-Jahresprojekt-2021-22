@@ -31,316 +31,316 @@ namespace MyTrade
 			set { _currency = value; }
 		}
 
-		private string _earningsTimestamp;
-		public string earningsTimestamp
+		private int _earningsTimestamp;
+		public int earningsTimestamp
 		{
 			get { return _earningsTimestamp; }
 			set { _earningsTimestamp = value; }
 		}
 
-		private string _earningsTimestampStart;
-		public string earningsTimestampStart
+		private int _earningsTimestampStart;
+		public int earningsTimestampStart
 		{
 			get { return _earningsTimestampStart; }
 			set { _earningsTimestampStart = value; }
 		}
 
-		private string _earningsTimestampEnd;
-		public string earningsTimestampEnd
+		private int _earningsTimestampEnd;
+		public int earningsTimestampEnd
 		{
 			get { return _earningsTimestampEnd; }
 			set { _earningsTimestampEnd = value; }
 		}
 
-		private string _trailingAnnualDividendRate;
-		public string trailingAnnualDividendRate
+		private int _trailingAnnualDividendRate;
+		public int trailingAnnualDividendRate
 		{
 			get { return _trailingAnnualDividendRate; }
 			set { _trailingAnnualDividendRate = value; }
 		}
 
-		private string _trailingPE;
-		public string trailingPE
+		private int _trailingPE;
+		public int trailingPE
 		{
 			get { return _trailingPE; }
 			set { _trailingPE = value; }
 		}
 
-		private string _trailingAnnualDividendYield;
-		public string trailingAnnualDividendYield
+		private int _trailingAnnualDividendYield;
+		public int trailingAnnualDividendYield
 		{
 			get { return _trailingAnnualDividendYield; }
 			set { _trailingAnnualDividendYield = value; }
 		}
 
-		private string _epsTrailingTwelveMonths;
-		public string epsTrailingTwelveMonths
+		private int _epsTrailingTwelveMonths;
+		public int epsTrailingTwelveMonths
 		{
 			get { return _epsTrailingTwelveMonths; }
 			set { _epsTrailingTwelveMonths = value; }
 		}
 
-		private string _epsForward;
-		public string epsForward
+		private int _epsForward;
+		public int epsForward
 		{
 			get { return _epsForward; }
 			set { _epsForward = value; }
 		}
 
-		private string _epsCurrentYear;
-		public string epsCurrentYear
+		private int _epsCurrentYear;
+		public int epsCurrentYear
 		{
 			get { return _epsCurrentYear; }
 			set { _epsCurrentYear = value; }
 		}
 
-		private string _priceEpsCurrentYear;
-		public string priceEpsCurrentYear
+		private int _priceEpsCurrentYear;
+		public int priceEpsCurrentYear
 		{
 			get { return _priceEpsCurrentYear; }
 			set { _priceEpsCurrentYear = value; }
 		}
 
-		private string _sharesOutstanding;
-		public string sharesOutstanding
+		private int _sharesOutstanding;
+		public int sharesOutstanding
 		{
 			get { return _sharesOutstanding; }
 			set { _sharesOutstanding = value; }
 		}
 
-		private string _bookValue;
-		public string bookValue
+		private int _bookValue;
+		public int bookValue
 		{
 			get { return _bookValue; }
 			set { _bookValue = value; }
 		}
 
-		private string _fiftyDayAverage;
-		public string fiftyDayAverage
+		private int _fiftyDayAverage;
+		public int fiftyDayAverage
 		{
 			get { return _fiftyDayAverage; }
 			set { _fiftyDayAverage = value; }
 		}
 
-		private string _fiftyDayAverageChange;
-		public string fiftyDayAverageChange
+		private int _fiftyDayAverageChange;
+		public int fiftyDayAverageChange
 		{
 			get { return _fiftyDayAverageChange; }
 			set { _fiftyDayAverageChange = value; }
 		}
 
-		private string _fiftyDayAverageChangePercent;
-		public string fiftyDayAverageChangePercent
+		private int _fiftyDayAverageChangePercent;
+		public int fiftyDayAverageChangePercent
 		{
 			get { return _fiftyDayAverageChangePercent; }
 			set { _fiftyDayAverageChangePercent = value; }
 		}
 
-		private string _twoHundredDayAverage;
-		public string twoHundredDayAverage
+		private int _twoHundredDayAverage;
+		public int twoHundredDayAverage
 		{
 			get { return _twoHundredDayAverage; }
 			set { _twoHundredDayAverage = value; }
 		}
 
-		private string _twoHundredDayAverageChange;
-		public string twoHundredDayAverageChange
+		private int _twoHundredDayAverageChange;
+		public int twoHundredDayAverageChange
 		{
 			get { return _twoHundredDayAverageChange; }
 			set { _twoHundredDayAverageChange = value; }
 		}
 
-		private string _twoHundredDayAverageChangePercent;
-		public string twoHundredDayAverageChangePercent
+		private int _twoHundredDayAverageChangePercent;
+		public int twoHundredDayAverageChangePercent
 		{
 			get { return _twoHundredDayAverageChangePercent; }
 			set { _twoHundredDayAverageChangePercent = value; }
 		}
 
-		private string _marketCap;
-		public string marketCap
+		private int _marketCap;
+		public int marketCap
 		{
 			get { return _marketCap; }
 			set { _marketCap = value; }
 		}
 
-		private string _forwardPE;
-		public string forwardPE
+		private int _forwardPE;
+		public int forwardPE
 		{
 			get { return _forwardPE; }
 			set { _forwardPE = value; }
 		}
 
-		private string _priceToBook;
-		public string priceToBook
+		private int _priceToBook;
+		public int priceToBook
 		{
 			get { return _priceToBook; }
 			set { _priceToBook = value; }
 		}
 
-		private string _sourceInterval;
-		public string sourceInterval
+		private int _sourceInterval;
+		public int sourceInterval
 		{
 			get { return _sourceInterval; }
 			set { _sourceInterval = value; }
 		}
 
-		private string _exchangeDataDelayedBy;
-		public string exchangeDataDelayedBy
+		private int _exchangeDataDelayedBy;
+		public int exchangeDataDelayedBy
 		{
 			get { return _exchangeDataDelayedBy; }
 			set { _exchangeDataDelayedBy = value; }
 		}
 
-		private string _pageViewGrowthWeekly;
-		public string pageViewGrowthWeekly
+		private int _pageViewGrowthWeekly;
+		public int pageViewGrowthWeekly
 		{
 			get { return _pageViewGrowthWeekly; }
 			set { _pageViewGrowthWeekly = value; }
 		}
 
-		private string _averageAnalystRating;
-		public string averageAnalystRating
+		private int _averageAnalystRating;
+		public int averageAnalystRating
 		{
 			get { return _averageAnalystRating; }
 			set { _averageAnalystRating = value; }
 		}
 
-		private string _tradeable;
-		public string tradeable
+		private bool _tradeable;
+		public bool tradeable
 		{
 			get { return _tradeable; }
 			set { _tradeable = value; }
 		}
 
-		private string _firstTradeDateMilliseconds;
-		public string firstTradeDateMilliseconds
+		private int _firstTradeDateMilliseconds;
+		public int firstTradeDateMilliseconds
 		{
 			get { return _firstTradeDateMilliseconds; }
 			set { _firstTradeDateMilliseconds = value; }
 		}
 
-		private string _priceHint;
-		public string priceHint
+		private int _priceHint;
+		public int priceHint
 		{
 			get { return _priceHint; }
 			set { _priceHint = value; }
 		}
 
-		private string _postMarketChangePercent;
-		public string postMarketChangePercent
+		private int _postMarketChangePercent;
+		public int postMarketChangePercent
 		{
 			get { return _postMarketChangePercent; }
 			set { _postMarketChangePercent = value; }
 		}
 
-		private string _postMarketTime;
-		public string postMarketTime
+		private int _postMarketTime;
+		public int postMarketTime
 		{
 			get { return _postMarketTime; }
 			set { _postMarketTime = value; }
 		}
 
-		private string _postMarketPrice;
-		public string postMarketPrice
+		private int _postMarketPrice;
+		public int postMarketPrice
 		{
 			get { return _postMarketPrice; }
 			set { _postMarketPrice = value; }
 		}
 
-		private string _postMarketChange;
-		public string postMarketChange
+		private int _postMarketChange;
+		public int postMarketChange
 		{
 			get { return _postMarketChange; }
 			set { _postMarketChange = value; }
 		}
 
-		private string _regularMarketChange;
-		public string regularMarketChange
+		private int _regularMarketChange;
+		public int regularMarketChange
 		{
 			get { return _regularMarketChange; }
 			set { _regularMarketChange = value; }
 		}
 
-		private string _regularMarketChangePercent;
-		public string regularMarketChangePercent
+		private int _regularMarketChangePercent;
+		public int regularMarketChangePercent
 		{
 			get { return _regularMarketChangePercent; }
 			set { _regularMarketChangePercent = value; }
 		}
 
-		private string _regularMarketTime;
-		public string regularMarketTime
+		private int _regularMarketTime;
+		public int regularMarketTime
 		{
 			get { return _regularMarketTime; }
 			set { _regularMarketTime = value; }
 		}
 
-		private string _regularMarketPrice;
-		public string regularMarketPrice
+		private int _regularMarketPrice;
+		public int regularMarketPrice
 		{
 			get { return _regularMarketPrice; }
 			set { _regularMarketPrice = value; }
 		}
 
-		private string _regularMarketDayHigh;
-		public string regularMarketDayHigh
+		private int _regularMarketDayHigh;
+		public int regularMarketDayHigh
 		{
 			get { return _regularMarketDayHigh; }
 			set { _regularMarketDayHigh = value; }
 		}
 
-		private string _regularMarketDayRange;
-		public string regularMarketDayRange
+		private int _regularMarketDayRange;
+		public int regularMarketDayRange
 		{
 			get { return _regularMarketDayRange; }
 			set { _regularMarketDayRange = value; }
 		}
 
-		private string _regularMarketDayLow;
-		public string regularMarketDayLow
+		private int _regularMarketDayLow;
+		public int regularMarketDayLow
 		{
 			get { return _regularMarketDayLow; }
 			set { _regularMarketDayLow = value; }
 		}
 
-		private string _regularMarketVolume;
-		public string regularMarketVolume
+		private int _regularMarketVolume;
+		public int regularMarketVolume
 		{
 			get { return _regularMarketVolume; }
 			set { _regularMarketVolume = value; }
 		}
 
-		private string _regularMarketPreviousClose;
-		public string regularMarketPreviousClose
+		private int _regularMarketPreviousClose;
+		public int regularMarketPreviousClose
 		{
 			get { return _regularMarketPreviousClose; }
 			set { _regularMarketPreviousClose = value; }
 		}
 
-		private string _bid;
-		public string bid
+		private int _bid;
+		public int bid
 		{
 			get { return _bid; }
 			set { _bid = value; }
 		}
 
-		private string _ask;
-		public string ask
+		private int _ask;
+		public int ask
 		{
 			get { return _ask; }
 			set { _ask = value; }
 		}
 
-		private string _bidSize;
-		public string bidSize
+		private int _bidSize;
+		public int bidSize
 		{
 			get { return _bidSize; }
 			set { _bidSize = value; }
 		}
 
-		private string _askSize;
-		public string askSize
+		private int _askSize;
+		public int askSize
 		{
 			get { return _askSize; }
 			set { _askSize = value; }
@@ -360,85 +360,85 @@ namespace MyTrade
 			set { _financialCurrency = value; }
 		}
 
-		private string _regularMarketOpen;
-		public string regularMarketOpen
+		private int _regularMarketOpen;
+		public int regularMarketOpen
 		{
 			get { return _regularMarketOpen; }
 			set { _regularMarketOpen = value; }
 		}
 
-		private string _averageDailyVolume3Month;
-		public string averageDailyVolume3Month
+		private int _averageDailyVolume3Month;
+		public int averageDailyVolume3Month
 		{
 			get { return _averageDailyVolume3Month; }
 			set { _averageDailyVolume3Month = value; }
 		}
 
-		private string _averageDailyVolume10Day;
-		public string averageDailyVolume10Day
+		private int _averageDailyVolume10Day;
+		public int averageDailyVolume10Day
 		{
 			get { return _averageDailyVolume10Day; }
 			set { _averageDailyVolume10Day = value; }
 		}
 
-		private string _fiftyTwoWeekLowChange;
-		public string fiftyTwoWeekLowChange
+		private int _fiftyTwoWeekLowChange;
+		public int fiftyTwoWeekLowChange
 		{
 			get { return _fiftyTwoWeekLowChange; }
 			set { _fiftyTwoWeekLowChange = value; }
 		}
 
-		private string _fiftyTwoWeekLowChangePercent;
-		public string fiftyTwoWeekLowChangePercent
+		private int _fiftyTwoWeekLowChangePercent;
+		public int fiftyTwoWeekLowChangePercent
 		{
 			get { return _fiftyTwoWeekLowChangePercent; }
 			set { _fiftyTwoWeekLowChangePercent = value; }
 		}
 
-		private string _fiftyTwoWeekRange;
-		public string fiftyTwoWeekRange
+		private int _fiftyTwoWeekRange;
+		public int fiftyTwoWeekRange
 		{
 			get { return _fiftyTwoWeekRange; }
 			set { _fiftyTwoWeekRange = value; }
 		}
 
-		private string _fiftyTwoWeekHighChange;
-		public string fiftyTwoWeekHighChange
+		private int _fiftyTwoWeekHighChange;
+		public int fiftyTwoWeekHighChange
 		{
 			get { return _fiftyTwoWeekHighChange; }
 			set { _fiftyTwoWeekHighChange = value; }
 		}
 
-		private string _fiftyTwoWeekHighChangePercent;
-		public string fiftyTwoWeekHighChangePercent
+		private int _fiftyTwoWeekHighChangePercent;
+		public int fiftyTwoWeekHighChangePercent
 		{
 			get { return _fiftyTwoWeekHighChangePercent; }
 			set { _fiftyTwoWeekHighChangePercent = value; }
 		}
 
-		private string _fiftyTwoWeekLow;
-		public string fiftyTwoWeekLow
+		private int _fiftyTwoWeekLow;
+		public int fiftyTwoWeekLow
 		{
 			get { return _fiftyTwoWeekLow; }
 			set { _fiftyTwoWeekLow = value; }
 		}
 
-		private string _fiftyTwoWeekHigh;
-		public string fiftyTwoWeekHigh
+		private int _fiftyTwoWeekHigh;
+		public int fiftyTwoWeekHigh
 		{
 			get { return _fiftyTwoWeekHigh; }
 			set { _fiftyTwoWeekHigh = value; }
 		}
 
-		private string _dividendDate;
-		public string dividendDate
+		private int _dividendDate;
+		public int dividendDate
 		{
 			get { return _dividendDate; }
 			set { _dividendDate = value; }
 		}
 
-		private string _messageBoardId;
-		public string messageBoardId
+		private int _messageBoardId;
+		public int messageBoardId
 		{
 			get { return _messageBoardId; }
 			set { _messageBoardId = value; }
@@ -458,8 +458,8 @@ namespace MyTrade
 			set { _exchangeTimezoneShortName = value; }
 		}
 
-		private string _gmtOffSetMilliseconds;
-		public string gmtOffSetMilliseconds
+		private int _gmtOffSetMilliseconds;
+		public int gmtOffSetMilliseconds
 		{
 			get { return _gmtOffSetMilliseconds; }
 			set { _gmtOffSetMilliseconds = value; }
@@ -472,8 +472,8 @@ namespace MyTrade
 			set { _market = value; }
 		}
 
-		private string _esgPopulated;
-		public string esgPopulated
+		private bool _esgPopulated;
+		public bool esgPopulated
 		{
 			get { return _esgPopulated; }
 			set { _esgPopulated = value; }
@@ -523,10 +523,12 @@ namespace MyTrade
 
 
 
+
+
 		#endregion
 
 		#region Constructor
-		public StockQuote (string region, string quoteType, string currency, string earningsTimestamp, string earningsTimestampStart, string earningsTimestampEnd, string trailingAnnualDividendRate, string trailingPE, string trailingAnnualDividendYield, string epsTrailingTwelveMonths, string epsForward, string epsCurrentYear, string priceEpsCurrentYear, string sharesOutstanding, string bookValue, string fiftyDayAverage, string fiftyDayAverageChange, string fiftyDayAverageChangePercent, string twoHundredDayAverage, string twoHundredDayAverageChange, string twoHundredDayAverageChangePercent, string marketCap, string forwardPE, string priceToBook, string sourceInterval, string exchangeDataDelayedBy, string pageViewGrowthWeekly, string averageAnalystRating, string tradeable, string firstTradeDateMilliseconds, string priceHint, string postMarketChangePercent, string postMarketTime, string postMarketPrice, string postMarketChange, string regularMarketChange, string regularMarketChangePercent, string regularMarketTime, string regularMarketPrice, string regularMarketDayHigh, string regularMarketDayRange, string regularMarketDayLow, string regularMarketVolume, string regularMarketPreviousClose, string bid, string ask, string bidSize, string askSize, string fullExchangeName, string financialCurrency, string regularMarketOpen, string averageDailyVolume3Month, string averageDailyVolume10Day, string fiftyTwoWeekLowChange, string fiftyTwoWeekLowChangePercent, string fiftyTwoWeekRange, string fiftyTwoWeekHighChange, string fiftyTwoWeekHighChangePercent, string fiftyTwoWeekLow, string fiftyTwoWeekHigh, string dividendDate, string messageBoardId, string exchangeTimezoneName, string exchangeTimezoneShortName, string gmtOffSetMilliseconds, string market, string esgPopulated, string exchange, string longName, string marketState, string shortName, string displayName, string symbol)
+		public StockQuote(string region, string quoteType, string currency, int earningsTimestamp, int earningsTimestampStart, int earningsTimestampEnd, int trailingAnnualDividendRate, int trailingPE, int trailingAnnualDividendYield, int epsTrailingTwelveMonths, int epsForward, int epsCurrentYear, int priceEpsCurrentYear, int sharesOutstanding, int bookValue, int fiftyDayAverage, int fiftyDayAverageChange, int fiftyDayAverageChangePercent, int twoHundredDayAverage, int twoHundredDayAverageChange, int twoHundredDayAverageChangePercent, int marketCap, int forwardPE, int priceToBook, int sourceInterval, int exchangeDataDelayedBy, int pageViewGrowthWeekly, int averageAnalystRating, bool tradeable, int firstTradeDateMilliseconds, int priceHint, int postMarketChangePercent, int postMarketTime, int postMarketPrice, int postMarketChange, int regularMarketChange, int regularMarketChangePercent, int regularMarketTime, int regularMarketPrice, int regularMarketDayHigh, int regularMarketDayRange, int regularMarketDayLow, int regularMarketVolume, int regularMarketPreviousClose, int bid, int ask, int bidSize, int askSize, string fullExchangeName, string financialCurrency, int regularMarketOpen, int averageDailyVolume3Month, int averageDailyVolume10Day, int fiftyTwoWeekLowChange, int fiftyTwoWeekLowChangePercent, int fiftyTwoWeekRange, int fiftyTwoWeekHighChange, int fiftyTwoWeekHighChangePercent, int fiftyTwoWeekLow, int fiftyTwoWeekHigh, int dividendDate, int messageBoardId, string exchangeTimezoneName, string exchangeTimezoneShortName, int gmtOffSetMilliseconds, string market, bool esgPopulated, string exchange, string longName, string marketState, string shortName, string displayName, string symbol)
 		{
 			this._region = region;
 			this._quoteType = quoteType;
@@ -602,8 +604,6 @@ namespace MyTrade
 			this._displayName = displayName;
 			this._symbol = symbol;
 		}
-
-
 
 
 		public StockQuote() { }
