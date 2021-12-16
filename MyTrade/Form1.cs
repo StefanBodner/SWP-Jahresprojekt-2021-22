@@ -15,8 +15,7 @@ namespace MyTrade
     public partial class frm_main : Form
     {
         #region Variables
-        string ticker = "";
-        
+        List<Stock> li = new List<Stock>();
         #endregion
 
         public frm_main()
@@ -26,7 +25,7 @@ namespace MyTrade
 
         private void frm_main_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btn_data_Click(object sender, EventArgs e)
@@ -47,6 +46,7 @@ namespace MyTrade
                                                                   
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
                 webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
+                                                                       //niYF94oEjJ7G6Ifo09pco3l57iO5tR070JE9SRY3
 
                 var webResponse = await httpClient.SendAsync(webRequest);
 
@@ -92,7 +92,10 @@ namespace MyTrade
                 tb_output.Text += tempArr[s].ToString() + Environment.NewLine;
             }
 
-            //Stock s = new Stock()
+            Stock st = new Stock();
+
+            li.Add(new Stock());
+
         }
     }
 }
