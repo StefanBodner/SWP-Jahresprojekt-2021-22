@@ -1,7 +1,7 @@
 ﻿
 namespace MyTrade
 {
-    partial class frm_main
+    partial class frm_chart
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -64,14 +64,14 @@ namespace MyTrade
             this.ch_line.Text = "chart1";
             this.ch_line.Click += new System.EventHandler(this.ch_line_Click);
             // 
-            // frm_main
+            // frm_chart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(789, 450);
             this.Controls.Add(this.ch_line);
             this.Controls.Add(this.btn_getdata);
-            this.Name = "frm_main";
+            this.Name = "frm_chart";
             this.Text = "MyTrade";
             this.Load += new System.EventHandler(this.frm_main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ch_line)).EndInit();

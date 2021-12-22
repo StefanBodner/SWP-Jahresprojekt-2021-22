@@ -11,9 +11,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MyTrade
 {
-    public partial class frm_main : Form
+    public partial class frm_chart : Form
     {
-        public frm_main()
+        public frm_chart()
         {
             InitializeComponent();
         }

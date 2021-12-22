@@ -88,14 +88,14 @@ namespace MyTrade
 
                 if (SQLInteraction.CMDExecuteScalarBool("SELECT [hasAdmin] FROM mytrade_UserData WHERE [uid] = " + SQLInteraction.GetuEditID() + ";"))
                 {
-                    frm_main ch = new frm_main();
+                    frm_chart ch = new frm_chart();
                     this.Hide();
                     ch.ShowDialog();
                     this.Show();
                 }
                 else
                 {
-                    frm_main ov = new frm_main();
+                    frm_chart ov = new frm_chart();
                     this.Hide();
                     ov.ShowDialog();
                     this.Show();
