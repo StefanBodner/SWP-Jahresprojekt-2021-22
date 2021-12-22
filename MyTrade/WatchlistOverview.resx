@@ -117,4 +117,83 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tb_data.Text" xml:space="preserve">
+    <value>{"quoteResponse":{"result":[{"language":"de-DE"
+"region":"DE"
+"quoteType":"EQUITY"
+"quoteSourceName":"Nasdaq Real Time Price"
+"triggerable":false
+"currency":"USD"
+"exchange":"NMS"
+"longName":"Apple Inc."
+"messageBoardId":"finmb_24937_lang_de"
+"exchangeTimezoneName":"America/New_York"
+"exchangeTimezoneShortName":"EST"
+"gmtOffSetMilliseconds":-18000000
+"market":"us_market"
+"esgPopulated":false
+"marketState":"PRE"
+"regularMarketChange":3.2400055
+"regularMarketChangePercent":1.9086925
+"regularMarketTime":1640120403
+"regularMarketPrice":172.99
+"regularMarketDayHigh":173.2
+"regularMarketDayRange":"169.12 - 173.2"
+"regularMarketDayLow":169.12
+"regularMarketVolume":83331194
+"regularMarketPreviousClose":169.75
+"bid":0.0
+"ask":0.0
+"bidSize":13
+"askSize":8
+"fullExchangeName":"NasdaqGS"
+"financialCurrency":"USD"
+"regularMarketOpen":171.555
+"averageDailyVolume3Month":89890835
+"averageDailyVolume10Day":133835440
+"fiftyTwoWeekLowChange":56.780006
+"fiftyTwoWeekLowChangePercent":0.4885983
+"fiftyTwoWeekRange":"116.21 - 182.13"
+"fiftyTwoWeekHighChange":-9.139999
+"fiftyTwoWeekHighChangePercent":-0.05018393
+"fiftyTwoWeekLow":116.21
+"fiftyTwoWeekHigh":182.13
+"dividendDate":1636588800
+"earningsTimestamp":1635438600
+"earningsTimestampStart":1643144400
+"earningsTimestampEnd":1643662800
+"trailingAnnualDividendRate":0.85
+"trailingPE":30.836008
+"trailingAnnualDividendYield":0.005007364
+"epsTrailingTwelveMonths":5.61
+"epsForward":6.18
+"epsCurrentYear":5.74
+"priceEpsCurrentYear":30.137632
+"sharesOutstanding":16406400000
+"bookValue":3.841
+"fiftyDayAverage":156.872
+"fiftyDayAverageChange":16.118011
+"fiftyDayAverageChangePercent":0.10274626
+"twoHundredDayAverage":141.7498
+"twoHundredDayAverageChange":31.240204
+"twoHundredDayAverageChangePercent":0.22038975
+"marketCap":2838143172608
+"forwardPE":27.99191
+"priceToBook":45.03775
+"firstTradeDateMilliseconds":345479400000
+"priceHint":2
+"preMarketChange":-0.9900055
+"preMarketChangePercent":-0.5722906
+"preMarketTime":1640166609
+"preMarketPrice":172.0
+"shortName":"Apple Inc."
+"sourceInterval":15
+"exchangeDataDelayedBy":0
+"pageViewGrowthWeekly":-0.047269892
+"averageAnalystRating":"1.8 - Buy"
+"tradeable":false
+"displayName":"Apple"
+"symbol":"AAPL"}]
+"error":null}}</value>
+  </data>
 </root>

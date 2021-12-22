@@ -62,7 +62,8 @@ namespace MyTrade
             }
             catch (Exception e)
             {
-                tb_data.Text += "Failed to get symbol: " + "AAPL";
+                tb_data.Text += "Failed to get symbol: " + tb_ticker.Text;
+                MessageBox.Show(e.ToString());
             }
             return 1;
         }
@@ -88,12 +89,12 @@ namespace MyTrade
             tempStr = tempStr.Replace("}", "");
             string[] tempArr = tempStr.Split(new[] { ';', '{', ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (var s = 2; s < tempArr.Length; s++)
+            for (var s = 2; s < tempArr.Length; s+=1)
             {
                 tb_output.Text += tempArr[s].ToString() + Environment.NewLine;
             }
 
-            StockQuote st = new StockQuote();
+
 
             li.Add(new StockQuote());
         }
