@@ -80,9 +80,9 @@ namespace MyTrade
             // 
             this.tb_ticker.Location = new System.Drawing.Point(93, 15);
             this.tb_ticker.Name = "tb_ticker";
-            this.tb_ticker.Size = new System.Drawing.Size(100, 20);
+            this.tb_ticker.Size = new System.Drawing.Size(212, 20);
             this.tb_ticker.TabIndex = 4;
-            this.tb_ticker.Text = "AAPL";
+            this.tb_ticker.Text = "AAPL,TSLA,MSFT";
             // 
             // frm_watchlist
             // 

@@ -49,16 +49,18 @@ namespace MyTrade
 
                 var webData = await webResponse.Content.ReadAsStringAsync();
 
+                tb_data.Text = webData.ToString();
+                MessageBox.Show("??");
+
                 string[] splittedWebData = webData.Split(',');
 
                 tb_data.Clear();
 
-                foreach (string s in splittedWebData)
+                foreach (var v in splittedWebData)
                 {
-                    tb_data.Text += s + Environment.NewLine;
+                    tb_data.Text += v + Environment.NewLine;
                 }
-
-                //tb_data.Text = webData;
+                
             }
             catch (Exception e)
             {
@@ -78,25 +80,22 @@ namespace MyTrade
         {
             tb_output.Clear();
 
-            string tempStr = tb_data.Text;
+            string convertStr = tb_data.Text;
 
-            tempStr = tempStr.Replace(",\"", ";");
-            tempStr = tempStr.Replace("\"", "");
-            tempStr = tempStr.Replace("[", "");
-            tempStr = tempStr.Replace("]", "");
-            tempStr = tempStr.Replace("},", "");
-            tempStr = tempStr.Replace("{", "");
-            tempStr = tempStr.Replace("}", "");
-            string[] tempArr = tempStr.Split(new[] { ';', '{', ':' }, StringSplitOptions.RemoveEmptyEntries);
+            convertStr = convertStr.Replace(",\"", ";");
+            convertStr = convertStr.Replace("\"", "");
+            convertStr = convertStr.Replace("[", "");
+            convertStr = convertStr.Replace("]", "");
+            convertStr = convertStr.Replace("{", "");
+            convertStr = convertStr.Replace("}", "");
+            string[] stockArr = convertStr.Split(new[] { ';', '{', ':', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (var s = 2; s < tempArr.Length; s+=1)
+            for (var s = 3; s < stockArr.Length; s += 2)
             {
-                tb_output.Text += tempArr[s].ToString() + Environment.NewLine;
+                tb_output.Text += stockArr[s].ToString() + Environment.NewLine;
             }
 
-
-
-            li.Add(new StockQuote());
+            //li.Add(new StockQuote(stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3]));
         }
     }
 }
