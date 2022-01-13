@@ -114,5 +114,13 @@ namespace MyTrade
                 tb_password.UseSystemPasswordChar = true;
             }
         }
+
+        private void btn_register_Click(object sender, EventArgs e)
+        {
+            frm_register rg = new frm_register();
+            this.Hide();
+            rg.ShowDialog();
+            this.Show();
+        }
     }
 }

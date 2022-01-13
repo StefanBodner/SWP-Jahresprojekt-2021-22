@@ -35,8 +35,8 @@ namespace MyTrade
             this.lbl_password = new System.Windows.Forms.Label();
             this.cb_show = new System.Windows.Forms.CheckBox();
             this.btn_login = new System.Windows.Forms.Button();
-            this.pb_logo = new System.Windows.Forms.PictureBox();
             this.btn_register = new System.Windows.Forms.Button();
+            this.pb_logo = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,6 +96,16 @@ namespace MyTrade
             this.btn_login.UseVisualStyleBackColor = true;
             this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
             // 
+            // btn_register
+            // 
+            this.btn_register.Location = new System.Drawing.Point(138, 367);
+            this.btn_register.Name = "btn_register";
+            this.btn_register.Size = new System.Drawing.Size(91, 23);
+            this.btn_register.TabIndex = 7;
+            this.btn_register.Text = "Register";
+            this.btn_register.UseVisualStyleBackColor = true;
+            this.btn_register.Click += new System.EventHandler(this.btn_register_Click);
+            // 
             // pb_logo
             // 
             this.pb_logo.BackColor = System.Drawing.Color.White;
@@ -106,15 +116,6 @@ namespace MyTrade
             this.pb_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pb_logo.TabIndex = 0;
             this.pb_logo.TabStop = false;
-            // 
-            // btn_register
-            // 
-            this.btn_register.Location = new System.Drawing.Point(138, 367);
-            this.btn_register.Name = "btn_register";
-            this.btn_register.Size = new System.Drawing.Size(91, 23);
-            this.btn_register.TabIndex = 7;
-            this.btn_register.Text = "Register";
-            this.btn_register.UseVisualStyleBackColor = true;
             // 
             // frm_login
             // 
