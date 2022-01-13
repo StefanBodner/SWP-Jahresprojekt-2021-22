@@ -16,5 +16,10 @@ namespace MyTrade
         {
             InitializeComponent();
         }
+
+        private void frm_register_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

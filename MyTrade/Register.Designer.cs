@@ -156,6 +156,7 @@ namespace MyTrade
             this.Controls.Add(this.tb_username);
             this.Name = "frm_register";
             this.Text = "Register";
+            this.Load += new System.EventHandler(this.frm_register_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
