@@ -49,16 +49,7 @@ namespace MyTrade
 
                 var webData = await webResponse.Content.ReadAsStringAsync();
 
-                string[] splittedWebData = webData.Split(',');
-
-                tb_data.Clear();
-
-                foreach (string s in splittedWebData)
-                {
-                    tb_data.Text += s + Environment.NewLine;
-                }
-
-                //tb_data.Text = webData;
+                tb_data.Text = webData;
             }
             catch (Exception e)
             {

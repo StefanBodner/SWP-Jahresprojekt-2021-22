@@ -29,6 +29,7 @@ namespace MyTrade
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_watchlist));
             this.btn_data = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.tb_data = new System.Windows.Forms.TextBox();
@@ -64,6 +65,7 @@ namespace MyTrade
             this.tb_data.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tb_data.Size = new System.Drawing.Size(693, 554);
             this.tb_data.TabIndex = 2;
+            this.tb_data.Text = resources.GetString("tb_data.Text");
             // 
             // tb_output
             // 
