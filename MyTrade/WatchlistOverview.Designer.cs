@@ -88,7 +88,7 @@ namespace MyTrade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1191, 607);
+            this.ClientSize = new System.Drawing.Size(1665, 607);
             this.Controls.Add(this.tb_ticker);
             this.Controls.Add(this.tb_output);
             this.Controls.Add(this.tb_data);

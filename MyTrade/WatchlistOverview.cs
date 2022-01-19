@@ -52,14 +52,14 @@ namespace MyTrade
                 tb_data.Text = webData.ToString();
                 MessageBox.Show("??");
 
-                string[] splittedWebData = webData.Split(',');
+                //string[] splittedWebData = webData.Split(',');
 
-                tb_data.Clear();
+                //tb_data.Clear();
 
-                foreach (var v in splittedWebData)
-                {
-                    tb_data.Text += v + Environment.NewLine;
-                }
+                //foreach (var v in splittedWebData)
+                //{
+                //    tb_data.Text += v + Environment.NewLine;
+                //}
                 
             }
             catch (Exception e)
