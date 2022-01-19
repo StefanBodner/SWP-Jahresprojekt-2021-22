@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -93,6 +95,23 @@ namespace MyTrade
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private static void Serialize(List<Human> list)
+        {
+            /* To store multiple Datatypes in one File:
+            string json = JsonConvert.SerializeObject(new {integer = 1, list = drawList*/
+
+            //better format
+            string json = JsonConvert.SerializeObject(list, Newtonsoft.Json.Formatting.Indented);
+
+            //string json = System.Text.Json.JsonSerializer.Serialize(list);
+            File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/bullshit.json", json);
+        }
+
+        private static List<Human> Deserialze(string path)
+        {
+            return System.Text.Json.JsonSerializer.Deserialize<List<Human>>(File.ReadAllText(path));
         }
     }
 }
