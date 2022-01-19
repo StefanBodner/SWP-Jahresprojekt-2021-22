@@ -11,6 +11,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Dynamic;
+
+
+
 
 namespace MyTrade
 {
@@ -19,6 +23,7 @@ namespace MyTrade
         #region Variables
         List<StockQuote> li = new List<StockQuote>();
         string[] tempArr = new string[25];
+        static string convertStr;
         #endregion
 
         public frm_watchlist()
@@ -53,6 +58,10 @@ namespace MyTrade
                 var webData = await webResponse.Content.ReadAsStringAsync();
 
                 tb_data.Text = webData.ToString();
+
+
+
+
             }
             catch (Exception e)
             {
@@ -72,7 +81,7 @@ namespace MyTrade
         {
             tb_output.Clear();
 
-            string convertStr = tb_data.Text;
+            convertStr = tb_data.Text;
 
             convertStr = convertStr.Replace(",\"", ";");
             convertStr = convertStr.Replace("\"", "");
@@ -97,7 +106,7 @@ namespace MyTrade
 
         }
 
-        private static void Serialize(List<Human> list)
+        private static void Serialize(List<StockQuote> list)
         {
             /* To store multiple Datatypes in one File:
             string json = JsonConvert.SerializeObject(new {integer = 1, list = drawList*/
@@ -109,9 +118,9 @@ namespace MyTrade
             File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/bullshit.json", json);
         }
 
-        private static List<Human> Deserialze(string path)
+        private static List<StockQuote> Deserialze(string path)
         {
-            return System.Text.Json.JsonSerializer.Deserialize<List<Human>>(File.ReadAllText(path));
+            return JsonSerializer.Deserialize<List<StockQuote>>();
         }
     }
 }
