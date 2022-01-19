@@ -16,6 +16,7 @@ namespace MyTrade
     {
         #region Variables
         List<StockQuote> li = new List<StockQuote>();
+        string[] tempArr = new string[25];
         #endregion
 
         public frm_watchlist()
@@ -50,17 +51,6 @@ namespace MyTrade
                 var webData = await webResponse.Content.ReadAsStringAsync();
 
                 tb_data.Text = webData.ToString();
-                MessageBox.Show("??");
-
-                //string[] splittedWebData = webData.Split(',');
-
-                //tb_data.Clear();
-
-                //foreach (var v in splittedWebData)
-                //{
-                //    tb_data.Text += v + Environment.NewLine;
-                //}
-                
             }
             catch (Exception e)
             {
@@ -90,12 +80,19 @@ namespace MyTrade
             convertStr = convertStr.Replace("}", "");
             string[] stockArr = convertStr.Split(new[] { ';', '{', ':', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (var s = 3; s < stockArr.Length; s += 2)
+            for (var s = 2; s < stockArr.Length; s++)
             {
                 tb_output.Text += stockArr[s].ToString() + Environment.NewLine;
             }
 
-            //li.Add(new StockQuote(stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3], stockArr[3]));
+            //tempArr.
+
+            //li.Add(new StockQuote());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
