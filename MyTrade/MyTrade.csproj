@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asdf.cs" />
     <Compile Include="BCrypt.cs" />
     <Compile Include="ChartGraphics.cs">
       <SubType>Form</SubType>

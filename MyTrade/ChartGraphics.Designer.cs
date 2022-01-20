@@ -30,7 +30,6 @@ namespace MyTrade
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btn_getdata = new System.Windows.Forms.Button();
             this.ch_line = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -51,12 +50,9 @@ namespace MyTrade
             // 
             chartArea1.Name = "ChartArea1";
             this.ch_line.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.ch_line.Legends.Add(legend1);
             this.ch_line.Location = new System.Drawing.Point(13, 75);
             this.ch_line.Name = "ch_line";
             series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.ch_line.Series.Add(series1);
             this.ch_line.Size = new System.Drawing.Size(759, 333);
