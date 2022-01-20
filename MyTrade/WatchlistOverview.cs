@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using System.Dynamic;
-
-
-
+using Newtonsoft.Json;
 
 namespace MyTrade
 {
     public partial class frm_watchlist : Form
     {
         #region Variables
-        List<StockQuote> li = new List<StockQuote>();
+        Root qr = new Root();
+        List<Result> li = new List<Result>();
+        string webData;
         #endregion
 
         public frm_watchlist()
@@ -30,39 +22,38 @@ namespace MyTrade
 
         private void WatchlistOverview_Load(object sender, EventArgs e)
         {
-
+            //so far empty
         }
 
         public async Task<int> getStockData()
         {
+            //source:
             //https://www.yahoofinanceapi.com/dashboard
-
 
             try
             {
+                //send request (enter ticker symbol in textbox)
                 var httpClient = new HttpClient();
-                //var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text + ",TSLA");
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text);
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
                 webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
                 //niYF94oEjJ7G6Ifo09pco3l57iO5tR070JE9SRY3
+                //2nd API-Key if necessary
 
                 var webResponse = await httpClient.SendAsync(webRequest);
 
                 webResponse.EnsureSuccessStatusCode();
 
-                var webData = await webResponse.Content.ReadAsStringAsync();
+                var temp = await webResponse.Content.ReadAsStringAsync();
 
-                tb_data.Text = webData.ToString();
+                webData = temp.ToString();
 
-
-
-
+                //show data in textbox
+                tb_data.Text = webData;
             }
             catch (Exception e)
             {
-                tb_data.Text += "Failed to get symbol: " + tb_ticker.Text;
                 MessageBox.Show(e.ToString());
             }
             return 1;
@@ -71,70 +62,38 @@ namespace MyTrade
 
         private void btn_data_Click(object sender, EventArgs e)
         {
+            //start Task
             var i = getStockData();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tb_output.Clear();
+            tb_listOutput.Clear();
 
-            string convertStr = tb_data.Text;
+            //just temporary - debug purposes only
+            webData = tb_data.Text;
 
-            convertStr = convertStr.Replace("},{", "|");
-            convertStr = convertStr.Replace(",\"", ";");
-            convertStr = convertStr.Replace("\"", "");
-            convertStr = convertStr.Replace("[", "");
-            convertStr = convertStr.Replace("]", "");
-            convertStr = convertStr.Replace("{", "");
-            convertStr = convertStr.Replace("}", "");
+            qr = Deserialze(webData);
 
-            string[] stockArr = convertStr.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+            li = qr.quoteResponse.result;
 
-            tb_listOutput.Text += stockArr.Length.ToString();
-
-            for (int i = 0; i < stockArr.Length; i++)
+            //output list entries
+            foreach (var v in li)
             {
-                string[] tempArr = stockArr[i].Split(new[] { ';', '{', ':', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-                tb_output.Text += tempArr[0] + ", " + tempArr[1] + ", " + tempArr[2] + ", " + tempArr[3];
-                tb_output.Text += Environment.NewLine;
-                tb_output.Text += Environment.NewLine;
-
-                //StockQuote s = new StockQuote(tempArr[0], tempArr[1]);
-
-                //li.Add(s);
-                StockQuote s = new StockQuote();
-
-                string[] fieldTitle =  StockQuote.GetArray();
-
-                foreach(string f in fieldTitle)
+                foreach (var propertyInfo in v.GetType().GetProperties())
                 {
-                    s.f = 
+                    tb_listOutput.Text += propertyInfo.Name + ", " + propertyInfo.GetValue(v, null) + Environment.NewLine;
                 }
-
-                temp
-
-                //s.longName = tempArr[]tempArr.index
-
+                tb_listOutput.Text += Environment.NewLine;
+                tb_listOutput.Text += Environment.NewLine;
             }
-
-            /////////////////////////////////////////////////////////
-
-
-
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private static Root Deserialze(string path)
         {
-            foreach(var v in li)
-            {
-                tb_listOutput.Text = v.ToString();
-            }
+            //convert Json into Object
+            return JsonConvert.DeserializeObject<Root>(path);
         }
     }
 }
-
-
-
-
 

@@ -33,10 +33,8 @@ namespace MyTrade
             this.btn_data = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.tb_data = new System.Windows.Forms.TextBox();
-            this.tb_output = new System.Windows.Forms.TextBox();
             this.tb_ticker = new System.Windows.Forms.TextBox();
             this.tb_listOutput = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_data
@@ -69,15 +67,6 @@ namespace MyTrade
             this.tb_data.TabIndex = 2;
             this.tb_data.Text = resources.GetString("tb_data.Text");
             // 
-            // tb_output
-            // 
-            this.tb_output.Location = new System.Drawing.Point(711, 41);
-            this.tb_output.Multiline = true;
-            this.tb_output.Name = "tb_output";
-            this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_output.Size = new System.Drawing.Size(374, 554);
-            this.tb_output.TabIndex = 3;
-            // 
             // tb_ticker
             // 
             this.tb_ticker.Location = new System.Drawing.Point(93, 15);
@@ -88,32 +77,20 @@ namespace MyTrade
             // 
             // tb_listOutput
             // 
-            this.tb_listOutput.Location = new System.Drawing.Point(1091, 41);
+            this.tb_listOutput.Location = new System.Drawing.Point(711, 41);
             this.tb_listOutput.Multiline = true;
             this.tb_listOutput.Name = "tb_listOutput";
             this.tb_listOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tb_listOutput.Size = new System.Drawing.Size(548, 554);
             this.tb_listOutput.TabIndex = 5;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(1091, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "List Output";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1651, 607);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(1271, 607);
             this.Controls.Add(this.tb_listOutput);
             this.Controls.Add(this.tb_ticker);
-            this.Controls.Add(this.tb_output);
             this.Controls.Add(this.tb_data);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_data);
@@ -130,9 +107,7 @@ namespace MyTrade
         private System.Windows.Forms.Button btn_data;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox tb_data;
-        private System.Windows.Forms.TextBox tb_output;
         private System.Windows.Forms.TextBox tb_ticker;
         private System.Windows.Forms.TextBox tb_listOutput;
-        private System.Windows.Forms.Button button2;
     }
 }

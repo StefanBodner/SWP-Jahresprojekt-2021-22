@@ -72,7 +72,7 @@
     <Compile Include="StartChoice.Designer.cs">
       <DependentUpon>StartChoice.cs</DependentUpon>
     </Compile>
-    <Compile Include="StockQuote.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="WatchlistOverview.cs">
       <SubType>Form</SubType>
     </Compile>
