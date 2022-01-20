@@ -220,7 +220,13 @@ namespace MyTrade
 		public StockQuote() { }
 		#endregion
 
-		#region
+		#region Methods
+
+		public static string[] GetArray()
+        {
+			string[] arr = { "currency", "trailingAnnualDividendRate", "trailingPE", "trailingAnnualDividendYield", "epsTrailingTwelveMonths", "fiftyDayAverage", "marketCap", "averageAnalystRating", "postMarketChangePercent", "postMarketPrice", "regularMarketChangePercent", "regularMarketPrice", "regularMarketDayRange", "regularMarketVolume", "regularMarketPreviousClose", "bid", "ask", "bidSize", "askSize", "fullExchangeName", "regularMarketOpen", "averageDailyVolume10Day", "fiftyTwoWeekRange", "longName", "symbol" };
+			return arr;
+        }
 
 		#endregion
 	}

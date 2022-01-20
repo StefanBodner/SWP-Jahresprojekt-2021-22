@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,8 +21,6 @@ namespace MyTrade
     {
         #region Variables
         List<StockQuote> li = new List<StockQuote>();
-        string[] tempArr = new string[25];
-        static string convertStr;
         #endregion
 
         public frm_watchlist()
@@ -81,46 +78,58 @@ namespace MyTrade
         {
             tb_output.Clear();
 
-            convertStr = tb_data.Text;
+            string convertStr = tb_data.Text;
 
+            convertStr = convertStr.Replace("},{", "|");
             convertStr = convertStr.Replace(",\"", ";");
             convertStr = convertStr.Replace("\"", "");
             convertStr = convertStr.Replace("[", "");
             convertStr = convertStr.Replace("]", "");
             convertStr = convertStr.Replace("{", "");
             convertStr = convertStr.Replace("}", "");
-            string[] stockArr = convertStr.Split(new[] { ';', '{', ':', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (var s = 2; s < stockArr.Length; s++)
+            string[] stockArr = convertStr.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+
+            tb_listOutput.Text += stockArr.Length.ToString();
+
+            for (int i = 0; i < stockArr.Length; i++)
             {
-                tb_output.Text += stockArr[s].ToString() + Environment.NewLine;
+                string[] tempArr = stockArr[i].Split(new[] { ';', '{', ':', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                tb_output.Text += tempArr[0] + ", " + tempArr[1] + ", " + tempArr[2] + ", " + tempArr[3];
+                tb_output.Text += Environment.NewLine;
+                tb_output.Text += Environment.NewLine;
+
+                //StockQuote s = new StockQuote(tempArr[0], tempArr[1]);
+
+                //li.Add(s);
+                StockQuote s = new StockQuote();
+
+                string[] fieldTitle =  StockQuote.GetArray();
+
+                foreach(string f in fieldTitle)
+                {
+                    s.f = 
+                }
+
+                temp
+
+                //s.longName = tempArr[]tempArr.index
+
             }
 
-            //tempArr.
+            /////////////////////////////////////////////////////////
 
-            //li.Add(new StockQuote());
+
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private static void Serialize(List<StockQuote> list)
-        {
-            /* To store multiple Datatypes in one File:
-            string json = JsonConvert.SerializeObject(new {integer = 1, list = drawList*/
-
-            //better format
-            string json = JsonConvert.SerializeObject(list, Newtonsoft.Json.Formatting.Indented);
-
-            //string json = System.Text.Json.JsonSerializer.Serialize(list);
-            File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/bullshit.json", json);
-        }
-
-        private static List<StockQuote> Deserialze(string path)
-        {
-            return JsonSerializer.Deserialize<List<StockQuote>>();
+            foreach(var v in li)
+            {
+                tb_listOutput.Text = v.ToString();
+            }
         }
     }
 }
