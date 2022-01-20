@@ -33,8 +33,8 @@ namespace MyTrade
             this.btn_data = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.tb_data = new System.Windows.Forms.TextBox();
-            this.tb_output = new System.Windows.Forms.TextBox();
             this.tb_ticker = new System.Windows.Forms.TextBox();
+            this.tb_listOutput = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_data
@@ -49,7 +49,7 @@ namespace MyTrade
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(805, 12);
+            this.button1.Location = new System.Drawing.Point(711, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -67,29 +67,30 @@ namespace MyTrade
             this.tb_data.TabIndex = 2;
             this.tb_data.Text = resources.GetString("tb_data.Text");
             // 
-            // tb_output
-            // 
-            this.tb_output.Location = new System.Drawing.Point(805, 41);
-            this.tb_output.Multiline = true;
-            this.tb_output.Name = "tb_output";
-            this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_output.Size = new System.Drawing.Size(374, 554);
-            this.tb_output.TabIndex = 3;
-            // 
             // tb_ticker
             // 
             this.tb_ticker.Location = new System.Drawing.Point(93, 15);
             this.tb_ticker.Name = "tb_ticker";
-            this.tb_ticker.Size = new System.Drawing.Size(100, 20);
+            this.tb_ticker.Size = new System.Drawing.Size(212, 20);
             this.tb_ticker.TabIndex = 4;
+            this.tb_ticker.Text = "AAPL,TSLA,MSFT";
+            // 
+            // tb_listOutput
+            // 
+            this.tb_listOutput.Location = new System.Drawing.Point(711, 41);
+            this.tb_listOutput.Multiline = true;
+            this.tb_listOutput.Name = "tb_listOutput";
+            this.tb_listOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tb_listOutput.Size = new System.Drawing.Size(548, 554);
+            this.tb_listOutput.TabIndex = 5;
             // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1191, 607);
+            this.ClientSize = new System.Drawing.Size(1271, 607);
+            this.Controls.Add(this.tb_listOutput);
             this.Controls.Add(this.tb_ticker);
-            this.Controls.Add(this.tb_output);
             this.Controls.Add(this.tb_data);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_data);
@@ -106,7 +107,7 @@ namespace MyTrade
         private System.Windows.Forms.Button btn_data;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox tb_data;
-        private System.Windows.Forms.TextBox tb_output;
         private System.Windows.Forms.TextBox tb_ticker;
+        private System.Windows.Forms.TextBox tb_listOutput;
     }
 }
