@@ -132,6 +132,7 @@ namespace MyTrade
             this.Controls.Add(this.lbl_username);
             this.Controls.Add(this.pb_logo);
             this.Name = "frm_login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.Load += new System.EventHandler(this.frm_login_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).EndInit();

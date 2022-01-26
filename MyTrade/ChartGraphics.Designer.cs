@@ -68,6 +68,7 @@ namespace MyTrade
             this.Controls.Add(this.ch_line);
             this.Controls.Add(this.btn_getdata);
             this.Name = "frm_chart";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MyTrade";
             this.Load += new System.EventHandler(this.frm_main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ch_line)).EndInit();

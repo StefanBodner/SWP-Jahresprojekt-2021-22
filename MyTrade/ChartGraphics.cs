@@ -26,11 +26,11 @@ namespace MyTrade
             var series = new Series("Kurswert");
             var series2 = new Series("Kurswert - 100");
 
-            series.ChartType = SeriesChartType.Spline;
+            series.ChartType = SeriesChartType.Line;
             series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004 }, new[] { 900, 100, 800, 1000, 400 });
             ch_line.Series.Add(series);
 
-            series2.ChartType = SeriesChartType.Spline;
+            series2.ChartType = SeriesChartType.Line;
             series2.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004 }, new[] { 800, 600, 700, 800, 600 });
             ch_line.Series.Add(series2);
             ch_line.Series.RemoveAt(0);

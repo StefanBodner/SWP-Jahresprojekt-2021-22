@@ -191,7 +191,7 @@ namespace MyTrade
             }
             catch (Exception)
             {
-                MessageBox.Show("Username does not exis t!");
+                MessageBox.Show("Username does not exist!");
                 return false;
             }
         }
