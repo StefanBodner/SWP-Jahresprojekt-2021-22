@@ -23,7 +23,7 @@ namespace MyTrade
         public double twoHundredDayAverage { get; set; }
         public double twoHundredDayAverageChange { get; set; }
         public double twoHundredDayAverageChangePercent { get; set; }
-        public object marketCap { get; set; }
+        public double marketCap { get; set; } //object?
         public double forwardPE { get; set; }
         public double priceToBook { get; set; }
         public int sourceInterval { get; set; }
@@ -37,8 +37,8 @@ namespace MyTrade
         public string fullExchangeName { get; set; }
         public string financialCurrency { get; set; }
         public double regularMarketOpen { get; set; }
-        public int averageDailyVolume3Month { get; set; }
-        public int averageDailyVolume10Day { get; set; }
+        public double averageDailyVolume3Month { get; set; }
+        public double averageDailyVolume10Day { get; set; }
         public double fiftyTwoWeekLowChange { get; set; }
         public double fiftyTwoWeekLowChangePercent { get; set; }
         public string fiftyTwoWeekRange { get; set; }
@@ -68,7 +68,7 @@ namespace MyTrade
         public double regularMarketDayHigh { get; set; }
         public string regularMarketDayRange { get; set; }
         public double regularMarketDayLow { get; set; }
-        public int regularMarketVolume { get; set; }
+        public double regularMarketVolume { get; set; }
         public double bid { get; set; }
         public string exchange { get; set; }
         public string shortName { get; set; }

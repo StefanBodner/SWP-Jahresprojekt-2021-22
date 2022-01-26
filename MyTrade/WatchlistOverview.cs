@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -48,9 +49,25 @@ namespace MyTrade
                 var temp = await webResponse.Content.ReadAsStringAsync();
 
                 webData = temp.ToString();
+                
+                qr = Deserialze(webData);
+
+                li = qr.quoteResponse.result;
+
+                //output list entries
+                foreach (var v in li)
+                {
+                    foreach (var propertyInfo in v.GetType().GetProperties())
+                    {
+                        tb_listOutput.Text += propertyInfo.Name + ", " + propertyInfo.GetValue(v, null) + Environment.NewLine;
+                    }
+                    tb_listOutput.Text += Environment.NewLine;
+                    tb_listOutput.Text += Environment.NewLine;
+                }
+
 
                 //show data in textbox
-                tb_data.Text = webData;
+                //tb_data.Text = webData;
             }
             catch (Exception e)
             {
@@ -73,26 +90,36 @@ namespace MyTrade
             //just temporary - debug purposes only
             webData = tb_data.Text;
 
-            qr = Deserialze(webData);
-
-            li = qr.quoteResponse.result;
-
-            //output list entries
-            foreach (var v in li)
-            {
-                foreach (var propertyInfo in v.GetType().GetProperties())
-                {
-                    tb_listOutput.Text += propertyInfo.Name + ", " + propertyInfo.GetValue(v, null) + Environment.NewLine;
-                }
-                tb_listOutput.Text += Environment.NewLine;
-                tb_listOutput.Text += Environment.NewLine;
-            }
+            
         }
 
         private static Root Deserialze(string path)
         {
             //convert Json into Object
             return JsonConvert.DeserializeObject<Root>(path);
+        }
+
+        private void btn_showData_Click(object sender, EventArgs e)
+        {
+            int count = 3;
+            Label[] labels = new Label[count * 5];
+            int[] temp = new int[] { 1, 2, 3, 4, 5};
+
+            for (int i = 0; i < count; i++)
+            {
+                for(int j = 0; j < 5; j++)
+                {
+                    labels[i] = new Label();
+                    labels[i].Text = temp[j].ToString();
+                    labels[i].Top = i * 50;
+                    labels[i].Left = j * 20;
+                    labels[i].Font = new Font("Arial", 15, FontStyle.Bold);
+                }
+            }
+            for (int i = 0; i < count; i++)
+            {
+                panel.Controls.Add(labels[i]);
+            }
         }
     }
 }

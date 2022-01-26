@@ -31,10 +31,12 @@ namespace MyTrade
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_watchlist));
             this.btn_data = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.tb_data = new System.Windows.Forms.TextBox();
             this.tb_ticker = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tb_listOutput = new System.Windows.Forms.TextBox();
+            this.panel = new System.Windows.Forms.Panel();
+            this.btn_showData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_data
@@ -46,16 +48,6 @@ namespace MyTrade
             this.btn_data.Text = "Load Data";
             this.btn_data.UseVisualStyleBackColor = true;
             this.btn_data.Click += new System.EventHandler(this.btn_data_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(711, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Split Data";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tb_data
             // 
@@ -75,6 +67,16 @@ namespace MyTrade
             this.tb_ticker.TabIndex = 4;
             this.tb_ticker.Text = "AAPL,TSLA,MSFT";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(711, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Split Data";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // tb_listOutput
             // 
             this.tb_listOutput.Location = new System.Drawing.Point(711, 41);
@@ -84,11 +86,31 @@ namespace MyTrade
             this.tb_listOutput.Size = new System.Drawing.Size(548, 554);
             this.tb_listOutput.TabIndex = 5;
             // 
+            // panel
+            // 
+            this.panel.AutoScroll = true;
+            this.panel.Location = new System.Drawing.Point(12, 41);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(1247, 554);
+            this.panel.TabIndex = 6;
+            // 
+            // btn_showData
+            // 
+            this.btn_showData.Location = new System.Drawing.Point(1184, 12);
+            this.btn_showData.Name = "btn_showData";
+            this.btn_showData.Size = new System.Drawing.Size(75, 23);
+            this.btn_showData.TabIndex = 7;
+            this.btn_showData.Text = "Show Data";
+            this.btn_showData.UseVisualStyleBackColor = true;
+            this.btn_showData.Click += new System.EventHandler(this.btn_showData_Click);
+            // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1271, 607);
+            this.Controls.Add(this.btn_showData);
+            this.Controls.Add(this.panel);
             this.Controls.Add(this.tb_listOutput);
             this.Controls.Add(this.tb_ticker);
             this.Controls.Add(this.tb_data);
@@ -105,9 +127,11 @@ namespace MyTrade
         #endregion
 
         private System.Windows.Forms.Button btn_data;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox tb_data;
         private System.Windows.Forms.TextBox tb_ticker;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox tb_listOutput;
+        private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.Button btn_showData;
     }
 }
