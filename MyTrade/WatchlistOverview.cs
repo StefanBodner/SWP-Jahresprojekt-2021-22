@@ -49,21 +49,8 @@ namespace MyTrade
                 var temp = await webResponse.Content.ReadAsStringAsync();
 
                 webData = temp.ToString();
+                tb_data.Text = webData;
                 
-                qr = Deserialze(webData);
-
-                li = qr.quoteResponse.result;
-
-                //output list entries
-                foreach (var v in li)
-                {
-                    foreach (var propertyInfo in v.GetType().GetProperties())
-                    {
-                        tb_listOutput.Text += propertyInfo.Name + ", " + propertyInfo.GetValue(v, null) + Environment.NewLine;
-                    }
-                    tb_listOutput.Text += Environment.NewLine;
-                    tb_listOutput.Text += Environment.NewLine;
-                }
 
 
                 //show data in textbox
@@ -85,12 +72,23 @@ namespace MyTrade
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tb_listOutput.Clear();
-
             //just temporary - debug purposes only
             webData = tb_data.Text;
 
-            
+            qr = Deserialze(webData);
+
+            li = qr.quoteResponse.result;
+
+            //output list entries
+            foreach (var v in li)
+            {
+                foreach (var propertyInfo in v.GetType().GetProperties())
+                {
+                    tb_listOutput.Text += propertyInfo.Name + ", " + propertyInfo.GetValue(v, null) + Environment.NewLine;
+                }
+                tb_listOutput.Text += Environment.NewLine;
+                tb_listOutput.Text += Environment.NewLine;
+            }
         }
 
         private static Root Deserialze(string path)
@@ -101,24 +99,53 @@ namespace MyTrade
 
         private void btn_showData_Click(object sender, EventArgs e)
         {
-            int count = 3;
-            Label[] labels = new Label[count * 5];
-            int[] temp = new int[] { 1, 2, 3, 4, 5};
+            int[] temp = new int[] { 9, 8, 7, 6, 5 };
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < li.Count; i++)
             {
                 for(int j = 0; j < 5; j++)
                 {
-                    labels[i] = new Label();
-                    labels[i].Text = temp[j].ToString();
-                    labels[i].Top = i * 50;
-                    labels[i].Left = j * 20;
-                    labels[i].Font = new Font("Arial", 15, FontStyle.Bold);
+                    Label l = new Label();
+
+                    switch (j)
+                    {
+                        case 0:
+                            l.Text = li[i].symbol;
+                            break;
+                        case 1:
+                            l.Text = li[i].longName;
+                            l.Left = 100;
+                            break;
+                        case 2:
+                            double changePercent = Math.Round(li[i].regularMarketChangePercent, 2);
+                            if (changePercent > 0)
+                            {
+                                l.Text = " " + changePercent + " %";
+                                l.ForeColor = Color.Green;
+                            }
+                            else
+                            {
+                                l.Text = changePercent + " %";
+                                l.ForeColor = Color.Red;
+                            }
+                            
+                            l.Left = 400;
+                            break;
+                        case 3:
+                            l.Text = li[i].regularMarketPrice + li[i].currency;
+                            l.Left = 500;
+                            break;
+                        case 4:
+                            l.Text = li[i].exchange;
+                            l.Left = 700;
+                            break;
+                    }
+                    l.Top = i * 50;
+                    
+                    l.AutoSize = true;
+                    l.Font = new Font("Arial", 15, FontStyle.Bold);
+                    panel.Controls.Add(l);
                 }
-            }
-            for (int i = 0; i < count; i++)
-            {
-                panel.Controls.Add(labels[i]);
             }
         }
     }

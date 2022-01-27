@@ -55,7 +55,7 @@ namespace MyTrade
             this.tb_data.Multiline = true;
             this.tb_data.Name = "tb_data";
             this.tb_data.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_data.Size = new System.Drawing.Size(693, 554);
+            this.tb_data.Size = new System.Drawing.Size(693, 138);
             this.tb_data.TabIndex = 2;
             this.tb_data.Text = resources.GetString("tb_data.Text");
             // 
@@ -83,15 +83,15 @@ namespace MyTrade
             this.tb_listOutput.Multiline = true;
             this.tb_listOutput.Name = "tb_listOutput";
             this.tb_listOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_listOutput.Size = new System.Drawing.Size(548, 554);
+            this.tb_listOutput.Size = new System.Drawing.Size(548, 138);
             this.tb_listOutput.TabIndex = 5;
             // 
             // panel
             // 
             this.panel.AutoScroll = true;
-            this.panel.Location = new System.Drawing.Point(12, 41);
+            this.panel.Location = new System.Drawing.Point(12, 185);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(1247, 554);
+            this.panel.Size = new System.Drawing.Size(1247, 410);
             this.panel.TabIndex = 6;
             // 
             // btn_showData
