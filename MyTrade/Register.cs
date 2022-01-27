@@ -19,39 +19,66 @@ namespace MyTrade
 
         private void frm_register_Load(object sender, EventArgs e)
         {
+
         }
 
         private void btn_register_Click(object sender, EventArgs e)
         {
-            if (isValid() == true)
+            if (!isValid())
             {
 
             }
-            else if (isValid() == false)
+            else if (isValid())
             {
-                SQLInteraction.uCreateNewUser(tb_password.Text, tb_surname.Text, tb_username.Text, tb_password.Text, "1", "");
+                if(tb_password.Text != tb_checkpassword.Text)
+                {
+                    MessageBox.Show("Please enter password twice!");
+                }
+                else
+                {
+                    if(SQLInteraction.CMDExecuteScalar("SELECT [user] FROM mytrade_UserData WHERE [user] = '"+ tb_username.Text + "';").ToString().Equals(tb_username.Text))
+                    {
+                        MessageBox.Show("Username already exists!");
+                    }
+                    else
+                    {
+                        SQLInteraction.uCreateNewUser(tb_password.Text, tb_surname.Text, tb_username.Text, tb_password.Text, "0", "");
+                        MessageBox.Show("Successfully registered!");
+                        this.Close();
+                    }
+                    
+                }
             }
 
-            MessageBox.Show("Successfully registered!");
-
-            this.Close();
 
         }
         private bool isValid()
         {
-            if (tb_username.Text.TrimStart() == string.Empty)
+            bool temp;
+            if (tb_username.Text == string.Empty || tb_password.Text == string.Empty || tb_surname.Text == string.Empty || tb_prename.Text == string.Empty || tb_checkpassword.Text == string.Empty)
             {
-                MessageBox.Show("Textbox (username) is empty!!!!!!!\r\rEnter valid username.");
-                return false;
+                MessageBox.Show("Please fill every Textbox!");
+                temp = false;
             }
-
-            else if (tb_password.Text.TrimStart() == string.Empty)
+            else
             {
-                MessageBox.Show("Textbox (password) is empty!!!!!!!\r\rEnter valid password.");
-                return false;
+                temp = true;
             }
+            return temp;
+        }
 
-            return true;
+        private void cb_show_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_show.Checked)
+            {
+                tb_password.UseSystemPasswordChar = false;
+                tb_checkpassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                tb_password.UseSystemPasswordChar = true;
+                tb_checkpassword.UseSystemPasswordChar = true;
+            }
         }
     }
 }
