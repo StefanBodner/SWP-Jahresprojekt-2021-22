@@ -70,8 +70,16 @@ namespace MyTrade
             var i = getStockData();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private static Root Deserialze(string path)
         {
+            //convert Json into Object
+            return JsonConvert.DeserializeObject<Root>(path);
+        }
+
+        private void btn_showData_Click(object sender, EventArgs e)
+        {
+            tb_listOutput.Text = "";
+
             //just temporary - debug purposes only
             webData = tb_data.Text;
 
@@ -89,21 +97,35 @@ namespace MyTrade
                 tb_listOutput.Text += Environment.NewLine;
                 tb_listOutput.Text += Environment.NewLine;
             }
+
+            createWatchlistOverview();
         }
 
-        private static Root Deserialze(string path)
+        static void btn_Click(object sender, EventArgs e)
         {
-            //convert Json into Object
-            return JsonConvert.DeserializeObject<Root>(path);
+            Button btn = sender as Button;
+            MessageBox.Show(btn.Text);
+
+            //show 2nd panel with further information
         }
 
-        private void btn_showData_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            int[] temp = new int[] { 9, 8, 7, 6, 5 };
+            var tmp = li[0];
+            li[0] = li[1];
+            li[1] = tmp;
+
+            createWatchlistOverview();
+        }
+
+        private void createWatchlistOverview()
+        {
+            panel.Controls.Clear();
+            panel.Refresh();
 
             for (int i = 0; i < li.Count; i++)
             {
-                for(int j = 0; j < 5; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     Label l = new Label();
 
@@ -113,7 +135,15 @@ namespace MyTrade
                             l.Text = li[i].symbol;
                             break;
                         case 1:
-                            l.Text = li[i].longName;
+                            if (li[i].longName == null)
+                            {
+                                l.Text = li[i].shortName;
+                            }
+                            else
+                            {
+                                l.Text = li[i].longName;
+                            }
+
                             l.Left = 100;
                             break;
                         case 2:
@@ -128,20 +158,31 @@ namespace MyTrade
                                 l.Text = changePercent + " %";
                                 l.ForeColor = Color.Red;
                             }
-                            
+
                             l.Left = 400;
                             break;
                         case 3:
-                            l.Text = li[i].regularMarketPrice + li[i].currency;
+                            l.Text = li[i].regularMarketPrice + " " + li[i].currency;
                             l.Left = 500;
                             break;
                         case 4:
                             l.Text = li[i].exchange;
                             l.Left = 700;
                             break;
+                        case 5:
+                            Button b = new Button();
+                            b.Text = li[i].symbol;
+                            b.Name = "btn_" + i;
+                            b.Left = 800;
+                            b.Top = i * 50;
+                            b.AutoSize = true;
+                            b.Font = new Font("Arial", 15, FontStyle.Bold);
+                            panel.Controls.Add(b);
+                            b.Click += btn_Click;
+                            break;
                     }
+
                     l.Top = i * 50;
-                    
                     l.AutoSize = true;
                     l.Font = new Font("Arial", 15, FontStyle.Bold);
                     panel.Controls.Add(l);
