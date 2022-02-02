@@ -43,25 +43,28 @@ namespace MyTrade
             // lbl_username
             // 
             this.lbl_username.AutoSize = true;
-            this.lbl_username.Location = new System.Drawing.Point(37, 240);
+            this.lbl_username.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lbl_username.Location = new System.Drawing.Point(25, 258);
             this.lbl_username.Name = "lbl_username";
-            this.lbl_username.Size = new System.Drawing.Size(58, 13);
+            this.lbl_username.Size = new System.Drawing.Size(74, 20);
             this.lbl_username.TabIndex = 1;
             this.lbl_username.Text = "Username:";
             // 
             // tb_username
             // 
-            this.tb_username.Location = new System.Drawing.Point(39, 256);
+            this.tb_username.Font = new System.Drawing.Font("Arial", 9.75F);
+            this.tb_username.Location = new System.Drawing.Point(116, 256);
             this.tb_username.Name = "tb_username";
-            this.tb_username.Size = new System.Drawing.Size(190, 20);
+            this.tb_username.Size = new System.Drawing.Size(180, 22);
             this.tb_username.TabIndex = 2;
             this.tb_username.Text = "admin";
             // 
             // tb_password
             // 
-            this.tb_password.Location = new System.Drawing.Point(40, 302);
+            this.tb_password.Font = new System.Drawing.Font("Arial", 9.75F);
+            this.tb_password.Location = new System.Drawing.Point(116, 302);
             this.tb_password.Name = "tb_password";
-            this.tb_password.Size = new System.Drawing.Size(189, 20);
+            this.tb_password.Size = new System.Drawing.Size(180, 22);
             this.tb_password.TabIndex = 4;
             this.tb_password.Text = "admin";
             this.tb_password.UseSystemPasswordChar = true;
@@ -69,16 +72,17 @@ namespace MyTrade
             // lbl_password
             // 
             this.lbl_password.AutoSize = true;
-            this.lbl_password.Location = new System.Drawing.Point(38, 285);
+            this.lbl_password.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lbl_password.Location = new System.Drawing.Point(25, 302);
             this.lbl_password.Name = "lbl_password";
-            this.lbl_password.Size = new System.Drawing.Size(56, 13);
+            this.lbl_password.Size = new System.Drawing.Size(72, 20);
             this.lbl_password.TabIndex = 3;
             this.lbl_password.Text = "Password:";
             // 
             // cb_show
             // 
             this.cb_show.AutoSize = true;
-            this.cb_show.Location = new System.Drawing.Point(41, 328);
+            this.cb_show.Location = new System.Drawing.Point(197, 330);
             this.cb_show.Name = "cb_show";
             this.cb_show.Size = new System.Drawing.Size(99, 17);
             this.cb_show.TabIndex = 5;
@@ -88,9 +92,9 @@ namespace MyTrade
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(39, 367);
+            this.btn_login.Location = new System.Drawing.Point(35, 367);
             this.btn_login.Name = "btn_login";
-            this.btn_login.Size = new System.Drawing.Size(91, 23);
+            this.btn_login.Size = new System.Drawing.Size(127, 23);
             this.btn_login.TabIndex = 6;
             this.btn_login.Text = "Login";
             this.btn_login.UseVisualStyleBackColor = true;
@@ -98,9 +102,9 @@ namespace MyTrade
             // 
             // btn_register
             // 
-            this.btn_register.Location = new System.Drawing.Point(138, 367);
+            this.btn_register.Location = new System.Drawing.Point(168, 367);
             this.btn_register.Name = "btn_register";
-            this.btn_register.Size = new System.Drawing.Size(91, 23);
+            this.btn_register.Size = new System.Drawing.Size(127, 23);
             this.btn_register.TabIndex = 7;
             this.btn_register.Text = "Register";
             this.btn_register.UseVisualStyleBackColor = true;
@@ -110,10 +114,10 @@ namespace MyTrade
             // 
             this.pb_logo.BackColor = System.Drawing.Color.White;
             this.pb_logo.Image = global::MyTrade.Properties.Resources.MyTradeLogo1;
-            this.pb_logo.Location = new System.Drawing.Point(40, 24);
+            this.pb_logo.Location = new System.Drawing.Point(29, 24);
             this.pb_logo.Name = "pb_logo";
-            this.pb_logo.Size = new System.Drawing.Size(189, 199);
-            this.pb_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pb_logo.Size = new System.Drawing.Size(266, 213);
+            this.pb_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pb_logo.TabIndex = 0;
             this.pb_logo.TabStop = false;
             // 
@@ -122,7 +126,7 @@ namespace MyTrade
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(271, 426);
+            this.ClientSize = new System.Drawing.Size(319, 411);
             this.Controls.Add(this.btn_register);
             this.Controls.Add(this.btn_login);
             this.Controls.Add(this.cb_show);

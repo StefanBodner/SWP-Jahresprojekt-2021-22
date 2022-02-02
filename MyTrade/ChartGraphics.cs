@@ -47,7 +47,6 @@ namespace MyTrade
 
 
 
-
         }
 
         private void btn_getdata_Click(object sender, EventArgs e)

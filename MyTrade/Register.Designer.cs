@@ -57,7 +57,7 @@ namespace MyTrade
             // 
             this.lbl_username.AutoSize = true;
             this.lbl_username.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_username.Location = new System.Drawing.Point(60, 309);
+            this.lbl_username.Location = new System.Drawing.Point(26, 309);
             this.lbl_username.Name = "lbl_username";
             this.lbl_username.Size = new System.Drawing.Size(74, 20);
             this.lbl_username.TabIndex = 1;
@@ -67,7 +67,7 @@ namespace MyTrade
             // 
             this.lbl_prename.AutoSize = true;
             this.lbl_prename.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_prename.Location = new System.Drawing.Point(61, 246);
+            this.lbl_prename.Location = new System.Drawing.Point(26, 248);
             this.lbl_prename.Name = "lbl_prename";
             this.lbl_prename.Size = new System.Drawing.Size(66, 20);
             this.lbl_prename.TabIndex = 3;
@@ -77,7 +77,7 @@ namespace MyTrade
             // 
             this.lbl_surname.AutoSize = true;
             this.lbl_surname.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_surname.Location = new System.Drawing.Point(60, 277);
+            this.lbl_surname.Location = new System.Drawing.Point(26, 277);
             this.lbl_surname.Name = "lbl_surname";
             this.lbl_surname.Size = new System.Drawing.Size(67, 20);
             this.lbl_surname.TabIndex = 5;
@@ -95,7 +95,7 @@ namespace MyTrade
             // 
             this.lbl_password.AutoSize = true;
             this.lbl_password.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_password.Location = new System.Drawing.Point(55, 340);
+            this.lbl_password.Location = new System.Drawing.Point(28, 342);
             this.lbl_password.Name = "lbl_password";
             this.lbl_password.Size = new System.Drawing.Size(72, 20);
             this.lbl_password.TabIndex = 7;
@@ -122,7 +122,7 @@ namespace MyTrade
             // 
             // btn_register
             // 
-            this.btn_register.Location = new System.Drawing.Point(21, 438);
+            this.btn_register.Location = new System.Drawing.Point(21, 427);
             this.btn_register.Name = "btn_register";
             this.btn_register.Size = new System.Drawing.Size(275, 30);
             this.btn_register.TabIndex = 7;
@@ -134,7 +134,7 @@ namespace MyTrade
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(17, 372);
+            this.label1.Location = new System.Drawing.Point(26, 372);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(117, 20);
             this.label1.TabIndex = 9;
@@ -143,7 +143,7 @@ namespace MyTrade
             // cb_show
             // 
             this.cb_show.AutoSize = true;
-            this.cb_show.Location = new System.Drawing.Point(28, 405);
+            this.cb_show.Location = new System.Drawing.Point(197, 400);
             this.cb_show.Name = "cb_show";
             this.cb_show.Size = new System.Drawing.Size(99, 17);
             this.cb_show.TabIndex = 6;
@@ -174,7 +174,7 @@ namespace MyTrade
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(319, 480);
+            this.ClientSize = new System.Drawing.Size(319, 472);
             this.Controls.Add(this.cb_show);
             this.Controls.Add(this.tb_checkpassword);
             this.Controls.Add(this.label1);
