@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -109,7 +110,7 @@ namespace MyTrade
                 tb_listOutput.Text += Environment.NewLine;
                 tb_listOutput.Text += Environment.NewLine;
             }
-
+            li = li.OrderBy(s => s.symbol).ToList();
             createWatchlistOverview();
         }
 
@@ -196,30 +197,56 @@ namespace MyTrade
         private void sortDataButtonLayout(object sender, EventArgs e)
         {
             Button b = sender as Button;
+            Func<Result, string> nameOrder = r => r.symbol.ToString();
+
+
+            if (b.Text.Equals(btn_sortSymbol.Text)) 
+            {
+                nameOrder = r => r.symbol;
+            }
+            else if (b.Text.Equals(btn_sortName.Text)) 
+            {
+                nameOrder = r => r.longName;
+            }
+            else if (b.Text.Equals(btn_sortChange.Text)) 
+            {
+                nameOrder = r => r.regularMarketChangePercent.ToString();
+            }
+            else if (b.Text.Equals(btn_sortPrice.Text)) 
+            {
+                nameOrder = r => r.regularMarketChange.ToString();
+            }
+            else if (b.Text.Equals(btn_sortExchange.Text)) 
+            {
+                nameOrder = r => r.exchange;
+            }
+
 
             if (b.Text.Contains('↓'))
             {
-                b.Text.Replace('↓', '↑');
-                li = li.OrderByDescending(s => s.symbol).ToList();
+                //DESC
+                b.Text = b.Text.Replace("↓", "↑");
+                li = li.OrderByDescending(nameOrder).ToList();
             }
             else if (b.Text.Contains('↑'))
             {
-                //finished
-                b.Text.Replace('↑', ' ');
-                li = li.OrderBy(s => s.symbol).ToList();
+                //Standard -> Symbol A-Z
+                b.Text = b.Text.Replace("↑", "");
+                li = li.OrderBy(nameOrder).ToList();
             }
             else
             {
-                b.Text += " ↓";
-                li = li.OrderBy(s => s.symbol).ToList();
+                //ASC
+                b.Text += "↓";
+                li = li.OrderBy(nameOrder).ToList();
             }
 
             foreach(Button btn in libtn)
             {
                 if (!btn.Equals(b))
                 {
-                    btn.Text.Replace('↑', ' ');
-                    btn.Text.Replace('↓', ' ');
+                    btn.Text.Replace("↑", "");
+                    btn.Text.Replace("↓", "");
                 }
             }
 

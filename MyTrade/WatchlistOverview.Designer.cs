@@ -77,9 +77,9 @@ namespace MyTrade
             // 
             this.tb_ticker.Location = new System.Drawing.Point(125, 35);
             this.tb_ticker.Name = "tb_ticker";
-            this.tb_ticker.Size = new System.Drawing.Size(212, 20);
+            this.tb_ticker.Size = new System.Drawing.Size(373, 20);
             this.tb_ticker.TabIndex = 4;
-            this.tb_ticker.Text = "AAPL,TSLA,MSFT";
+            this.tb_ticker.Text = "AAPL,TSLA,MSFT,GOOGL,FB,IMO1.HM,AMZN";
             // 
             // tb_listOutput
             // 
@@ -184,7 +184,7 @@ namespace MyTrade
             // 
             // btn_sortName
             // 
-            this.btn_sortName.Location = new System.Drawing.Point(177, 205);
+            this.btn_sortName.Location = new System.Drawing.Point(216, 205);
             this.btn_sortName.Name = "btn_sortName";
             this.btn_sortName.Size = new System.Drawing.Size(75, 23);
             this.btn_sortName.TabIndex = 13;
@@ -193,7 +193,7 @@ namespace MyTrade
             // 
             // btn_sortChange
             // 
-            this.btn_sortChange.Location = new System.Drawing.Point(373, 205);
+            this.btn_sortChange.Location = new System.Drawing.Point(517, 205);
             this.btn_sortChange.Name = "btn_sortChange";
             this.btn_sortChange.Size = new System.Drawing.Size(75, 23);
             this.btn_sortChange.TabIndex = 14;
@@ -202,7 +202,7 @@ namespace MyTrade
             // 
             // btn_sortPrice
             // 
-            this.btn_sortPrice.Location = new System.Drawing.Point(655, 205);
+            this.btn_sortPrice.Location = new System.Drawing.Point(711, 205);
             this.btn_sortPrice.Name = "btn_sortPrice";
             this.btn_sortPrice.Size = new System.Drawing.Size(75, 23);
             this.btn_sortPrice.TabIndex = 15;
@@ -211,7 +211,7 @@ namespace MyTrade
             // 
             // btn_sortExchange
             // 
-            this.btn_sortExchange.Location = new System.Drawing.Point(867, 205);
+            this.btn_sortExchange.Location = new System.Drawing.Point(913, 205);
             this.btn_sortExchange.Name = "btn_sortExchange";
             this.btn_sortExchange.Size = new System.Drawing.Size(75, 23);
             this.btn_sortExchange.TabIndex = 16;
