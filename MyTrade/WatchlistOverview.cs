@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +13,8 @@ namespace MyTrade
     {
         #region Variables
         Root qr = new Root();
-        List<Result> li = new List<Result>();
+        static List<Result> li = new List<Result>();
+        static List<Button> libtn = new List<Button>();
         string webData;
         #endregion
 
@@ -23,7 +25,17 @@ namespace MyTrade
 
         private void WatchlistOverview_Load(object sender, EventArgs e)
         {
-            //so far empty
+            libtn.Add(btn_sortSymbol);
+            libtn.Add(btn_sortName);
+            libtn.Add(btn_sortChange);
+            libtn.Add(btn_sortPrice);
+            libtn.Add(btn_sortExchange);
+
+            foreach(Button b in libtn)
+            {
+                b.Click += sortDataButtonLayout; 
+            }
+
         }
 
         public async Task<int> getStockData()
@@ -101,7 +113,7 @@ namespace MyTrade
             createWatchlistOverview();
         }
 
-        static void btn_Click(object sender, EventArgs e)
+        static void btn_ClickMoreInfo(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             MessageBox.Show(btn.Text);
@@ -109,16 +121,7 @@ namespace MyTrade
             //show 2nd panel with further information
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var tmp = li[0];
-            li[0] = li[1];
-            li[1] = tmp;
-
-            createWatchlistOverview();
-        }
-
-        private void createWatchlistOverview()
+        private  void createWatchlistOverview()
         {
             panel.Controls.Clear();
             panel.Refresh();
@@ -144,7 +147,7 @@ namespace MyTrade
                                 l.Text = li[i].longName;
                             }
 
-                            l.Left = 100;
+                            l.Left = 200;
                             break;
                         case 2:
                             double changePercent = Math.Round(li[i].regularMarketChangePercent, 2);
@@ -159,26 +162,26 @@ namespace MyTrade
                                 l.ForeColor = Color.Red;
                             }
 
-                            l.Left = 400;
+                            l.Left = 500;
                             break;
                         case 3:
                             l.Text = li[i].regularMarketPrice + " " + li[i].currency;
-                            l.Left = 500;
+                            l.Left = 700;
                             break;
                         case 4:
                             l.Text = li[i].exchange;
-                            l.Left = 700;
+                            l.Left = 900;
                             break;
                         case 5:
                             Button b = new Button();
                             b.Text = li[i].symbol;
                             b.Name = "btn_" + i;
-                            b.Left = 800;
+                            b.Left = 1000;
                             b.Top = i * 50;
                             b.AutoSize = true;
                             b.Font = new Font("Arial", 15, FontStyle.Bold);
                             panel.Controls.Add(b);
-                            b.Click += btn_Click;
+                            b.Click += btn_ClickMoreInfo;
                             break;
                     }
 
@@ -188,6 +191,39 @@ namespace MyTrade
                     panel.Controls.Add(l);
                 }
             }
+        }
+
+        private void sortDataButtonLayout(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            if (b.Text.Contains('↓'))
+            {
+                b.Text.Replace('↓', '↑');
+                li = li.OrderByDescending(s => s.symbol).ToList();
+            }
+            else if (b.Text.Contains('↑'))
+            {
+                //finished
+                b.Text.Replace('↑', ' ');
+                li = li.OrderBy(s => s.symbol).ToList();
+            }
+            else
+            {
+                b.Text += " ↓";
+                li = li.OrderBy(s => s.symbol).ToList();
+            }
+
+            foreach(Button btn in libtn)
+            {
+                if (!btn.Equals(b))
+                {
+                    btn.Text.Replace('↑', ' ');
+                    btn.Text.Replace('↓', ' ');
+                }
+            }
+
+            createWatchlistOverview();
         }
     }
 }

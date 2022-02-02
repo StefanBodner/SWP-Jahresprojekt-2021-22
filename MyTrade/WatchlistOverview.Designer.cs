@@ -45,7 +45,11 @@ namespace MyTrade
             this.ms_addDecimal = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_removeDecimal = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_sortSymbol = new System.Windows.Forms.Button();
+            this.btn_sortName = new System.Windows.Forms.Button();
+            this.btn_sortChange = new System.Windows.Forms.Button();
+            this.btn_sortPrice = new System.Windows.Forms.Button();
+            this.btn_sortExchange = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,9 +93,9 @@ namespace MyTrade
             // panel
             // 
             this.panel.AutoScroll = true;
-            this.panel.Location = new System.Drawing.Point(12, 205);
+            this.panel.Location = new System.Drawing.Point(12, 234);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(1400, 644);
+            this.panel.Size = new System.Drawing.Size(1400, 615);
             this.panel.TabIndex = 6;
             // 
             // btn_showData
@@ -169,22 +173,61 @@ namespace MyTrade
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
             // 
-            // button1
+            // btn_sortSymbol
             // 
-            this.button1.Location = new System.Drawing.Point(711, 33);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Sort Data ";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_sortSymbol.Location = new System.Drawing.Point(12, 205);
+            this.btn_sortSymbol.Name = "btn_sortSymbol";
+            this.btn_sortSymbol.Size = new System.Drawing.Size(75, 23);
+            this.btn_sortSymbol.TabIndex = 11;
+            this.btn_sortSymbol.Text = "Symbol ";
+            this.btn_sortSymbol.UseVisualStyleBackColor = true;
+            // 
+            // btn_sortName
+            // 
+            this.btn_sortName.Location = new System.Drawing.Point(177, 205);
+            this.btn_sortName.Name = "btn_sortName";
+            this.btn_sortName.Size = new System.Drawing.Size(75, 23);
+            this.btn_sortName.TabIndex = 13;
+            this.btn_sortName.Text = "Name ";
+            this.btn_sortName.UseVisualStyleBackColor = true;
+            // 
+            // btn_sortChange
+            // 
+            this.btn_sortChange.Location = new System.Drawing.Point(373, 205);
+            this.btn_sortChange.Name = "btn_sortChange";
+            this.btn_sortChange.Size = new System.Drawing.Size(75, 23);
+            this.btn_sortChange.TabIndex = 14;
+            this.btn_sortChange.Text = "Change ";
+            this.btn_sortChange.UseVisualStyleBackColor = true;
+            // 
+            // btn_sortPrice
+            // 
+            this.btn_sortPrice.Location = new System.Drawing.Point(655, 205);
+            this.btn_sortPrice.Name = "btn_sortPrice";
+            this.btn_sortPrice.Size = new System.Drawing.Size(75, 23);
+            this.btn_sortPrice.TabIndex = 15;
+            this.btn_sortPrice.Text = "Price ";
+            this.btn_sortPrice.UseVisualStyleBackColor = true;
+            // 
+            // btn_sortExchange
+            // 
+            this.btn_sortExchange.Location = new System.Drawing.Point(867, 205);
+            this.btn_sortExchange.Name = "btn_sortExchange";
+            this.btn_sortExchange.Size = new System.Drawing.Size(75, 23);
+            this.btn_sortExchange.TabIndex = 16;
+            this.btn_sortExchange.Text = "Exchange ";
+            this.btn_sortExchange.UseVisualStyleBackColor = true;
             // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1424, 861);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_sortExchange);
+            this.Controls.Add(this.btn_sortPrice);
+            this.Controls.Add(this.btn_sortChange);
+            this.Controls.Add(this.btn_sortName);
+            this.Controls.Add(this.btn_sortSymbol);
             this.Controls.Add(this.btn_showData);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.tb_listOutput);
@@ -221,6 +264,10 @@ namespace MyTrade
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_sortSymbol;
+        private System.Windows.Forms.Button btn_sortName;
+        private System.Windows.Forms.Button btn_sortChange;
+        private System.Windows.Forms.Button btn_sortPrice;
+        private System.Windows.Forms.Button btn_sortExchange;
     }
 }
