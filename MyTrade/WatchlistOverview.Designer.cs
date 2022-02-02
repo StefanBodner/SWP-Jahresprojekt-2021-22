@@ -171,7 +171,7 @@ namespace MyTrade
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(736, 32);
+            this.button1.Location = new System.Drawing.Point(711, 33);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 11;
