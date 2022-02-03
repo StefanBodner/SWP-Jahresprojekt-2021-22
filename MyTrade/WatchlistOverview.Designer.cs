@@ -38,10 +38,11 @@ namespace MyTrade
             this.ms_showInvestments = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.ms_addDecimal = new System.Windows.Forms.ToolStripMenuItem();
-            this.ms_removeDecimal = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ms_decimal = new System.Windows.Forms.ToolStripMenuItem();
+            this.decimalPlaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decimalPlacesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.decimalPlacesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.decimalPlacesToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_sortSymbol = new System.Windows.Forms.Button();
             this.btn_sortChange = new System.Windows.Forms.Button();
             this.btn_sortPrice = new System.Windows.Forms.Button();
@@ -50,13 +51,14 @@ namespace MyTrade
             this.tb_data = new System.Windows.Forms.TextBox();
             this.tb_listOutput = new System.Windows.Forms.TextBox();
             this.panel = new System.Windows.Forms.Panel();
+            this.developerModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_data
             // 
-            this.btn_data.Location = new System.Drawing.Point(391, 30);
+            this.btn_data.Location = new System.Drawing.Point(485, 30);
             this.btn_data.Name = "btn_data";
             this.btn_data.Size = new System.Drawing.Size(107, 23);
             this.btn_data.TabIndex = 0;
@@ -68,9 +70,9 @@ namespace MyTrade
             // 
             this.tb_ticker.Location = new System.Drawing.Point(12, 32);
             this.tb_ticker.Name = "tb_ticker";
-            this.tb_ticker.Size = new System.Drawing.Size(373, 20);
+            this.tb_ticker.Size = new System.Drawing.Size(467, 20);
             this.tb_ticker.TabIndex = 4;
-            this.tb_ticker.Text = "AAPL,TSLA,MSFT,GOOGL,FB,IMO1.HM,AMZN";
+            this.tb_ticker.Text = "AAPL,TSLA,MSFT,GOOGL,FB,IMO1.HM,AMZN,^GDAXI,BTC-USD,MRNA,BNTX,NFLX,NESM";
             // 
             // btn_showData
             // 
@@ -117,35 +119,50 @@ namespace MyTrade
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator2,
-            this.ms_addDecimal,
-            this.ms_removeDecimal,
-            this.toolStripSeparator1});
+            this.ms_decimal,
+            this.developerModeToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
-            // toolStripSeparator2
+            // ms_decimal
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            this.ms_decimal.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.decimalPlaceToolStripMenuItem,
+            this.decimalPlacesToolStripMenuItem1,
+            this.decimalPlacesToolStripMenuItem2,
+            this.decimalPlacesToolStripMenuItem3});
+            this.ms_decimal.Name = "ms_decimal";
+            this.ms_decimal.Size = new System.Drawing.Size(180, 22);
+            this.ms_decimal.Text = "Rounding";
             // 
-            // ms_addDecimal
+            // decimalPlaceToolStripMenuItem
             // 
-            this.ms_addDecimal.Name = "ms_addDecimal";
-            this.ms_addDecimal.Size = new System.Drawing.Size(163, 22);
-            this.ms_addDecimal.Text = "Add Decimal";
+            this.decimalPlaceToolStripMenuItem.Name = "decimalPlaceToolStripMenuItem";
+            this.decimalPlaceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.decimalPlaceToolStripMenuItem.Text = "1 decimal place";
+            this.decimalPlaceToolStripMenuItem.Click += new System.EventHandler(this.decimalPlaceToolStripMenuItem_Click);
             // 
-            // ms_removeDecimal
+            // decimalPlacesToolStripMenuItem1
             // 
-            this.ms_removeDecimal.Name = "ms_removeDecimal";
-            this.ms_removeDecimal.Size = new System.Drawing.Size(163, 22);
-            this.ms_removeDecimal.Text = "Remove Decimal";
+            this.decimalPlacesToolStripMenuItem1.Name = "decimalPlacesToolStripMenuItem1";
+            this.decimalPlacesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.decimalPlacesToolStripMenuItem1.Text = "2 decimal places";
+            this.decimalPlacesToolStripMenuItem1.Click += new System.EventHandler(this.decimalPlacesToolStripMenuItem1_Click);
             // 
-            // toolStripSeparator1
+            // decimalPlacesToolStripMenuItem2
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+            this.decimalPlacesToolStripMenuItem2.Name = "decimalPlacesToolStripMenuItem2";
+            this.decimalPlacesToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.decimalPlacesToolStripMenuItem2.Text = "3 decimal places";
+            this.decimalPlacesToolStripMenuItem2.Click += new System.EventHandler(this.decimalPlacesToolStripMenuItem2_Click);
+            // 
+            // decimalPlacesToolStripMenuItem3
+            // 
+            this.decimalPlacesToolStripMenuItem3.Name = "decimalPlacesToolStripMenuItem3";
+            this.decimalPlacesToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.decimalPlacesToolStripMenuItem3.Text = "4 decimal places";
+            this.decimalPlacesToolStripMenuItem3.Click += new System.EventHandler(this.decimalPlacesToolStripMenuItem3_Click);
             // 
             // btn_sortSymbol
             // 
@@ -198,22 +215,24 @@ namespace MyTrade
             // 
             // tb_data
             // 
-            this.tb_data.Location = new System.Drawing.Point(12, 158);
+            this.tb_data.Location = new System.Drawing.Point(12, 725);
             this.tb_data.Multiline = true;
             this.tb_data.Name = "tb_data";
             this.tb_data.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_data.Size = new System.Drawing.Size(693, 138);
+            this.tb_data.Size = new System.Drawing.Size(693, 111);
             this.tb_data.TabIndex = 2;
             this.tb_data.Text = resources.GetString("tb_data.Text");
+            this.tb_data.Visible = false;
             // 
             // tb_listOutput
             // 
-            this.tb_listOutput.Location = new System.Drawing.Point(711, 158);
+            this.tb_listOutput.Location = new System.Drawing.Point(708, 725);
             this.tb_listOutput.Multiline = true;
             this.tb_listOutput.Name = "tb_listOutput";
             this.tb_listOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_listOutput.Size = new System.Drawing.Size(701, 138);
+            this.tb_listOutput.Size = new System.Drawing.Size(701, 111);
             this.tb_listOutput.TabIndex = 5;
+            this.tb_listOutput.Visible = false;
             // 
             // panel
             // 
@@ -223,15 +242,22 @@ namespace MyTrade
             this.panel.Size = new System.Drawing.Size(1400, 603);
             this.panel.TabIndex = 102;
             // 
+            // developerModeToolStripMenuItem
+            // 
+            this.developerModeToolStripMenuItem.Name = "developerModeToolStripMenuItem";
+            this.developerModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.developerModeToolStripMenuItem.Text = "Developer mode";
+            this.developerModeToolStripMenuItem.Click += new System.EventHandler(this.developerModeToolStripMenuItem_Click);
+            // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1424, 861);
-            this.Controls.Add(this.tb_ticker);
-            this.Controls.Add(this.panel);
-            this.Controls.Add(this.tb_data);
             this.Controls.Add(this.tb_listOutput);
+            this.Controls.Add(this.tb_ticker);
+            this.Controls.Add(this.tb_data);
+            this.Controls.Add(this.panel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btn_sortExchange);
             this.Controls.Add(this.btn_sortPrice);
@@ -243,7 +269,7 @@ namespace MyTrade
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frm_watchlist";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "WatchlistOverview";
+            this.Text = "MyTrade";
             this.Load += new System.EventHandler(this.WatchlistOverview_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -262,10 +288,7 @@ namespace MyTrade
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ms_showWatchlist;
         private System.Windows.Forms.ToolStripMenuItem ms_showInvestments;
-        private System.Windows.Forms.ToolStripMenuItem ms_addDecimal;
-        private System.Windows.Forms.ToolStripMenuItem ms_removeDecimal;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem ms_decimal;
         private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
         private System.Windows.Forms.Button btn_sortSymbol;
         private System.Windows.Forms.Button btn_sortChange;
@@ -275,5 +298,10 @@ namespace MyTrade
         private System.Windows.Forms.TextBox tb_data;
         private System.Windows.Forms.TextBox tb_listOutput;
         private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.ToolStripMenuItem decimalPlaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem decimalPlacesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem decimalPlacesToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem decimalPlacesToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem developerModeToolStripMenuItem;
     }
 }

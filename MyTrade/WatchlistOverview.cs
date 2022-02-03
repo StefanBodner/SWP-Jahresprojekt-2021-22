@@ -22,6 +22,9 @@ namespace MyTrade
         byte sortChange;
         byte sortPrice;
         byte sortExchange;
+
+        string decimalsFormat = "{0:0.00}";
+        bool devMode = false;
         #endregion
 
         public frm_watchlist()
@@ -157,22 +160,23 @@ namespace MyTrade
                             break;
                         case 2:
                             
-                            double changePercent = Math.Round(li[i].regularMarketChangePercent, 2);
+                            //double changePercent = Math.Round(li[i].regularMarketChangePercent, 2);
+                            double changePercent = li[i].regularMarketChangePercent;
                             if (changePercent > 0)
                             {
-                                l.Text = " " + String.Format("{0:.00}", changePercent) + " %";
+                                l.Text = " " + String.Format(decimalsFormat, changePercent) + " %";
                                 l.ForeColor = Color.Green;
                             }
                             else
                             {
-                                l.Text = String.Format("{0:.00}", changePercent) + " %";
+                                l.Text = String.Format(decimalsFormat, changePercent) + " %";
                                 l.ForeColor = Color.Red;
                             }
 
                             l.Left = 500;
                             break;
                         case 3:
-                            l.Text = li[i].regularMarketPrice + " " + li[i].currency;
+                            l.Text = String.Format(decimalsFormat, li[i].regularMarketPrice) + " " + li[i].currency;
                             l.Left = 700;
                             break;
                         case 4:
@@ -187,6 +191,7 @@ namespace MyTrade
                             b.Top = i * 50;
                             b.AutoSize = true;
                             b.Font = new Font("Arial", 15, FontStyle.Bold);
+                            
                             panel.Controls.Add(b);
                             b.Click += btn_ClickMoreInfo;
                             break;
@@ -200,6 +205,7 @@ namespace MyTrade
             }
         }
 
+        #region sort Data
         private void sortDataButtonLayout()
         {
             foreach (Button b in libtn)
@@ -208,8 +214,6 @@ namespace MyTrade
                 b.Text = b.Text.Replace("↓", "");
             }
         }
-
-
 
         private void btn_sortSymbol_Click(object sender, EventArgs e)
         {
@@ -341,6 +345,50 @@ namespace MyTrade
             sortPrice = 0;
 
             createWatchlistOverview();
+        }
+
+        #endregion
+
+        private void decimalPlaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            decimalsFormat = "{0:0.0}";
+            createWatchlistOverview();
+        }
+
+        private void decimalPlacesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            decimalsFormat = "{0:0.00}";
+            createWatchlistOverview();
+        }
+
+        private void decimalPlacesToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            decimalsFormat = "{0:0.000}";
+            createWatchlistOverview();
+        }
+
+        private void decimalPlacesToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            decimalsFormat = "{0:0.0000}";
+            createWatchlistOverview();
+        }
+
+        private void developerModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (devMode)
+            {
+                tb_data.Visible = false;
+                tb_listOutput.Visible = false;
+                devMode = false;
+            }
+            else
+            {
+                tb_data.Visible = true;
+                tb_listOutput.Visible = true;
+                tb_data.BringToFront();
+                tb_listOutput.BringToFront();
+                devMode = true;
+            }
         }
     }
 }
