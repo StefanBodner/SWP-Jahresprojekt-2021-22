@@ -17,6 +17,11 @@ namespace MyTrade
         static List<Result> li = new List<Result>();
         static List<Button> libtn = new List<Button>();
         string webData;
+
+        byte sortSymbol;
+        byte sortChange;
+        byte sortPrice;
+        byte sortExchange;
         #endregion
 
         public frm_watchlist()
@@ -27,16 +32,11 @@ namespace MyTrade
         private void WatchlistOverview_Load(object sender, EventArgs e)
         {
             libtn.Add(btn_sortSymbol);
-            libtn.Add(btn_sortName);
             libtn.Add(btn_sortChange);
             libtn.Add(btn_sortPrice);
             libtn.Add(btn_sortExchange);
 
-            foreach(Button b in libtn)
-            {
-                b.Click += sortDataButtonLayout; 
-            }
-
+            visualizeData();
         }
 
         public async Task<int> getStockData()
@@ -90,6 +90,11 @@ namespace MyTrade
         }
 
         private void btn_showData_Click(object sender, EventArgs e)
+        {
+            visualizeData();
+        }
+
+        private void visualizeData()
         {
             tb_listOutput.Text = "";
 
@@ -151,15 +156,16 @@ namespace MyTrade
                             l.Left = 200;
                             break;
                         case 2:
+                            
                             double changePercent = Math.Round(li[i].regularMarketChangePercent, 2);
                             if (changePercent > 0)
                             {
-                                l.Text = " " + changePercent + " %";
+                                l.Text = " " + String.Format("{0:.00}", changePercent) + " %";
                                 l.ForeColor = Color.Green;
                             }
                             else
                             {
-                                l.Text = changePercent + " %";
+                                l.Text = String.Format("{0:.00}", changePercent) + " %";
                                 l.ForeColor = Color.Red;
                             }
 
@@ -194,61 +200,145 @@ namespace MyTrade
             }
         }
 
-        private void sortDataButtonLayout(object sender, EventArgs e)
+        private void sortDataButtonLayout()
         {
-            Button b = sender as Button;
-            Func<Result, string> nameOrder = r => r.symbol.ToString();
-
-
-            if (b.Text.Equals(btn_sortSymbol.Text)) 
+            foreach (Button b in libtn)
             {
-                nameOrder = r => r.symbol;
-            }
-            else if (b.Text.Equals(btn_sortName.Text)) 
-            {
-                nameOrder = r => r.longName;
-            }
-            else if (b.Text.Equals(btn_sortChange.Text)) 
-            {
-                nameOrder = r => r.regularMarketChangePercent.ToString();
-            }
-            else if (b.Text.Equals(btn_sortPrice.Text)) 
-            {
-                nameOrder = r => r.regularMarketChange.ToString();
-            }
-            else if (b.Text.Equals(btn_sortExchange.Text)) 
-            {
-                nameOrder = r => r.exchange;
-            }
-
-
-            if (b.Text.Contains('↓'))
-            {
-                //DESC
-                b.Text = b.Text.Replace("↓", "↑");
-                li = li.OrderByDescending(nameOrder).ToList();
-            }
-            else if (b.Text.Contains('↑'))
-            {
-                //Standard -> Symbol A-Z
                 b.Text = b.Text.Replace("↑", "");
-                li = li.OrderBy(nameOrder).ToList();
+                b.Text = b.Text.Replace("↓", "");
             }
-            else
+        }
+
+
+
+        private void btn_sortSymbol_Click(object sender, EventArgs e)
+        {
+            sortDataButtonLayout();
+
+            switch (sortSymbol)
             {
-                //ASC
-                b.Text += "↓";
-                li = li.OrderBy(nameOrder).ToList();
+                case 0:
+                    //Pfeil nach unten
+                    li = li.OrderBy(s => s.symbol).ToList();
+                    btn_sortSymbol.Text += "↓";
+                    sortSymbol = 1;
+
+                    break;
+                case 1:
+                    //Pfeil nach oben
+                    li = li.OrderByDescending(s => s.symbol).ToList();
+                    btn_sortSymbol.Text += "↑";
+                    sortSymbol = 0;
+                    break;
+                case 2:
+                    //ohne Pfeil
+                    btn_sortSymbol.Text = btn_sortSymbol.Text.Replace("↑", "");
+                    sortSymbol = 0;
+                    break;
             }
 
-            foreach(Button btn in libtn)
+            sortChange =0;
+            sortPrice = 0;
+            sortExchange = 0;
+
+            createWatchlistOverview();
+        }
+
+        private void btn_sortChange_Click(object sender, EventArgs e)
+        {
+            sortDataButtonLayout();
+
+            switch (sortChange)
             {
-                if (!btn.Equals(b))
-                {
-                    btn.Text.Replace("↑", "");
-                    btn.Text.Replace("↓", "");
-                }
+                case 0:
+                    //Pfeil nach unten
+                    li = li.OrderByDescending(s => s.regularMarketChangePercent).ToList();
+                    btn_sortChange.Text += "↓";
+                    sortChange = 1;
+
+                    break;
+                case 1:
+                    //Pfeil nach oben
+                    li = li.OrderBy(s => s.regularMarketChangePercent).ToList();
+                    btn_sortChange.Text += "↑";
+                    sortChange = 0;
+                    break;
+                case 2:
+                    //ohne Pfeil
+                    btn_sortChange.Text = btn_sortChange.Text.Replace("↑", "");
+                    sortChange = 0;
+                    break;
             }
+
+            sortSymbol = 0;
+            sortPrice = 0;
+            sortExchange = 0;
+
+            createWatchlistOverview();
+        }
+
+        private void btn_sortPrice_Click(object sender, EventArgs e)
+        {
+            sortDataButtonLayout();
+
+            switch (sortPrice)
+            {
+                case 0:
+                    //Pfeil nach unten
+                    li = li.OrderByDescending(s => s.regularMarketPrice).ToList();
+                    btn_sortPrice.Text += "↓";
+                    sortPrice = 1;
+
+                    break;
+                case 1:
+                    //Pfeil nach oben
+                    li = li.OrderBy(s => s.regularMarketPrice).ToList();
+                    btn_sortPrice.Text += "↑";
+                    sortPrice = 0;
+                    break;
+                case 2:
+                    //ohne Pfeil
+                    btn_sortPrice.Text = btn_sortPrice.Text.Replace("↑", "");
+                    sortPrice = 0;
+                    break;
+            }
+
+            sortSymbol = 0;
+            sortChange = 0;
+            sortExchange = 0;
+
+            createWatchlistOverview();
+        }
+
+        private void btn_sortExchange_Click(object sender, EventArgs e)
+        {
+            sortDataButtonLayout();
+
+            switch (sortExchange)
+            {
+                case 0:
+                    //Pfeil nach unten
+                    li = li.OrderBy(s => s.exchange).ToList();
+                    btn_sortExchange.Text += "↓";
+                    sortExchange = 1;
+
+                    break;
+                case 1:
+                    //Pfeil nach oben
+                    li = li.OrderByDescending(s => s.exchange).ToList();
+                    btn_sortExchange.Text += "↑";
+                    sortExchange = 0;
+                    break;
+                case 2:
+                    //ohne Pfeil
+                    btn_sortExchange.Text = btn_sortExchange.Text.Replace("↑", "");
+                    sortExchange = 0;
+                    break;
+            }
+
+            sortSymbol = 0;
+            sortChange = 0;
+            sortPrice = 0;
 
             createWatchlistOverview();
         }
