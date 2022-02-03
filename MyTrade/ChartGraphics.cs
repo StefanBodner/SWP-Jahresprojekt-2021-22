@@ -22,7 +22,6 @@ namespace MyTrade
         private void frm_main_Load(object sender, EventArgs e)
         {
 
-
             var series = new Series("Kurswert");
             var series2 = new Series("Kurswert - 100");
 

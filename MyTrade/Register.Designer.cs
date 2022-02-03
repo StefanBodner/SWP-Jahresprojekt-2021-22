@@ -29,6 +29,7 @@ namespace MyTrade
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_register));
             this.tb_username = new System.Windows.Forms.TextBox();
             this.lbl_username = new System.Windows.Forms.Label();
             this.lbl_prename = new System.Windows.Forms.Label();
@@ -188,6 +189,7 @@ namespace MyTrade
             this.Controls.Add(this.tb_password);
             this.Controls.Add(this.lbl_username);
             this.Controls.Add(this.tb_username);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frm_register";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Register";

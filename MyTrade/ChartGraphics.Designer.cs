@@ -29,8 +29,9 @@ namespace MyTrade
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_chart));
             this.btn_getdata = new System.Windows.Forms.Button();
             this.ch_line = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,13 +51,13 @@ namespace MyTrade
             // 
             // ch_line
             // 
-            chartArea2.Name = "ChartArea1";
-            this.ch_line.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.ch_line.ChartAreas.Add(chartArea1);
             this.ch_line.Location = new System.Drawing.Point(13, 75);
             this.ch_line.Name = "ch_line";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "Series1";
-            this.ch_line.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "Series1";
+            this.ch_line.Series.Add(series1);
             this.ch_line.Size = new System.Drawing.Size(759, 333);
             this.ch_line.TabIndex = 1;
             this.ch_line.Text = "chart1";
@@ -89,6 +90,7 @@ namespace MyTrade
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ch_line);
             this.Controls.Add(this.btn_getdata);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frm_chart";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MyTrade";
