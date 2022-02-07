@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using Newtonsoft.Json;
 
 namespace MyTrade
@@ -23,7 +24,7 @@ namespace MyTrade
         byte sortPrice;
         byte sortExchange;
 
-        string decimalsFormat = "{0:0.00}";
+        string decimalsFormat = "{0:#,##0.00}";
         bool devMode = false;
         #endregion
 
@@ -122,24 +123,32 @@ namespace MyTrade
             createWatchlistOverview();
         }
 
-        static void btn_ClickMoreInfo(object sender, EventArgs e)
+        private void btn_ClickMoreInfo(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            MessageBox.Show(btn.Text);
+            int index = Int32.Parse(btn.Name);
+            
 
             //show 2nd panel with further information
+            panelExtra.Controls.Clear();
+            panelExtra.Refresh();
+
+            Label l = new Label();
+            l.Text = li[index].symbol.ToString();
+            panelExtra.Controls.Add(l);
         }
 
         private  void createWatchlistOverview()
         {
-            panel.Controls.Clear();
-            panel.Refresh();
+            panelMain.Controls.Clear();
+            panelMain.Refresh();
 
             for (int i = 0; i < li.Count; i++)
             {
                 for (int j = 0; j < 6; j++)
                 {
                     Label l = new Label();
+                    l.AutoSize = true;
 
                     switch (j)
                     {
@@ -172,35 +181,42 @@ namespace MyTrade
                                 l.Text = String.Format(decimalsFormat, changePercent) + " %";
                                 l.ForeColor = Color.Red;
                             }
-
-                            l.Left = 500;
+                            l.TextAlign = ContentAlignment.MiddleRight;
+                            l.AutoSize = false;
+                            l.Width = 100;
+                            l.Left = 600;
                             break;
                         case 3:
                             l.Text = String.Format(decimalsFormat, li[i].regularMarketPrice) + " " + li[i].currency;
-                            l.Left = 700;
+                            l.TextAlign = ContentAlignment.MiddleRight;
+                            l.AutoSize = false;
+                            l.Width = 150;
+                            l.Left = 750;
                             break;
                         case 4:
-                            l.Text = li[i].exchange;
-                            l.Left = 900;
+                            l.Text = li[i].fullExchangeName;
+                            l.Left = 1000;
                             break;
                         case 5:
                             Button b = new Button();
-                            b.Text = li[i].symbol;
-                            b.Name = "btn_" + i;
-                            b.Left = 1000;
+                            b.Name = i.ToString();
+                            b.Text = "Show more";
+                            b.Left = 1200;
+                            b.Width = 100;
                             b.Top = i * 50;
-                            b.AutoSize = true;
-                            b.Font = new Font("Arial", 15, FontStyle.Bold);
-                            
-                            panel.Controls.Add(b);
+                            b.Height = 22;
+                            b.FlatStyle = FlatStyle.System;
+                            b.FlatAppearance.BorderSize = 2;
+                            b.AutoSize = false;
+                            b.TextAlign = ContentAlignment.MiddleCenter;
+                            b.Font = new Font("Arial", 8, FontStyle.Bold);
+                            panelMain.Controls.Add(b);
                             b.Click += btn_ClickMoreInfo;
                             break;
                     }
-
                     l.Top = i * 50;
-                    l.AutoSize = true;
-                    l.Font = new Font("Arial", 15, FontStyle.Bold);
-                    panel.Controls.Add(l);
+                    l.Font = new Font("Arial", 12, FontStyle.Bold);
+                    panelMain.Controls.Add(l);
                 }
             }
         }
@@ -349,29 +365,31 @@ namespace MyTrade
 
         #endregion
 
+        #region decimals
         private void decimalPlaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            decimalsFormat = "{0:0.0}";
+            decimalsFormat = "{0:#,##0.0}";
             createWatchlistOverview();
         }
 
         private void decimalPlacesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            decimalsFormat = "{0:0.00}";
+            decimalsFormat = "{0:#,##0.00}";
             createWatchlistOverview();
         }
 
         private void decimalPlacesToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            decimalsFormat = "{0:0.000}";
+            decimalsFormat = "{0:#,##0.000}";
             createWatchlistOverview();
         }
 
         private void decimalPlacesToolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            decimalsFormat = "{0:0.0000}";
+            decimalsFormat = "{0:#,##0.0000}";
             createWatchlistOverview();
         }
+        #endregion
 
         private void developerModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -389,6 +407,27 @@ namespace MyTrade
                 tb_listOutput.BringToFront();
                 devMode = true;
             }
+        }
+
+        private void btn_chart_Click(object sender, EventArgs e)
+        {
+            var series = new Series("Kurswert");
+
+            // first parameter is X-Axis and second is collection of Y-Axis
+            series.ChartType = SeriesChartType.Line;
+            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400 , 500, 300, 800, 600, 750 });
+            chart.Series.Add(series);
+            
+            chart.Series.RemoveAt(0);
+
+            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
+
+            chart.ChartAreas[0].Axes[0].Minimum = 2000;
+            chart.ChartAreas[0].Axes[0].Maximum = 2009;
+            chart.ChartAreas[0].Axes[1].Minimum = 50;
+            chart.ChartAreas[0].Axes[1].Maximum = 1000;
+
+            chart.Legends[0].Enabled = false;
         }
     }
 }
