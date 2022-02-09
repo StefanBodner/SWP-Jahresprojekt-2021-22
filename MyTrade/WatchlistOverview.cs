@@ -71,7 +71,9 @@ namespace MyTrade
 
 
                 //show data in textbox
-                //tb_data.Text = webData;
+
+                tb_data.Text = webData;
+
             }
             catch (Exception e)
             {
