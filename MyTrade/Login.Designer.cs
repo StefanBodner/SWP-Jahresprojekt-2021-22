@@ -38,6 +38,7 @@ namespace MyTrade
             this.btn_login = new System.Windows.Forms.Button();
             this.btn_register = new System.Windows.Forms.Button();
             this.pb_logo = new System.Windows.Forms.PictureBox();
+            this.tb_test = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,12 +123,21 @@ namespace MyTrade
             this.pb_logo.TabIndex = 0;
             this.pb_logo.TabStop = false;
             // 
+            // tb_test
+            // 
+            this.tb_test.Location = new System.Drawing.Point(359, 34);
+            this.tb_test.Multiline = true;
+            this.tb_test.Name = "tb_test";
+            this.tb_test.Size = new System.Drawing.Size(642, 331);
+            this.tb_test.TabIndex = 8;
+            // 
             // frm_login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(319, 411);
+            this.ClientSize = new System.Drawing.Size(1031, 411);
+            this.Controls.Add(this.tb_test);
             this.Controls.Add(this.btn_register);
             this.Controls.Add(this.btn_login);
             this.Controls.Add(this.cb_show);
@@ -157,5 +167,6 @@ namespace MyTrade
         private System.Windows.Forms.CheckBox cb_show;
         private System.Windows.Forms.Button btn_login;
         private System.Windows.Forms.Button btn_register;
+        private System.Windows.Forms.TextBox tb_test;
     }
 }

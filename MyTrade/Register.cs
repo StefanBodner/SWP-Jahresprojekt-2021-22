@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MongoDB.Driver;
 
 namespace MyTrade
 {
@@ -19,7 +20,13 @@ namespace MyTrade
 
         private void frm_register_Load(object sender, EventArgs e)
         {
+            string connectionString = "";
+            string databaseName = "MyTrade";
+            string collectionName = "mytrade";
 
+            var client = new MongoClient(connectionString);
+            var db = client.GetDatabase(databaseName);
+            var collection = db.GetCollection<PersonModel>(collectionName);
         }
 
         private void btn_register_Click(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MongoDB.Driver;
 
 namespace MyTrade
 {
@@ -20,6 +21,20 @@ namespace MyTrade
 
         private void frm_login_Load(object sender, EventArgs e)
         {
+            MongoClient dbClient = new MongoClient("https://data.mongodb-api.com/app/data-jpkcl/endpoint/data/beta");
+            //API-Key-Name: MyTrade-Mongo-Key
+            //API-Key: o2tiPhSGeQnPBB3QzWNWd393vyICK08xhz7EqoXMqgTimvrzoaymqdD5xNfzaNms
+            var dbList = dbClient.ListDatabases().ToList();
+
+
+            tb_test.Text = "The list of databases on this server is: ";
+
+            foreach (var db in dbList)
+            {
+                tb_test.Text += db;
+            }
+
+
             SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; Integrated Security = sspi;");
 
             if (SQLInteraction.CMDExecuteScalarInt("SELECT COUNT(*) FROM master.dbo.sysdatabases where name = 'MyTrade';") == 0)
