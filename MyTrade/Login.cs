@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace MyTrade
 {
@@ -21,7 +22,8 @@ namespace MyTrade
 
         private void frm_login_Load(object sender, EventArgs e)
         {
-            MongoClient dbClient = new MongoClient("https://data.mongodb-api.com/app/data-jpkcl/endpoint/data/beta");
+            
+            MongoClient dbClient = new MongoClient("mongodb+srv://mytrade:MyTrade@mytrade.i5wc1.mongodb.net/mytrade?retryWrites=true&w=majority");
             //API-Key-Name: MyTrade-Mongo-Key
             //API-Key: o2tiPhSGeQnPBB3QzWNWd393vyICK08xhz7EqoXMqgTimvrzoaymqdD5xNfzaNms
             var dbList = dbClient.ListDatabases().ToList();
