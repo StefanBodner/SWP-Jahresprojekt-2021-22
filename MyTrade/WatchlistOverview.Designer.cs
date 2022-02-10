@@ -55,20 +55,19 @@ namespace MyTrade
             this.tb_listOutput = new System.Windows.Forms.TextBox();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelExtra = new System.Windows.Forms.Panel();
-            this.btn_chart = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_ = new System.Windows.Forms.Label();
+            this.lbl_name = new System.Windows.Forms.Label();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.lbl_name = new System.Windows.Forms.Label();
-            this.lbl_ = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelExtra.SuspendLayout();
@@ -275,22 +274,101 @@ namespace MyTrade
             this.panelExtra.Controls.Add(this.label1);
             this.panelExtra.Controls.Add(this.lbl_);
             this.panelExtra.Controls.Add(this.lbl_name);
-            this.panelExtra.Controls.Add(this.btn_chart);
             this.panelExtra.Controls.Add(this.chart);
             this.panelExtra.Location = new System.Drawing.Point(12, 495);
             this.panelExtra.Name = "panelExtra";
             this.panelExtra.Size = new System.Drawing.Size(1331, 354);
             this.panelExtra.TabIndex = 103;
             // 
-            // btn_chart
+            // label8
             // 
-            this.btn_chart.Location = new System.Drawing.Point(558, 0);
-            this.btn_chart.Name = "btn_chart";
-            this.btn_chart.Size = new System.Drawing.Size(75, 23);
-            this.btn_chart.TabIndex = 1;
-            this.btn_chart.Text = "visualize Data";
-            this.btn_chart.UseVisualStyleBackColor = true;
-            this.btn_chart.Click += new System.EventHandler(this.btn_chart_Click);
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(182, 156);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(62, 13);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "Market Cap";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(182, 125);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(62, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Market Cap";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 189);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(27, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Low";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 156);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "High";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(44, 71);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(45, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "(0,17 %)";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 71);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "-0,30";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 125);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Open";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Apple";
+            // 
+            // lbl_
+            // 
+            this.lbl_.AutoSize = true;
+            this.lbl_.Location = new System.Drawing.Point(13, 58);
+            this.lbl_.Name = "lbl_";
+            this.lbl_.Size = new System.Drawing.Size(66, 13);
+            this.lbl_.TabIndex = 3;
+            this.lbl_.Text = "172,39 USD";
+            // 
+            // lbl_name
+            // 
+            this.lbl_name.AutoSize = true;
+            this.lbl_name.Location = new System.Drawing.Point(13, 10);
+            this.lbl_name.Name = "lbl_name";
+            this.lbl_name.Size = new System.Drawing.Size(34, 13);
+            this.lbl_name.TabIndex = 2;
+            this.lbl_name.Text = "AAPL";
             // 
             // chart
             // 
@@ -305,7 +383,7 @@ namespace MyTrade
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(681, 351);
+            this.chart.Size = new System.Drawing.Size(681, 354);
             this.chart.TabIndex = 0;
             this.chart.Text = "chart";
             // 
@@ -326,96 +404,6 @@ namespace MyTrade
             this.pictureBox3.Size = new System.Drawing.Size(1331, 2);
             this.pictureBox3.TabIndex = 105;
             this.pictureBox3.TabStop = false;
-            // 
-            // lbl_name
-            // 
-            this.lbl_name.AutoSize = true;
-            this.lbl_name.Location = new System.Drawing.Point(13, 10);
-            this.lbl_name.Name = "lbl_name";
-            this.lbl_name.Size = new System.Drawing.Size(34, 13);
-            this.lbl_name.TabIndex = 2;
-            this.lbl_name.Text = "AAPL";
-            // 
-            // lbl_
-            // 
-            this.lbl_.AutoSize = true;
-            this.lbl_.Location = new System.Drawing.Point(13, 58);
-            this.lbl_.Name = "lbl_";
-            this.lbl_.Size = new System.Drawing.Size(66, 13);
-            this.lbl_.TabIndex = 3;
-            this.lbl_.Text = "172,39 USD";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Apple";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 125);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Open";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 71);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "-0,30";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(44, 71);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(45, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "(0,17 %)";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 156);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "High";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 189);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Low";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(182, 125);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(62, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Market Cap";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(182, 156);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "Market Cap";
             // 
             // frm_watchlist
             // 
@@ -480,7 +468,6 @@ namespace MyTrade
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
-        private System.Windows.Forms.Button btn_chart;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label3;

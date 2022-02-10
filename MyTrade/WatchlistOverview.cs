@@ -26,6 +26,8 @@ namespace MyTrade
 
         string decimalsFormat = "{0:#,##0.00}";
         bool devMode = false;
+
+        
         #endregion
 
         public frm_watchlist()
@@ -138,6 +140,34 @@ namespace MyTrade
             Label l = new Label();
             l.Text = li[index].symbol.ToString();
             panelExtra.Controls.Add(l);
+
+
+
+            #region Chart
+            // first parameter is X-Axis and second is collection of Y-Axis
+            Chart c = new Chart();
+            Series series = new Series();
+            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400, 500, 300, 800, 600, 750 });
+            series.ChartType = SeriesChartType.Line;
+
+            c.Width = 681;
+            c.Height = 354;
+            c.Left = 650;
+            c.Top = 0;
+            c.Series.Clear();
+            c.Series.Add(series);
+            
+            //c.Series.RemoveAt(0);
+            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
+            //c.ChartAreas[0].Axes[0].Minimum = 2000;
+            //c.ChartAreas[0].Axes[0].Maximum = 2009;
+            //c.ChartAreas[0].Axes[1].Minimum = 50;
+            //c.ChartAreas[0].Axes[1].Maximum = 1000;
+            //c.Legends[0].Enabled = false;
+            //c.Invalidate();
+
+            panelExtra.Controls.Add(c);
+            #endregion
         }
 
         private  void createWatchlistOverview()
@@ -409,27 +439,6 @@ namespace MyTrade
                 tb_listOutput.BringToFront();
                 devMode = true;
             }
-        }
-
-        private void btn_chart_Click(object sender, EventArgs e)
-        {
-            var series = new Series("Kurswert");
-
-            // first parameter is X-Axis and second is collection of Y-Axis
-            series.ChartType = SeriesChartType.Line;
-            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400 , 500, 300, 800, 600, 750 });
-            chart.Series.Add(series);
-            
-            chart.Series.RemoveAt(0);
-
-            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
-
-            chart.ChartAreas[0].Axes[0].Minimum = 2000;
-            chart.ChartAreas[0].Axes[0].Maximum = 2009;
-            chart.ChartAreas[0].Axes[1].Minimum = 50;
-            chart.ChartAreas[0].Axes[1].Maximum = 1000;
-
-            chart.Legends[0].Enabled = false;
         }
     }
 }
