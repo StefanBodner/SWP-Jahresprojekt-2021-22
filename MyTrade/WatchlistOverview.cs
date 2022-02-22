@@ -17,7 +17,7 @@ namespace MyTrade
         Root qr = new Root();
         static List<Result> li = new List<Result>();
         static List<Button> libtn = new List<Button>();
-        string webData;
+        string webData = "";
 
         byte sortSymbol;
         byte sortChange;
@@ -26,6 +26,11 @@ namespace MyTrade
 
         string decimalsFormat = "{0:#,##0.00}";
         bool devMode = false;
+        string lastClickedBtn = "";
+        
+        Color elementColor = Color.White;
+        Color themeColorA = Color.LightSteelBlue;
+        Color themeColorB = Color.White;
         #endregion
 
         public frm_watchlist()
@@ -41,8 +46,15 @@ namespace MyTrade
             libtn.Add(btn_sortExchange);
 
             visualizeData();
+            panelMain.BringToFront();
+
+            panelMain.HorizontalScroll.Maximum = 0;
+            panelMain.AutoScroll = false;
+            panelMain.VerticalScroll.Visible = false;
+            panelMain.AutoScroll = true;
         }
 
+        #region Recieve Stock Data (Web Request + Deserialization)
         public async Task<int> getStockData()
         {
             //source:
@@ -63,15 +75,10 @@ namespace MyTrade
 
                 webResponse.EnsureSuccessStatusCode();
 
-                var temp = await webResponse.Content.ReadAsStringAsync();
+                webData = await webResponse.Content.ReadAsStringAsync();
 
-                webData = temp.ToString();
                 tb_data.Text = webData;
                 
-
-
-                //show data in textbox
-                //tb_data.Text = webData;
             }
             catch (Exception e)
             {
@@ -80,11 +87,10 @@ namespace MyTrade
             return 1;
         }
 
-
         private void btn_data_Click(object sender, EventArgs e)
         {
             //start Task
-            var i = getStockData();
+            _ = getStockData();
         }
 
         private static Root Deserialze(string path)
@@ -93,6 +99,9 @@ namespace MyTrade
             return JsonConvert.DeserializeObject<Root>(path);
         }
 
+        #endregion
+
+        #region Developer Info (in Textboxes)
         private void btn_showData_Click(object sender, EventArgs e)
         {
             visualizeData();
@@ -100,14 +109,9 @@ namespace MyTrade
 
         private void visualizeData()
         {
+            //just temporary -debug purposes only
             tb_listOutput.Text = "";
-
-            //just temporary - debug purposes only
             webData = tb_data.Text;
-
-            qr = Deserialze(webData);
-
-            li = qr.quoteResponse.result;
 
             //output list entries
             foreach (var v in li)
@@ -119,109 +123,229 @@ namespace MyTrade
                 tb_listOutput.Text += Environment.NewLine;
                 tb_listOutput.Text += Environment.NewLine;
             }
+
+            li = Deserialze(webData).quoteResponse.result;
             li = li.OrderBy(s => s.symbol).ToList();
+
             createWatchlistOverview();
+        }
+        #endregion
+
+        #region Text + Chart Creation (Extra Info)
+        private string getStockName(int i)
+        {
+            if (li[i].longName == null)
+            {
+                return li[i].shortName;
+            }
+            else
+            {
+                return li[i].longName;
+            }
+
+        }
+
+        private void moreInfoCreateLabel(string s, int x, int y, int fontSize, Color color)
+        {
+            Label l = new Label();
+            l.AutoSize = true;
+            l.Text = s;
+            l.TextAlign = ContentAlignment.MiddleLeft;
+            l.Left = x;
+            l.Top = y;
+            l.Font = new Font("Arial", fontSize, FontStyle.Bold);
+            l.ForeColor = color;
+            l.BringToFront();
+            panelExtra.Controls.Add(l);
+        }
+
+        private void moreInfoCreateChart()
+        {
+            //Define Chart Bounds
+            Chart c = new Chart();
+            c.Left = 650;
+            c.Top = 0;
+            c.Width = 681;
+            c.Height = 354;
+
+            //Define Chart Area
+            ChartArea chartArea = new ChartArea();
+            chartArea.Axes[0].MajorGrid.Enabled = false;
+            chartArea.Axes[0].Minimum = 2000;
+            chartArea.Axes[0].Maximum = 2009;
+            chartArea.Axes[1].Minimum = 50;
+            chartArea.Axes[1].Maximum = 1000;
+
+            c.ChartAreas.Add(chartArea);
+
+            //Define Series
+            Series series = new Series("");
+            series.ChartType = SeriesChartType.Line;
+            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400, 500, 300, 800, 600, 750 });
+
+            c.Series.Add(series);
+
+            //c.Legends[0].Enabled = false;
+            panelExtra.Controls.Add(c);
         }
 
         private void btn_ClickMoreInfo(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
-            int index = Int32.Parse(btn.Name);
-            
+            string name = "";
+            if (sender is Button)
+            {
+                name = ((Button)sender).Name;
+            }
+            else if (sender is PictureBox)
+            {
+                name = ((PictureBox)sender).Name;
+            }
 
-            //show 2nd panel with further information
-            panelExtra.Controls.Clear();
-            panelExtra.Refresh();
+            if (lastClickedBtn.Equals(name))
+            {
+                //Change Size of Panel
+                panelMain.Height = 745;
+                lastClickedBtn = "";
+            }
+            else
+            {
+                panelMain.Height = 377;
+                Button btn = sender as Button;
+                int i = Int32.Parse(name);
 
-            Label l = new Label();
-            l.Text = li[index].symbol.ToString();
-            panelExtra.Controls.Add(l);
+                //show 2nd panel with further information
+
+                panelExtra.Controls.Clear();
+
+                moreInfoCreateLabel(getStockName(i) + " (" + li[i].symbol + ")", 10, 10, 14, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketPrice) + " " + li[i].currency, 10, 40, 20, Color.Black);
+                moreInfoCreateLabel(setLabelStringPosOrNeg(li[i].regularMarketChange) + " (" + String.Format(decimalsFormat, li[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(li[i].regularMarketChangePercent));
+
+                moreInfoCreateLabel("Open", 10, 110, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketOpen) + " " + li[i].currency, 100, 110, 11, Color.Black);
+
+                moreInfoCreateLabel("High", 10, 140, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketDayHigh) + " " + li[i].currency, 100, 140, 11, Color.Black);
+
+                moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketDayLow) + " " + li[i].currency, 100, 170, 11, Color.Black);
+
+                moreInfoCreateChart();
+                lastClickedBtn = name;
+            }
         }
+        #endregion
 
-        private  void createWatchlistOverview()
+        #region Create Overview Table (Main)
+        private void createWatchlistOverview()
         {
             panelMain.Controls.Clear();
             panelMain.Refresh();
 
             for (int i = 0; i < li.Count; i++)
             {
+                setBackColor(i);
+
                 for (int j = 0; j < 6; j++)
                 {
-                    Label l = new Label();
-                    l.AutoSize = true;
-
-                    switch (j)
-                    {
-                        case 0:
-                            l.Text = li[i].symbol;
-                            break;
-                        case 1:
-                            if (li[i].longName == null)
-                            {
-                                l.Text = li[i].shortName;
-                            }
-                            else
-                            {
-                                l.Text = li[i].longName;
-                            }
-
-                            l.Left = 200;
-                            break;
-                        case 2:
-                            
-                            //double changePercent = Math.Round(li[i].regularMarketChangePercent, 2);
-                            double changePercent = li[i].regularMarketChangePercent;
-                            if (changePercent > 0)
-                            {
-                                l.Text = " " + String.Format(decimalsFormat, changePercent) + " %";
-                                l.ForeColor = Color.Green;
-                            }
-                            else
-                            {
-                                l.Text = String.Format(decimalsFormat, changePercent) + " %";
-                                l.ForeColor = Color.Red;
-                            }
-                            l.TextAlign = ContentAlignment.MiddleRight;
-                            l.AutoSize = false;
-                            l.Width = 100;
-                            l.Left = 600;
-                            break;
-                        case 3:
-                            l.Text = String.Format(decimalsFormat, li[i].regularMarketPrice) + " " + li[i].currency;
-                            l.TextAlign = ContentAlignment.MiddleRight;
-                            l.AutoSize = false;
-                            l.Width = 150;
-                            l.Left = 750;
-                            break;
-                        case 4:
-                            l.Text = li[i].fullExchangeName;
-                            l.Left = 1000;
-                            break;
-                        case 5:
-                            Button b = new Button();
-                            b.Name = i.ToString();
-                            b.Text = "Show more";
-                            b.Left = 1200;
-                            b.Width = 100;
-                            b.Top = i * 50;
-                            b.Height = 22;
-                            b.FlatStyle = FlatStyle.System;
-                            b.FlatAppearance.BorderSize = 2;
-                            b.AutoSize = false;
-                            b.TextAlign = ContentAlignment.MiddleCenter;
-                            b.Font = new Font("Arial", 8, FontStyle.Bold);
-                            panelMain.Controls.Add(b);
-                            b.Click += btn_ClickMoreInfo;
-                            break;
-                    }
-                    l.Top = i * 50;
-                    l.Font = new Font("Arial", 12, FontStyle.Bold);
-                    panelMain.Controls.Add(l);
+                    overviewLabelsCreation(i, j);
                 }
+
+                overviewPictureBoxCreation(i);
             }
         }
 
-        #region sort Data
+        private void setBackColor(int i)
+        {
+            //Set two different background colors
+            if (i % 2 == 0)
+            {
+                elementColor = themeColorA;
+            }
+            else
+            {
+                elementColor = themeColorB;
+            }
+        }
+
+        private void overviewPictureBoxCreation(int i)
+        {
+            //Create PictureBox for each line as "background"
+            PictureBox pb = new PictureBox();
+            pb.Name = i.ToString();
+            pb.Top = i * 50;
+            pb.Height = 50;
+            pb.Click += btn_ClickMoreInfo;
+            pb.BackColor = elementColor;
+            pb.Width = panelMain.Width;
+            panelMain.Controls.Add(pb);
+        }
+
+        private void overviewLabelsCreation(int i, int j)
+        {
+            //Create Labels for Overview
+            Label l = new Label();
+            l.AutoSize = true;
+            l.Top = i * 50 + 15;
+            l.Font = new Font("Arial", 11, FontStyle.Bold);
+            l.BackColor = elementColor;
+
+            switch (j)
+            {
+                case 0:
+                    l.Text = li[i].symbol;
+                    break;
+                case 1:
+                    l.Text = getStockName(i);
+                    l.Left = 200;
+                    break;
+                case 2:
+                    l.Text = setLabelStringPosOrNeg(li[i].regularMarketChangePercent) + " %";
+                    l.ForeColor = setLabelColorPosOrNeg(li[i].regularMarketChangePercent);
+                    l.TextAlign = ContentAlignment.MiddleRight;
+                    l.AutoSize = false;
+                    l.Width = 100;
+                    l.Left = 600;
+                    break;
+                case 3:
+                    l.Text = String.Format(decimalsFormat, li[i].regularMarketPrice) + " " + li[i].currency;
+                    l.TextAlign = ContentAlignment.MiddleRight;
+                    l.AutoSize = false;
+                    l.Width = 150;
+                    l.Left = 750;
+                    break;
+                case 4:
+                    l.Text = li[i].fullExchangeName;
+                    l.Left = 1000;
+                    break;
+                case 5:
+                    overviewButtonCreation(i);
+                    break;
+            }
+            panelMain.Controls.Add(l);
+        }
+
+        private void overviewButtonCreation(int i)
+        {
+            Button b = new Button();
+            b.Name = i.ToString();
+            b.Text = "Show more";
+            b.Left = 1200;
+            b.Width = 100;
+            b.Top = i * 50 + 15;
+            b.Height = 22;
+            b.FlatStyle = FlatStyle.System;
+            b.FlatAppearance.BorderSize = 2;
+            b.AutoSize = false;
+            b.TextAlign = ContentAlignment.MiddleCenter;
+            b.Font = new Font("Arial", 8, FontStyle.Bold);
+            b.Click += btn_ClickMoreInfo;
+            b.BackColor = elementColor;
+            panelMain.Controls.Add(b);
+        }
+        #endregion
+
+        #region Sort Data 
         private void sortDataButtonLayout()
         {
             foreach (Button b in libtn)
@@ -257,7 +381,7 @@ namespace MyTrade
                     break;
             }
 
-            sortChange =0;
+            sortChange = 0;
             sortPrice = 0;
             sortExchange = 0;
 
@@ -365,7 +489,7 @@ namespace MyTrade
 
         #endregion
 
-        #region decimals
+        #region Set Decimals (in Menu-Strip)
         private void decimalPlaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             decimalsFormat = "{0:#,##0.0}";
@@ -391,6 +515,7 @@ namespace MyTrade
         }
         #endregion
 
+        #region Set Developer Mode (in Menu-Strip)
         private void developerModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (devMode)
@@ -398,6 +523,8 @@ namespace MyTrade
                 tb_data.Visible = false;
                 tb_listOutput.Visible = false;
                 devMode = false;
+                frm_watchlist.ActiveForm.Width = 1365;
+                frm_watchlist.ActiveForm.StartPosition = FormStartPosition.CenterScreen;
             }
             else
             {
@@ -406,29 +533,63 @@ namespace MyTrade
                 tb_data.BringToFront();
                 tb_listOutput.BringToFront();
                 devMode = true;
+                frm_watchlist.ActiveForm.Width = 1791;
+                frm_watchlist.ActiveForm.StartPosition = FormStartPosition.CenterScreen;
             }
         }
+        #endregion
 
-        private void btn_chart_Click(object sender, EventArgs e)
+        #region Set Colors (in Menu-Strip)
+        private void blueWhiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var series = new Series("Kurswert");
-
-            // first parameter is X-Axis and second is collection of Y-Axis
-            series.ChartType = SeriesChartType.Line;
-            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400 , 500, 300, 800, 600, 750 });
-            chart.Series.Add(series);
-            
-            chart.Series.RemoveAt(0);
-
-            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
-
-            chart.ChartAreas[0].Axes[0].Minimum = 2000;
-            chart.ChartAreas[0].Axes[0].Maximum = 2009;
-            chart.ChartAreas[0].Axes[1].Minimum = 50;
-            chart.ChartAreas[0].Axes[1].Maximum = 1000;
-
-            chart.Legends[0].Enabled = false;
+            themeColorA = Color.LightSteelBlue;
+            themeColorB = Color.White;
+            createWatchlistOverview();
         }
+
+        private void grayWhiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            themeColorA = Color.LightGray;
+            themeColorB = Color.White;
+            createWatchlistOverview();
+        }
+        #endregion
+
+        #region Format Positive Or Negative Numbers/Texts
+        private Color setLabelColorPosOrNeg(double num)
+        {
+            Color c;
+
+            if (num >= 0)
+            {
+                c = Color.Green;
+            }
+            else
+            {
+                c = Color.Red;
+            }
+
+            return c;
+        }
+
+        private string setLabelStringPosOrNeg(double num)
+        {
+            string s;
+
+            if (num > 0)
+            {
+                s = " " + String.Format(decimalsFormat, num);
+
+            }
+            else
+            {
+                s = String.Format(decimalsFormat, num);
+            }
+
+            return s;
+        }
+
+        #endregion
     }
 }
 

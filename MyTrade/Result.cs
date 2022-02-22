@@ -23,7 +23,7 @@ namespace MyTrade
         public double twoHundredDayAverage { get; set; }
         public double twoHundredDayAverageChange { get; set; }
         public double twoHundredDayAverageChangePercent { get; set; }
-        public double marketCap { get; set; } //object?
+        public double marketCap { get; set; }
         public double forwardPE { get; set; }
         public double priceToBook { get; set; }
         public int sourceInterval { get; set; }
