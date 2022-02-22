@@ -43,9 +43,7 @@ namespace MyTrade
             this.decimalPlacesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.decimalPlacesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.decimalPlacesToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.blueWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.grayWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.developerModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_sortSymbol = new System.Windows.Forms.Button();
             this.btn_sortChange = new System.Windows.Forms.Button();
@@ -67,6 +65,8 @@ namespace MyTrade
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.blueWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grayWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -136,8 +136,7 @@ namespace MyTrade
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ms_decimal,
-            this.changeColorToolStripMenuItem,
-            this.changeChartTypeToolStripMenuItem,
+            this.themeToolStripMenuItem,
             this.developerModeToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -151,7 +150,7 @@ namespace MyTrade
             this.decimalPlacesToolStripMenuItem2,
             this.decimalPlacesToolStripMenuItem3});
             this.ms_decimal.Name = "ms_decimal";
-            this.ms_decimal.Size = new System.Drawing.Size(161, 22);
+            this.ms_decimal.Size = new System.Drawing.Size(180, 22);
             this.ms_decimal.Text = "Rounding";
             // 
             // decimalPlaceToolStripMenuItem
@@ -182,33 +181,19 @@ namespace MyTrade
             this.decimalPlacesToolStripMenuItem3.Text = "4 decimal places";
             this.decimalPlacesToolStripMenuItem3.Click += new System.EventHandler(this.decimalPlacesToolStripMenuItem3_Click);
             // 
-            // changeColorToolStripMenuItem
+            // themeToolStripMenuItem
             // 
-            this.changeColorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.themeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.blueWhiteToolStripMenuItem,
             this.grayWhiteToolStripMenuItem});
-            this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
-            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.changeColorToolStripMenuItem.Text = "Theme";
-            // 
-            // blueWhiteToolStripMenuItem
-            // 
-            this.blueWhiteToolStripMenuItem.Name = "blueWhiteToolStripMenuItem";
-            this.blueWhiteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.blueWhiteToolStripMenuItem.Text = "Blue-White";
-            this.blueWhiteToolStripMenuItem.Click += new System.EventHandler(this.blueWhiteToolStripMenuItem_Click);
-            // 
-            // grayWhiteToolStripMenuItem
-            // 
-            this.grayWhiteToolStripMenuItem.Name = "grayWhiteToolStripMenuItem";
-            this.grayWhiteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.grayWhiteToolStripMenuItem.Text = "Gray-White";
-            this.grayWhiteToolStripMenuItem.Click += new System.EventHandler(this.grayWhiteToolStripMenuItem_Click);
+            this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themeToolStripMenuItem.Text = "Theme";
             // 
             // developerModeToolStripMenuItem
             // 
             this.developerModeToolStripMenuItem.Name = "developerModeToolStripMenuItem";
-            this.developerModeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.developerModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.developerModeToolStripMenuItem.Text = "Developer mode";
             this.developerModeToolStripMenuItem.Click += new System.EventHandler(this.developerModeToolStripMenuItem_Click);
             // 
@@ -283,49 +268,10 @@ namespace MyTrade
             // 
             // panelExtra
             // 
-            this.panelExtra.Controls.Add(this.label8);
-            this.panelExtra.Controls.Add(this.label7);
-            this.panelExtra.Controls.Add(this.label3);
-            this.panelExtra.Controls.Add(this.label6);
-            this.panelExtra.Controls.Add(this.label5);
-            this.panelExtra.Controls.Add(this.label4);
-            this.panelExtra.Controls.Add(this.label2);
-            this.panelExtra.Controls.Add(this.label1);
-            this.panelExtra.Controls.Add(this.lbl_);
-            this.panelExtra.Controls.Add(this.lbl_name);
-            this.panelExtra.Controls.Add(this.btn_chart);
-            this.panelExtra.Controls.Add(this.chart);
             this.panelExtra.Location = new System.Drawing.Point(12, 495);
             this.panelExtra.Name = "panelExtra";
             this.panelExtra.Size = new System.Drawing.Size(1331, 354);
             this.panelExtra.TabIndex = 103;
-            // 
-            // btn_chart
-            // 
-            this.btn_chart.Location = new System.Drawing.Point(558, 0);
-            this.btn_chart.Name = "btn_chart";
-            this.btn_chart.Size = new System.Drawing.Size(75, 23);
-            this.btn_chart.TabIndex = 1;
-            this.btn_chart.Text = "visualize Data";
-            this.btn_chart.UseVisualStyleBackColor = true;
-            this.btn_chart.Click += new System.EventHandler(this.btn_chart_Click);
-            // 
-            // chart
-            // 
-            this.chart.BackColor = System.Drawing.SystemColors.Control;
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(650, 0);
-            this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(681, 351);
-            this.chart.TabIndex = 0;
-            this.chart.Text = "chart";
             // 
             // pictureBox2
             // 
@@ -435,6 +381,20 @@ namespace MyTrade
             this.label8.TabIndex = 12;
             this.label8.Text = "Market Cap";
             // 
+            // blueWhiteToolStripMenuItem
+            // 
+            this.blueWhiteToolStripMenuItem.Name = "blueWhiteToolStripMenuItem";
+            this.blueWhiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.blueWhiteToolStripMenuItem.Text = "Blue-White";
+            this.blueWhiteToolStripMenuItem.Click += new System.EventHandler(this.blueWhiteToolStripMenuItem_Click_1);
+            // 
+            // grayWhiteToolStripMenuItem
+            // 
+            this.grayWhiteToolStripMenuItem.Name = "grayWhiteToolStripMenuItem";
+            this.grayWhiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.grayWhiteToolStripMenuItem.Text = "Gray-White";
+            this.grayWhiteToolStripMenuItem.Click += new System.EventHandler(this.grayWhiteToolStripMenuItem_Click_1);
+            // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -506,5 +466,8 @@ namespace MyTrade
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbl_;
         private System.Windows.Forms.Label lbl_name;
+        private System.Windows.Forms.ToolStripMenuItem themeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blueWhiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem grayWhiteToolStripMenuItem;
     }
 }

@@ -78,11 +78,6 @@ namespace MyTrade
                 webData = await webResponse.Content.ReadAsStringAsync();
 
                 tb_data.Text = webData;
-                
-
-
-                //show data in textbox
-                //tb_data.Text = webData;
             }
             catch (Exception e)
             {
@@ -161,6 +156,31 @@ namespace MyTrade
             l.ForeColor = color;
             l.BringToFront();
             panelExtra.Controls.Add(l);
+
+            #region Chart
+            Chart c = new Chart();
+            Series series = new Series();
+            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400, 500, 300, 800, 600, 750 });
+            series.ChartType = SeriesChartType.Line;
+
+            c.Width = 681;
+            c.Height = 354;
+            c.Left = 650;
+            c.Top = 0;
+            c.Series.Clear();
+            c.Series.Add(series);
+            
+            //c.Series.RemoveAt(0);
+            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
+            //c.ChartAreas[0].Axes[0].Minimum = 2000;
+            //c.ChartAreas[0].Axes[0].Maximum = 2009;
+            //c.ChartAreas[0].Axes[1].Minimum = 50;
+            //c.ChartAreas[0].Axes[1].Maximum = 1000;
+            //c.Legends[0].Enabled = false;
+            //c.Invalidate();
+
+            panelExtra.Controls.Add(c);
+            #endregion
         }
 
         private void moreInfoCreateChart()
@@ -234,9 +254,9 @@ namespace MyTrade
                 moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
                 moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketDayLow) + " " + li[i].currency, 100, 170, 11, Color.Black);
 
-            Label l = new Label();
-            l.Text = li[index].symbol.ToString();
-            panelExtra.Controls.Add(l);
+                moreInfoCreateChart();
+                lastClickedBtn = name;
+            }
         }
         #endregion
 
@@ -537,31 +557,65 @@ namespace MyTrade
                 tb_data.BringToFront();
                 tb_listOutput.BringToFront();
                 devMode = true;
+                frm_watchlist.ActiveForm.Width = 1791;
+                frm_watchlist.ActiveForm.StartPosition = FormStartPosition.CenterScreen;
             }
         }
+        #endregion
 
-        private void btn_chart_Click(object sender, EventArgs e)
+        #region Set Colors (in Menu-Strip)
+        private void blueWhiteToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            var series = new Series("Kurswert");
+            themeColorA = Color.LightSteelBlue;
+            themeColorB = Color.White;
+            createWatchlistOverview();
+        }
+        private void grayWhiteToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            themeColorA = Color.LightGray;
+            themeColorB = Color.White;
+            createWatchlistOverview();
+        }
+        #endregion
 
-            // first parameter is X-Axis and second is collection of Y-Axis
-            series.ChartType = SeriesChartType.Line;
-            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400 , 500, 300, 800, 600, 750 });
-            chart.Series.Add(series);
-            
-            chart.Series.RemoveAt(0);
+        #region Format Positive Or Negative Numbers/Texts
+        private Color setLabelColorPosOrNeg(double num)
+        {
+            Color c;
 
-            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
+            if (num >= 0)
+            {
+                c = Color.Green;
+            }
+            else
+            {
+                c = Color.Red;
+            }
 
-            chart.ChartAreas[0].Axes[0].Minimum = 2000;
-            chart.ChartAreas[0].Axes[0].Maximum = 2009;
-            chart.ChartAreas[0].Axes[1].Minimum = 50;
-            chart.ChartAreas[0].Axes[1].Maximum = 1000;
-
-            chart.Legends[0].Enabled = false;
+            return c;
         }
 
+        private string setLabelStringPosOrNeg(double num)
+        {
+            string s;
+
+            if (num > 0)
+            {
+                s = " " + String.Format(decimalsFormat, num);
+
+            }
+            else
+            {
+                s = String.Format(decimalsFormat, num);
+            }
+
+            return s;
+        }
+
+
         #endregion
+
+        
     }
 }
 
