@@ -79,6 +79,10 @@ namespace MyTrade
 
                 tb_data.Text = webData;
                 
+
+
+                //show data in textbox
+                //tb_data.Text = webData;
             }
             catch (Exception e)
             {
@@ -230,9 +234,9 @@ namespace MyTrade
                 moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
                 moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketDayLow) + " " + li[i].currency, 100, 170, 11, Color.Black);
 
-                moreInfoCreateChart();
-                lastClickedBtn = name;
-            }
+            Label l = new Label();
+            l.Text = li[index].symbol.ToString();
+            panelExtra.Controls.Add(l);
         }
         #endregion
 
@@ -533,60 +537,28 @@ namespace MyTrade
                 tb_data.BringToFront();
                 tb_listOutput.BringToFront();
                 devMode = true;
-                frm_watchlist.ActiveForm.Width = 1791;
-                frm_watchlist.ActiveForm.StartPosition = FormStartPosition.CenterScreen;
             }
         }
-        #endregion
 
-        #region Set Colors (in Menu-Strip)
-        private void blueWhiteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btn_chart_Click(object sender, EventArgs e)
         {
-            themeColorA = Color.LightSteelBlue;
-            themeColorB = Color.White;
-            createWatchlistOverview();
-        }
+            var series = new Series("Kurswert");
 
-        private void grayWhiteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            themeColorA = Color.LightGray;
-            themeColorB = Color.White;
-            createWatchlistOverview();
-        }
-        #endregion
+            // first parameter is X-Axis and second is collection of Y-Axis
+            series.ChartType = SeriesChartType.Line;
+            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400 , 500, 300, 800, 600, 750 });
+            chart.Series.Add(series);
+            
+            chart.Series.RemoveAt(0);
 
-        #region Format Positive Or Negative Numbers/Texts
-        private Color setLabelColorPosOrNeg(double num)
-        {
-            Color c;
+            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
 
-            if (num >= 0)
-            {
-                c = Color.Green;
-            }
-            else
-            {
-                c = Color.Red;
-            }
+            chart.ChartAreas[0].Axes[0].Minimum = 2000;
+            chart.ChartAreas[0].Axes[0].Maximum = 2009;
+            chart.ChartAreas[0].Axes[1].Minimum = 50;
+            chart.ChartAreas[0].Axes[1].Maximum = 1000;
 
-            return c;
-        }
-
-        private string setLabelStringPosOrNeg(double num)
-        {
-            string s;
-
-            if (num > 0)
-            {
-                s = " " + String.Format(decimalsFormat, num);
-
-            }
-            else
-            {
-                s = String.Format(decimalsFormat, num);
-            }
-
-            return s;
+            chart.Legends[0].Enabled = false;
         }
 
         #endregion
