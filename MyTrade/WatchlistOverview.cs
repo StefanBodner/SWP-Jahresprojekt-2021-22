@@ -154,61 +154,6 @@ namespace MyTrade
             l.ForeColor = color;
             l.BringToFront();
             panelExtra.Controls.Add(l);
-
-            #region Chart
-            Chart c = new Chart();
-            Series series = new Series();
-            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400, 500, 300, 800, 600, 750 });
-            series.ChartType = SeriesChartType.Line;
-
-            c.Width = 681;
-            c.Height = 354;
-            c.Left = 650;
-            c.Top = 0;
-            c.Series.Clear();
-            c.Series.Add(series);
-            
-            //c.Series.RemoveAt(0);
-            //chart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;//x axis
-            //c.ChartAreas[0].Axes[0].Minimum = 2000;
-            //c.ChartAreas[0].Axes[0].Maximum = 2009;
-            //c.ChartAreas[0].Axes[1].Minimum = 50;
-            //c.ChartAreas[0].Axes[1].Maximum = 1000;
-            //c.Legends[0].Enabled = false;
-            //c.Invalidate();
-
-            panelExtra.Controls.Add(c);
-            #endregion
-        }
-
-        private void moreInfoCreateChart()
-        {
-            //Define Chart Bounds
-            Chart c = new Chart();
-            c.Left = 650;
-            c.Top = 0;
-            c.Width = 681;
-            c.Height = 354;
-
-            //Define Chart Area
-            ChartArea chartArea = new ChartArea();
-            chartArea.Axes[0].MajorGrid.Enabled = false;
-            chartArea.Axes[0].Minimum = 2000;
-            chartArea.Axes[0].Maximum = 2009;
-            chartArea.Axes[1].Minimum = 50;
-            chartArea.Axes[1].Maximum = 1000;
-
-            c.ChartAreas.Add(chartArea);
-
-            //Define Series
-            Series series = new Series("");
-            series.ChartType = SeriesChartType.Line;
-            series.Points.DataBindXY(new[] { 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 }, new[] { 900, 100, 800, 1000, 400, 500, 300, 800, 600, 750 });
-
-            c.Series.Add(series);
-
-            //c.Legends[0].Enabled = false;
-            panelExtra.Controls.Add(c);
         }
 
         private void btn_ClickMoreInfo(object sender, EventArgs e)
@@ -255,6 +200,28 @@ namespace MyTrade
                 moreInfoCreateChart();
                 lastClickedBtn = name;
             }
+        }
+        private void moreInfoCreateChart()
+        {
+            Chart c = new Chart();
+            Series series = new Series();
+            ChartArea chartArea = new ChartArea();
+
+            series.Points.DataBindXY(liC[0].timestamp, liC[0].comparisons[0].close);
+            series.ChartType = SeriesChartType.Line;
+
+            c.Width = 681;
+            c.Height = 354;
+            c.Left = 650;
+            c.Top = 0;
+            c.Series.Clear();
+            c.Series.Add(series);
+            c.ChartAreas.Add(chartArea);
+            c.ChartAreas[0].Axes[0].MajorGrid.Enabled = false; //x axis
+            c.ChartAreas[0].AxisY.Maximum = liC[0].comparisons[0].high.Max();
+            c.ChartAreas[0].AxisY.Minimum = liC[0].comparisons[0].high.Min() * 0.95;
+
+            panelExtra.Controls.Add(c);
         }
         #endregion
 
@@ -636,7 +603,6 @@ namespace MyTrade
 
                 webDataChart = await webResponse.Content.ReadAsStringAsync();
                 liC = DeserialzeChart(webDataChart).chart.result;
-                Geheimnis();
             }
             catch (Exception e)
             {
@@ -649,12 +615,6 @@ namespace MyTrade
         {
             //convert Json into Object
             return JsonConvert.DeserializeObject<RootChart>(path);
-        }
-
-        private static void Geheimnis()
-        {
-            MessageBox.Show(liC[0].comparisons[0].symbol);
-            MessageBox.Show(liC[0].comparisons[1].symbol);
         }
         #endregion
 

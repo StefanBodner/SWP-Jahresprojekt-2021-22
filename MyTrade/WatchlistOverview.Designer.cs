@@ -283,6 +283,7 @@ namespace MyTrade
             // 
             // panelExtra
             // 
+            this.panelExtra.BackColor = System.Drawing.SystemColors.Control;
             this.panelExtra.Location = new System.Drawing.Point(12, 495);
             this.panelExtra.Name = "panelExtra";
             this.panelExtra.Size = new System.Drawing.Size(1331, 354);
