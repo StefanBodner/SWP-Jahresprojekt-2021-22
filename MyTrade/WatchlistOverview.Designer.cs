@@ -44,6 +44,8 @@ namespace MyTrade
             this.decimalPlacesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.decimalPlacesToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.themeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blueWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grayWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.developerModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_sortSymbol = new System.Windows.Forms.Button();
             this.btn_sortChange = new System.Windows.Forms.Button();
@@ -65,8 +67,7 @@ namespace MyTrade
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.blueWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.grayWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -150,7 +151,7 @@ namespace MyTrade
             this.decimalPlacesToolStripMenuItem2,
             this.decimalPlacesToolStripMenuItem3});
             this.ms_decimal.Name = "ms_decimal";
-            this.ms_decimal.Size = new System.Drawing.Size(180, 22);
+            this.ms_decimal.Size = new System.Drawing.Size(161, 22);
             this.ms_decimal.Text = "Rounding";
             // 
             // decimalPlaceToolStripMenuItem
@@ -187,13 +188,27 @@ namespace MyTrade
             this.blueWhiteToolStripMenuItem,
             this.grayWhiteToolStripMenuItem});
             this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
-            this.themeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.themeToolStripMenuItem.Text = "Theme";
+            // 
+            // blueWhiteToolStripMenuItem
+            // 
+            this.blueWhiteToolStripMenuItem.Name = "blueWhiteToolStripMenuItem";
+            this.blueWhiteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.blueWhiteToolStripMenuItem.Text = "Blue-White";
+            this.blueWhiteToolStripMenuItem.Click += new System.EventHandler(this.blueWhiteToolStripMenuItem_Click_1);
+            // 
+            // grayWhiteToolStripMenuItem
+            // 
+            this.grayWhiteToolStripMenuItem.Name = "grayWhiteToolStripMenuItem";
+            this.grayWhiteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.grayWhiteToolStripMenuItem.Text = "Gray-White";
+            this.grayWhiteToolStripMenuItem.Click += new System.EventHandler(this.grayWhiteToolStripMenuItem_Click_1);
             // 
             // developerModeToolStripMenuItem
             // 
             this.developerModeToolStripMenuItem.Name = "developerModeToolStripMenuItem";
-            this.developerModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.developerModeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.developerModeToolStripMenuItem.Text = "Developer mode";
             this.developerModeToolStripMenuItem.Click += new System.EventHandler(this.developerModeToolStripMenuItem_Click);
             // 
@@ -381,25 +396,22 @@ namespace MyTrade
             this.label8.TabIndex = 12;
             this.label8.Text = "Market Cap";
             // 
-            // blueWhiteToolStripMenuItem
+            // button1
             // 
-            this.blueWhiteToolStripMenuItem.Name = "blueWhiteToolStripMenuItem";
-            this.blueWhiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.blueWhiteToolStripMenuItem.Text = "Blue-White";
-            this.blueWhiteToolStripMenuItem.Click += new System.EventHandler(this.blueWhiteToolStripMenuItem_Click_1);
-            // 
-            // grayWhiteToolStripMenuItem
-            // 
-            this.grayWhiteToolStripMenuItem.Name = "grayWhiteToolStripMenuItem";
-            this.grayWhiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.grayWhiteToolStripMenuItem.Text = "Gray-White";
-            this.grayWhiteToolStripMenuItem.Click += new System.EventHandler(this.grayWhiteToolStripMenuItem_Click_1);
+            this.button1.Location = new System.Drawing.Point(876, 28);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 106;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1349, 861);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.tb_listOutput);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.tb_data);
@@ -454,8 +466,6 @@ namespace MyTrade
         private System.Windows.Forms.Panel panelExtra;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
-        private System.Windows.Forms.Button btn_chart;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label3;
@@ -469,5 +479,6 @@ namespace MyTrade
         private System.Windows.Forms.ToolStripMenuItem themeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blueWhiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grayWhiteToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
     }
 }

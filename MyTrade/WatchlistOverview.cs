@@ -14,10 +14,11 @@ namespace MyTrade
     public partial class frm_watchlist : Form
     {
         #region Variables
-        Root qr = new Root();
-        static List<Result> li = new List<Result>();
+        static List<ResultStockQuote> liSQ = new List<ResultStockQuote>();
+        static List<ResultChart> liC = new List<ResultChart>();
         static List<Button> libtn = new List<Button>();
-        string webData = "";
+        string webDataStockQuote = "";
+        string webDataChart = "";
 
         byte sortSymbol;
         byte sortChange;
@@ -54,11 +55,10 @@ namespace MyTrade
             panelMain.AutoScroll = true;
         }
 
-        #region Recieve Stock Data (Web Request + Deserialization)
-        public async Task<int> getStockData()
+        #region Recieve StockQuote Data (Web Request + Deserialization)
+        public async Task<int> getStockQuoteData()
         {
-            //source:
-            //https://www.yahoofinanceapi.com/dashboard
+            //source: https://www.yahoofinanceapi.com/dashboard
 
             try
             {
@@ -72,12 +72,10 @@ namespace MyTrade
                 //2nd API-Key if necessary
 
                 var webResponse = await httpClient.SendAsync(webRequest);
-
                 webResponse.EnsureSuccessStatusCode();
 
-                webData = await webResponse.Content.ReadAsStringAsync();
-
-                tb_data.Text = webData;
+                webDataStockQuote = await webResponse.Content.ReadAsStringAsync();
+                tb_data.Text = webDataStockQuote;
             }
             catch (Exception e)
             {
@@ -89,13 +87,13 @@ namespace MyTrade
         private void btn_data_Click(object sender, EventArgs e)
         {
             //start Task
-            _ = getStockData();
+            _ = getStockQuoteData();
         }
 
-        private static Root Deserialze(string path)
+        private static RootStockQuote DeserialzeStockQuote(string path)
         {
             //convert Json into Object
-            return JsonConvert.DeserializeObject<Root>(path);
+            return JsonConvert.DeserializeObject<RootStockQuote>(path);
         }
 
         #endregion
@@ -110,10 +108,10 @@ namespace MyTrade
         {
             //just temporary -debug purposes only
             tb_listOutput.Text = "";
-            webData = tb_data.Text;
+            webDataStockQuote = tb_data.Text;
 
             //output list entries
-            foreach (var v in li)
+            foreach (var v in liSQ)
             {
                 foreach (var propertyInfo in v.GetType().GetProperties())
                 {
@@ -123,8 +121,8 @@ namespace MyTrade
                 tb_listOutput.Text += Environment.NewLine;
             }
 
-            li = Deserialze(webData).quoteResponse.result;
-            li = li.OrderBy(s => s.symbol).ToList();
+            liSQ = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
+            liSQ = liSQ.OrderBy(s => s.symbol).ToList();
 
             createWatchlistOverview();
         }
@@ -133,13 +131,13 @@ namespace MyTrade
         #region Text + Chart Creation (Extra Info)
         private string getStockName(int i)
         {
-            if (li[i].longName == null)
+            if (liSQ[i].longName == null)
             {
-                return li[i].shortName;
+                return liSQ[i].shortName;
             }
             else
             {
-                return li[i].longName;
+                return liSQ[i].longName;
             }
 
         }
@@ -241,18 +239,18 @@ namespace MyTrade
 
                 panelExtra.Controls.Clear();
 
-                moreInfoCreateLabel(getStockName(i) + " (" + li[i].symbol + ")", 10, 10, 14, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketPrice) + " " + li[i].currency, 10, 40, 20, Color.Black);
-                moreInfoCreateLabel(setLabelStringPosOrNeg(li[i].regularMarketChange) + " (" + String.Format(decimalsFormat, li[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(li[i].regularMarketChangePercent));
+                moreInfoCreateLabel(getStockName(i) + " (" + liSQ[i].symbol + ")", 10, 10, 14, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketPrice) + " " + liSQ[i].currency, 10, 40, 20, Color.Black);
+                moreInfoCreateLabel(setLabelStringPosOrNeg(liSQ[i].regularMarketChange) + " (" + String.Format(decimalsFormat, liSQ[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(liSQ[i].regularMarketChangePercent));
 
                 moreInfoCreateLabel("Open", 10, 110, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketOpen) + " " + li[i].currency, 100, 110, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketOpen) + " " + liSQ[i].currency, 100, 110, 11, Color.Black);
 
                 moreInfoCreateLabel("High", 10, 140, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketDayHigh) + " " + li[i].currency, 100, 140, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayHigh) + " " + liSQ[i].currency, 100, 140, 11, Color.Black);
 
                 moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, li[i].regularMarketDayLow) + " " + li[i].currency, 100, 170, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayLow) + " " + liSQ[i].currency, 100, 170, 11, Color.Black);
 
                 moreInfoCreateChart();
                 lastClickedBtn = name;
@@ -266,7 +264,7 @@ namespace MyTrade
             panelMain.Controls.Clear();
             panelMain.Refresh();
 
-            for (int i = 0; i < li.Count; i++)
+            for (int i = 0; i < liSQ.Count; i++)
             {
                 setBackColor(i);
 
@@ -317,29 +315,29 @@ namespace MyTrade
             switch (j)
             {
                 case 0:
-                    l.Text = li[i].symbol;
+                    l.Text = liSQ[i].symbol;
                     break;
                 case 1:
                     l.Text = getStockName(i);
                     l.Left = 200;
                     break;
                 case 2:
-                    l.Text = setLabelStringPosOrNeg(li[i].regularMarketChangePercent) + " %";
-                    l.ForeColor = setLabelColorPosOrNeg(li[i].regularMarketChangePercent);
+                    l.Text = setLabelStringPosOrNeg(liSQ[i].regularMarketChangePercent) + " %";
+                    l.ForeColor = setLabelColorPosOrNeg(liSQ[i].regularMarketChangePercent);
                     l.TextAlign = ContentAlignment.MiddleRight;
                     l.AutoSize = false;
                     l.Width = 100;
                     l.Left = 600;
                     break;
                 case 3:
-                    l.Text = String.Format(decimalsFormat, li[i].regularMarketPrice) + " " + li[i].currency;
+                    l.Text = String.Format(decimalsFormat, liSQ[i].regularMarketPrice) + " " + liSQ[i].currency;
                     l.TextAlign = ContentAlignment.MiddleRight;
                     l.AutoSize = false;
                     l.Width = 150;
                     l.Left = 750;
                     break;
                 case 4:
-                    l.Text = li[i].fullExchangeName;
+                    l.Text = liSQ[i].fullExchangeName;
                     l.Left = 1000;
                     break;
                 case 5:
@@ -387,14 +385,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    li = li.OrderBy(s => s.symbol).ToList();
+                    liSQ = liSQ.OrderBy(s => s.symbol).ToList();
                     btn_sortSymbol.Text += "↓";
                     sortSymbol = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    li = li.OrderByDescending(s => s.symbol).ToList();
+                    liSQ = liSQ.OrderByDescending(s => s.symbol).ToList();
                     btn_sortSymbol.Text += "↑";
                     sortSymbol = 0;
                     break;
@@ -420,14 +418,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    li = li.OrderByDescending(s => s.regularMarketChangePercent).ToList();
+                    liSQ = liSQ.OrderByDescending(s => s.regularMarketChangePercent).ToList();
                     btn_sortChange.Text += "↓";
                     sortChange = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    li = li.OrderBy(s => s.regularMarketChangePercent).ToList();
+                    liSQ = liSQ.OrderBy(s => s.regularMarketChangePercent).ToList();
                     btn_sortChange.Text += "↑";
                     sortChange = 0;
                     break;
@@ -453,14 +451,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    li = li.OrderByDescending(s => s.regularMarketPrice).ToList();
+                    liSQ = liSQ.OrderByDescending(s => s.regularMarketPrice).ToList();
                     btn_sortPrice.Text += "↓";
                     sortPrice = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    li = li.OrderBy(s => s.regularMarketPrice).ToList();
+                    liSQ = liSQ.OrderBy(s => s.regularMarketPrice).ToList();
                     btn_sortPrice.Text += "↑";
                     sortPrice = 0;
                     break;
@@ -486,14 +484,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    li = li.OrderBy(s => s.exchange).ToList();
+                    liSQ = liSQ.OrderBy(s => s.exchange).ToList();
                     btn_sortExchange.Text += "↓";
                     sortExchange = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    li = li.OrderByDescending(s => s.exchange).ToList();
+                    liSQ = liSQ.OrderByDescending(s => s.exchange).ToList();
                     btn_sortExchange.Text += "↑";
                     sortExchange = 0;
                     break;
@@ -615,7 +613,50 @@ namespace MyTrade
 
         #endregion
 
-        
+        #region Recieve Chart Data (Web Request + Deserialization)
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _ = getChartData();
+        }
+
+        public async Task<int> getChartData()
+        {
+            try
+            {
+                var httpClient = new HttpClient();
+                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en");
+
+                webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
+                //niYF94oEjJ7G6Ifo09pco3l57iO5tR070JE9SRY3
+                //2nd API-Key if necessary (Stefans Key)
+
+                var webResponse = await httpClient.SendAsync(webRequest);
+                webResponse.EnsureSuccessStatusCode();
+
+                webDataChart = await webResponse.Content.ReadAsStringAsync();
+                liC = DeserialzeChart(webDataChart).chart.result;
+                Geheimnis();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            return 1;
+        }
+
+        private static RootChart DeserialzeChart(string path)
+        {
+            //convert Json into Object
+            return JsonConvert.DeserializeObject<RootChart>(path);
+        }
+
+        private static void Geheimnis()
+        {
+            MessageBox.Show(liC[0].comparisons[0].symbol);
+            MessageBox.Show(liC[0].comparisons[1].symbol);
+        }
+        #endregion
+
     }
 }
-

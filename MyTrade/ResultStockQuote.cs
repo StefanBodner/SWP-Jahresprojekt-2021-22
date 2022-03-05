@@ -2,7 +2,7 @@
 
 namespace MyTrade
 {
-    public class Result
+    public class ResultStockQuote
     {
         // automatic class creation 
         // https://json2csharp.com/
@@ -85,11 +85,11 @@ namespace MyTrade
     }
     public class QuoteResponse
     {
-        public List<Result> result { get; set; }
+        public List<ResultStockQuote> result { get; set; }
         public object error { get; set; }
     }
 
-    public class Root
+    public class RootStockQuote
     {
         public QuoteResponse quoteResponse { get; set; }
     }
