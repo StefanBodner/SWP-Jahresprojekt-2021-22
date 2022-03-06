@@ -32,6 +32,12 @@ namespace MyTrade
         Color elementColor = Color.White;
         Color themeColorA = Color.LightSteelBlue;
         Color themeColorB = Color.White;
+
+        static JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            MissingMemberHandling = MissingMemberHandling.Ignore
+        };
         #endregion
 
         public frm_watchlist()
@@ -197,17 +203,17 @@ namespace MyTrade
                 moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
                 moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayLow) + " " + liSQ[i].currency, 100, 170, 11, Color.Black);
 
-                moreInfoCreateChart();
+                moreInfoCreateChart(i);
                 lastClickedBtn = name;
             }
         }
-        private void moreInfoCreateChart()
+        private void moreInfoCreateChart(int i)
         {
             Chart c = new Chart();
             Series series = new Series();
             ChartArea chartArea = new ChartArea();
 
-            series.Points.DataBindXY(liC[0].timestamp, liC[0].comparisons[0].close);
+            series.Points.DataBindXY(liC[0].timestamp, liC[0].comparisons[i].close);
             series.ChartType = SeriesChartType.Line;
 
             c.Width = 681;
@@ -216,10 +222,11 @@ namespace MyTrade
             c.Top = 0;
             c.Series.Clear();
             c.Series.Add(series);
+            c.ChartAreas.Clear();
             c.ChartAreas.Add(chartArea);
             c.ChartAreas[0].Axes[0].MajorGrid.Enabled = false; //x axis
-            c.ChartAreas[0].AxisY.Maximum = liC[0].comparisons[0].high.Max();
-            c.ChartAreas[0].AxisY.Minimum = liC[0].comparisons[0].high.Min() * 0.95;
+            c.ChartAreas[0].AxisY.Maximum = liC[0].comparisons[i].high.Max();
+            c.ChartAreas[0].AxisY.Minimum = liC[0].comparisons[i].high.Min() * 0.95;
 
             panelExtra.Controls.Add(c);
         }
@@ -590,8 +597,29 @@ namespace MyTrade
         {
             try
             {
+                string webRequestString = "";
+                webRequestString = "https://yfapi.net/v8/finance/chart/BOOM?comparisons=";
+                foreach (ResultStockQuote s in liSQ)
+                {
+                    if (!s.Equals(liSQ.Last()))
+                    {
+                        webRequestString += s.symbol + "%2C";
+                    }
+                    else
+                    {
+                        webRequestString += s.symbol;
+                    }
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    
+                }
+
+                webRequestString += "&range=6mo&region=US&interval=1d&lang=en";
+
                 var httpClient = new HttpClient();
-                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en");
+                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString); //https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
                 webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "WinGU8zX1G5jdbAl0dNhu3i7ipf2hmMfgP1ST4zg");
@@ -613,9 +641,13 @@ namespace MyTrade
 
         private static RootChart DeserialzeChart(string path)
         {
+            path = path.Replace("null", "0");
+            
             //convert Json into Object
-            return JsonConvert.DeserializeObject<RootChart>(path);
+            return JsonConvert.DeserializeObject<RootChart>(path, settings);
         }
+
+
         #endregion
 
     }
