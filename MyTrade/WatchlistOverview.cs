@@ -210,14 +210,15 @@ namespace MyTrade
                 lastClickedBtn = name;
             }
         }
+
         private void moreInfoCreateChart(int i)
         {
             _ = getChartData(i);
             Chart c = new Chart();
             Series series = new Series();
             ChartArea chartArea = new ChartArea();
-
-            series.Points.DataBindXY(liC[i].timestamp, liC[i].indicators.quote[0].close);
+            MessageBox.Show(liC.Count.ToString());
+            series.Points.DataBindXY(liC[0].timestamp, liC[0].indicators.quote[0].close);
             series.ChartType = SeriesChartType.Line;
 
             c.Width = 681;
@@ -229,10 +230,11 @@ namespace MyTrade
             c.ChartAreas.Clear();
             c.ChartAreas.Add(chartArea);
             c.ChartAreas[0].Axes[0].MajorGrid.Enabled = false; //x axis
-            c.ChartAreas[0].AxisY.Maximum = liC[i].indicators.quote[0].high.Max();
-            c.ChartAreas[0].AxisY.Minimum = liC[i].indicators.quote[0].high.Min() * 0.95;
+            c.ChartAreas[0].AxisY.Maximum = liC[0].indicators.quote[0].high.Max();
+            c.ChartAreas[0].AxisY.Minimum = liC[0].indicators.quote[0].high.Min() * 0.95;
 
             panelExtra.Controls.Add(c);
+            liC.Clear();
         }
         #endregion
 
