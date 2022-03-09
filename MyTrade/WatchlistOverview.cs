@@ -33,6 +33,9 @@ namespace MyTrade
         Color themeColorA = Color.LightSteelBlue;
         Color themeColorB = Color.White;
 
+        string range = "6mo";
+        string interval = "1d";
+
         static JsonSerializerSettings settings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
@@ -209,11 +212,12 @@ namespace MyTrade
         }
         private void moreInfoCreateChart(int i)
         {
+            _ = getChartData(i);
             Chart c = new Chart();
             Series series = new Series();
             ChartArea chartArea = new ChartArea();
 
-            series.Points.DataBindXY(liC[0].timestamp, liC[0].comparisons[i].close);
+            series.Points.DataBindXY(liC[i].timestamp, liC[i].indicators.quote[0].close);
             series.ChartType = SeriesChartType.Line;
 
             c.Width = 681;
@@ -225,8 +229,8 @@ namespace MyTrade
             c.ChartAreas.Clear();
             c.ChartAreas.Add(chartArea);
             c.ChartAreas[0].Axes[0].MajorGrid.Enabled = false; //x axis
-            c.ChartAreas[0].AxisY.Maximum = liC[0].comparisons[i].high.Max();
-            c.ChartAreas[0].AxisY.Minimum = liC[0].comparisons[i].high.Min() * 0.95;
+            c.ChartAreas[0].AxisY.Maximum = liC[i].indicators.quote[0].high.Max();
+            c.ChartAreas[0].AxisY.Minimum = liC[i].indicators.quote[0].high.Min() * 0.95;
 
             panelExtra.Controls.Add(c);
         }
@@ -360,6 +364,7 @@ namespace MyTrade
                 case 0:
                     //Pfeil nach unten
                     liSQ = liSQ.OrderBy(s => s.symbol).ToList();
+                    liC = liC.OrderBy(c => c.meta.symbol).ToList();
                     btn_sortSymbol.Text += "↓";
                     sortSymbol = 1;
 
@@ -367,6 +372,7 @@ namespace MyTrade
                 case 1:
                     //Pfeil nach oben
                     liSQ = liSQ.OrderByDescending(s => s.symbol).ToList();
+                    liC = liC.OrderByDescending(c => c.meta.symbol).ToList();
                     btn_sortSymbol.Text += "↑";
                     sortSymbol = 0;
                     break;
@@ -393,6 +399,7 @@ namespace MyTrade
                 case 0:
                     //Pfeil nach unten
                     liSQ = liSQ.OrderByDescending(s => s.regularMarketChangePercent).ToList();
+                    liC = liC.OrderByDescending(c => c.meta.symbol).ToList();
                     btn_sortChange.Text += "↓";
                     sortChange = 1;
 
@@ -400,6 +407,7 @@ namespace MyTrade
                 case 1:
                     //Pfeil nach oben
                     liSQ = liSQ.OrderBy(s => s.regularMarketChangePercent).ToList();
+                    liC = liC.OrderBy(c => c.meta.symbol).ToList();
                     btn_sortChange.Text += "↑";
                     sortChange = 0;
                     break;
@@ -426,6 +434,7 @@ namespace MyTrade
                 case 0:
                     //Pfeil nach unten
                     liSQ = liSQ.OrderByDescending(s => s.regularMarketPrice).ToList();
+                    liC = liC.OrderByDescending(c => c.meta.symbol).ToList();
                     btn_sortPrice.Text += "↓";
                     sortPrice = 1;
 
@@ -433,6 +442,7 @@ namespace MyTrade
                 case 1:
                     //Pfeil nach oben
                     liSQ = liSQ.OrderBy(s => s.regularMarketPrice).ToList();
+                    liC = liC.OrderBy(c => c.meta.symbol).ToList();
                     btn_sortPrice.Text += "↑";
                     sortPrice = 0;
                     break;
@@ -459,6 +469,7 @@ namespace MyTrade
                 case 0:
                     //Pfeil nach unten
                     liSQ = liSQ.OrderBy(s => s.exchange).ToList();
+                    liC = liC.OrderBy(c => c.meta.symbol).ToList();
                     btn_sortExchange.Text += "↓";
                     sortExchange = 1;
 
@@ -466,6 +477,7 @@ namespace MyTrade
                 case 1:
                     //Pfeil nach oben
                     liSQ = liSQ.OrderByDescending(s => s.exchange).ToList();
+                    liC = liC.OrderByDescending(c => c.meta.symbol).ToList();
                     btn_sortExchange.Text += "↑";
                     sortExchange = 0;
                     break;
@@ -590,33 +602,15 @@ namespace MyTrade
         #region Recieve Chart Data (Web Request + Deserialization)
         private void button1_Click(object sender, EventArgs e)
         {
-            _ = getChartData();
+            //_ = getChartData();
         }
 
-        public async Task<int> getChartData()
+        public async Task<int> getChartData(int i)
         {
             try
             {
-                string webRequestString = "";
-                webRequestString = "https://yfapi.net/v8/finance/chart/BOOM?comparisons=";
-                foreach (ResultStockQuote s in liSQ)
-                {
-                    if (!s.Equals(liSQ.Last()))
-                    {
-                        webRequestString += s.symbol + "%2C";
-                    }
-                    else
-                    {
-                        webRequestString += s.symbol;
-                    }
-                }
-
-                for (int i = 0; i < 10; i++)
-                {
-                    
-                }
-
-                webRequestString += "&range=6mo&region=US&interval=1d&lang=en";
+                string webRequestString = "https://yfapi.net/v8/finance/chart/" + liSQ[i].symbol + "?range=" + range + "&region=DE&interval=" + interval + "&lang=en";
+                MessageBox.Show(webRequestString);
 
                 var httpClient = new HttpClient();
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString); //https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en
@@ -631,6 +625,7 @@ namespace MyTrade
 
                 webDataChart = await webResponse.Content.ReadAsStringAsync();
                 liC = DeserialzeChart(webDataChart).chart.result;
+                liC = liC.OrderBy(c => c.meta.symbol).ToList();
             }
             catch (Exception e)
             {
@@ -650,5 +645,88 @@ namespace MyTrade
 
         #endregion
 
+        #region Set Range 
+        private void dToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            range = "1d";
+        }
+
+        private void dToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            range = "5d";
+        }
+
+        private void moToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            range = "1mo";
+        }
+
+        private void moToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            range = "3mo";
+        }
+
+        private void moToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            range = "6mo";
+        }
+
+        private void yToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            range = "1y";
+        }
+
+        private void yToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            range = "5y";
+        }
+
+        private void yToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            range = "10y";
+        }
+
+        private void ytdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            range = "ytd";
+        }
+
+        private void maxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            range = "max";
+        }
+        #endregion
+
+        #region Set Interval
+        private void mToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            interval = "1m";
+        }
+
+        private void mToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            interval = "5m";
+        }
+
+        private void mToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            interval = "15m";
+        }
+
+        private void dToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            interval = "1d";
+        }
+
+        private void wkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            interval = "1wk";
+        }
+
+        private void moToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            interval = "1mo";
+        }
+        #endregion
     }
 }

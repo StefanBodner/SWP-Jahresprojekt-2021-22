@@ -10,7 +10,6 @@ namespace MyTrade
     {
         public Meta meta { get; set; }
         public List<int> timestamp { get; set; }
-        public List<Comparison> comparisons { get; set; }
         public Indicators indicators { get; set; }
     }
 
@@ -63,16 +62,6 @@ namespace MyTrade
         public string dataGranularity { get; set; }
         public string range { get; set; }
         public List<string> validRanges { get; set; }
-    }
-
-    public class Comparison
-    {
-        public string symbol { get; set; }
-        public List<double> high { get; set; }
-        public List<double> low { get; set; }
-        public double chartPreviousClose { get; set; }
-        public List<double> close { get; set; }
-        public List<double> open { get; set; }
     }
 
     public class Quote
