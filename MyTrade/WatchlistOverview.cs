@@ -211,13 +211,29 @@ namespace MyTrade
             }
         }
 
-        private void moreInfoCreateChart(int i)
+        public static int checkIfChartDataExists(int i)
         {
-            _ = getChartData(i);
+            for(int c = 0; c < liC.Count; c++)
+            {
+                if (liC[c].meta.symbol.Equals(liSQ[i].symbol))
+                {
+                    return c;
+                }
+            }
+            return null;
+        }
+
+        private async void moreInfoCreateChart(int i)
+        {
+            checkIfChartDataExists();
+
+            Task t = getChartData(i);
+            await t;
+
             Chart c = new Chart();
             Series series = new Series();
             ChartArea chartArea = new ChartArea();
-            MessageBox.Show(liC.Count.ToString());
+            
             series.Points.DataBindXY(liC[0].timestamp, liC[0].indicators.quote[0].close);
             series.ChartType = SeriesChartType.Line;
 
@@ -233,6 +249,7 @@ namespace MyTrade
             c.ChartAreas[0].AxisY.Maximum = liC[0].indicators.quote[0].high.Max();
             c.ChartAreas[0].AxisY.Minimum = liC[0].indicators.quote[0].high.Min() * 0.95;
 
+            
             panelExtra.Controls.Add(c);
             liC.Clear();
         }
