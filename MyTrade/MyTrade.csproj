@@ -122,5 +122,8 @@
   <ItemGroup>
     <None Include="Resources\MyTradeLogo1.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="tempStorage.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
