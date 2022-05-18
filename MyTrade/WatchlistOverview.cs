@@ -79,7 +79,7 @@ namespace MyTrade
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text);
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
-                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "kzEJR8x3Te8Ckm92RJN9H8J8BQ5YU5JX1YWBLVUB");
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "e1i5DKWcaV7UBrc5OVNge4U1LgokxF703OTc6O99");
                 //niYF94oEjJ7G6Ifo09pco3l57iO5tR070JE9SRY3
                 //2nd API-Key if necessary
 
@@ -126,7 +126,7 @@ namespace MyTrade
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString); //https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
-                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "kzEJR8x3Te8Ckm92RJN9H8J8BQ5YU5JX1YWBLVUB"); 
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "e1i5DKWcaV7UBrc5OVNge4U1LgokxF703OTc6O99"); 
                  //niYF94oEjJ7G6Ifo09pco3l57iO5tR070JE9SRY3
                  //2nd API-Key if necessary
 
@@ -362,8 +362,20 @@ namespace MyTrade
             Chart c = new Chart();
             Series series = new Series();
             ChartArea chartArea = new ChartArea();
+            
 
-            series.Points.DataBindXY(liC[chartListIndex].timestamp, liC[chartListIndex].indicators.quote[0].close);
+            List<DateTime> dateTime = new List<DateTime>();
+            List<string> valueStock = new List<string>(); 
+
+            foreach (int o in liC[chartListIndex].timestamp)
+            {
+                dateTime.Add(DateTimeOffset.FromUnixTimeSeconds(o).DateTime);
+            }
+
+            series.Points.DataBindXY(dateTime, liC[chartListIndex].indicators.quote[0].close);
+
+            chartArea.AxisY.LabelStyle.Format = decimalsFormat + " " + liSQ[chartListIndex].currency;
+
             series.ChartType = SeriesChartType.Line;
 
             c.Width = 681;
@@ -634,51 +646,61 @@ namespace MyTrade
         #region Set Range (in Menu-Strip)
         private void dToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "1d";
         }
 
         private void dToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "5d";
         }
 
         private void moToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "1mo";
         }
 
         private void moToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "3mo";
         }
 
         private void moToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "6mo";
         }
 
         private void yToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "1y";
         }
 
         private void yToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "5y";
         }
 
         private void yToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "10y";
         }
 
         private void ytdToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "ytd";
         }
 
         private void maxToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             range = "max";
         }
         #endregion
@@ -686,31 +708,37 @@ namespace MyTrade
         #region Set Interval (in Menu-Strip)
         private void mToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             interval = "1m";
         }
 
         private void mToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             interval = "5m";
         }
 
         private void mToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             interval = "15m";
         }
 
         private void dToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             interval = "1d";
         }
 
         private void wkToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             interval = "1wk";
         }
 
         private void moToolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            liC.Clear();
             interval = "1mo";
         }
         #endregion
