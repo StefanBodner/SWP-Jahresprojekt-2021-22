@@ -51,6 +51,7 @@ namespace MyTrade
 
         private void WatchlistOverview_Load(object sender, EventArgs e)
         {
+            
             libtn.Add(btn_sortSymbol);
             libtn.Add(btn_sortChange);
             libtn.Add(btn_sortPrice);
@@ -79,9 +80,7 @@ namespace MyTrade
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text);
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
-                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "e1i5DKWcaV7UBrc5OVNge4U1LgokxF703OTc6O99");
-                //niYF94oEjJ7G6Ifo09pco3l57iO5tR070JE9SRY3
-                //2nd API-Key if necessary
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", storeVariables.apiKey);
 
                 var webResponse = await httpClient.SendAsync(webRequest);
                 webResponse.EnsureSuccessStatusCode();
@@ -111,11 +110,6 @@ namespace MyTrade
         #endregion
 
         #region Recieve Chart Data (Web Request + Deserialization)
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //_ = getChartData();
-        }
-
         public async Task<int> getChartData(int i)
         {
             try
@@ -126,9 +120,7 @@ namespace MyTrade
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString); //https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
-                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", "e1i5DKWcaV7UBrc5OVNge4U1LgokxF703OTc6O99"); 
-                 //niYF94oEjJ7G6Ifo09pco3l57iO5tR070JE9SRY3
-                 //2nd API-Key if necessary
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", storeVariables.apiKey); 
 
                  var webResponse = await httpClient.SendAsync(webRequest);
                 webResponse.EnsureSuccessStatusCode();
@@ -301,6 +293,8 @@ namespace MyTrade
             {
                 name = ((PictureBox)sender).Name;
             }
+
+            MessageBox.Show(name);
 
             if (lastClickedBtn.Equals(name))
             {

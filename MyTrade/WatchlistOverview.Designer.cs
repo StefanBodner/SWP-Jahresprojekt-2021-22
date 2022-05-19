@@ -86,7 +86,6 @@ namespace MyTrade
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -98,7 +97,7 @@ namespace MyTrade
             this.btn_data.Name = "btn_data";
             this.btn_data.Size = new System.Drawing.Size(107, 23);
             this.btn_data.TabIndex = 0;
-            this.btn_data.Text = "Update Data";
+            this.btn_data.Text = "Get new Data";
             this.btn_data.UseVisualStyleBackColor = true;
             this.btn_data.Click += new System.EventHandler(this.btn_data_Click);
             // 
@@ -116,7 +115,7 @@ namespace MyTrade
             this.btn_showData.Name = "btn_showData";
             this.btn_showData.Size = new System.Drawing.Size(75, 23);
             this.btn_showData.TabIndex = 7;
-            this.btn_showData.Text = "Show Data";
+            this.btn_showData.Text = "Update";
             this.btn_showData.UseVisualStyleBackColor = true;
             this.btn_showData.Click += new System.EventHandler(this.btn_showData_Click);
             // 
@@ -171,7 +170,7 @@ namespace MyTrade
             this.decimalPlacesToolStripMenuItem2,
             this.decimalPlacesToolStripMenuItem3});
             this.ms_decimal.Name = "ms_decimal";
-            this.ms_decimal.Size = new System.Drawing.Size(180, 22);
+            this.ms_decimal.Size = new System.Drawing.Size(161, 22);
             this.ms_decimal.Text = "Rounding";
             // 
             // decimalPlaceToolStripMenuItem
@@ -208,20 +207,20 @@ namespace MyTrade
             this.blueWhiteToolStripMenuItem,
             this.grayWhiteToolStripMenuItem});
             this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
-            this.themeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.themeToolStripMenuItem.Text = "Theme";
             // 
             // blueWhiteToolStripMenuItem
             // 
             this.blueWhiteToolStripMenuItem.Name = "blueWhiteToolStripMenuItem";
-            this.blueWhiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.blueWhiteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.blueWhiteToolStripMenuItem.Text = "Blue-White";
             this.blueWhiteToolStripMenuItem.Click += new System.EventHandler(this.blueWhiteToolStripMenuItem_Click_1);
             // 
             // grayWhiteToolStripMenuItem
             // 
             this.grayWhiteToolStripMenuItem.Name = "grayWhiteToolStripMenuItem";
-            this.grayWhiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.grayWhiteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.grayWhiteToolStripMenuItem.Text = "Gray-White";
             this.grayWhiteToolStripMenuItem.Click += new System.EventHandler(this.grayWhiteToolStripMenuItem_Click_1);
             // 
@@ -231,7 +230,7 @@ namespace MyTrade
             this.rangeToolStripMenuItem,
             this.intervalToolStripMenuItem});
             this.chartToolStripMenuItem.Name = "chartToolStripMenuItem";
-            this.chartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.chartToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.chartToolStripMenuItem.Text = "Chart";
             // 
             // rangeToolStripMenuItem
@@ -248,76 +247,76 @@ namespace MyTrade
             this.ytdToolStripMenuItem,
             this.maxToolStripMenuItem});
             this.rangeToolStripMenuItem.Name = "rangeToolStripMenuItem";
-            this.rangeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rangeToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.rangeToolStripMenuItem.Text = "Range";
             // 
             // dToolStripMenuItem
             // 
             this.dToolStripMenuItem.Name = "dToolStripMenuItem";
-            this.dToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.dToolStripMenuItem.Text = "1d";
             this.dToolStripMenuItem.Click += new System.EventHandler(this.dToolStripMenuItem_Click);
             // 
             // dToolStripMenuItem1
             // 
             this.dToolStripMenuItem1.Name = "dToolStripMenuItem1";
-            this.dToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.dToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
             this.dToolStripMenuItem1.Text = "5d";
             this.dToolStripMenuItem1.Click += new System.EventHandler(this.dToolStripMenuItem1_Click);
             // 
             // moToolStripMenuItem
             // 
             this.moToolStripMenuItem.Name = "moToolStripMenuItem";
-            this.moToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.moToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.moToolStripMenuItem.Text = "1mo";
             this.moToolStripMenuItem.Click += new System.EventHandler(this.moToolStripMenuItem_Click);
             // 
             // moToolStripMenuItem1
             // 
             this.moToolStripMenuItem1.Name = "moToolStripMenuItem1";
-            this.moToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.moToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
             this.moToolStripMenuItem1.Text = "3mo";
             this.moToolStripMenuItem1.Click += new System.EventHandler(this.moToolStripMenuItem1_Click);
             // 
             // moToolStripMenuItem2
             // 
             this.moToolStripMenuItem2.Name = "moToolStripMenuItem2";
-            this.moToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.moToolStripMenuItem2.Size = new System.Drawing.Size(98, 22);
             this.moToolStripMenuItem2.Text = "6mo";
             this.moToolStripMenuItem2.Click += new System.EventHandler(this.moToolStripMenuItem2_Click);
             // 
             // yToolStripMenuItem
             // 
             this.yToolStripMenuItem.Name = "yToolStripMenuItem";
-            this.yToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.yToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.yToolStripMenuItem.Text = "1y";
             this.yToolStripMenuItem.Click += new System.EventHandler(this.yToolStripMenuItem_Click);
             // 
             // yToolStripMenuItem1
             // 
             this.yToolStripMenuItem1.Name = "yToolStripMenuItem1";
-            this.yToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.yToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
             this.yToolStripMenuItem1.Text = "5y";
             this.yToolStripMenuItem1.Click += new System.EventHandler(this.yToolStripMenuItem1_Click);
             // 
             // yToolStripMenuItem2
             // 
             this.yToolStripMenuItem2.Name = "yToolStripMenuItem2";
-            this.yToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.yToolStripMenuItem2.Size = new System.Drawing.Size(98, 22);
             this.yToolStripMenuItem2.Text = "10y";
             this.yToolStripMenuItem2.Click += new System.EventHandler(this.yToolStripMenuItem2_Click);
             // 
             // ytdToolStripMenuItem
             // 
             this.ytdToolStripMenuItem.Name = "ytdToolStripMenuItem";
-            this.ytdToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ytdToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.ytdToolStripMenuItem.Text = "ytd";
             this.ytdToolStripMenuItem.Click += new System.EventHandler(this.ytdToolStripMenuItem_Click);
             // 
             // maxToolStripMenuItem
             // 
             this.maxToolStripMenuItem.Name = "maxToolStripMenuItem";
-            this.maxToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.maxToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.maxToolStripMenuItem.Text = "max";
             this.maxToolStripMenuItem.Click += new System.EventHandler(this.maxToolStripMenuItem_Click);
             // 
@@ -331,55 +330,55 @@ namespace MyTrade
             this.wkToolStripMenuItem,
             this.moToolStripMenuItem3});
             this.intervalToolStripMenuItem.Name = "intervalToolStripMenuItem";
-            this.intervalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.intervalToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.intervalToolStripMenuItem.Text = "Interval";
             // 
             // mToolStripMenuItem
             // 
             this.mToolStripMenuItem.Name = "mToolStripMenuItem";
-            this.mToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.mToolStripMenuItem.Text = "1m";
             this.mToolStripMenuItem.Click += new System.EventHandler(this.mToolStripMenuItem_Click);
             // 
             // mToolStripMenuItem1
             // 
             this.mToolStripMenuItem1.Name = "mToolStripMenuItem1";
-            this.mToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.mToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
             this.mToolStripMenuItem1.Text = "5m";
             this.mToolStripMenuItem1.Click += new System.EventHandler(this.mToolStripMenuItem1_Click);
             // 
             // mToolStripMenuItem2
             // 
             this.mToolStripMenuItem2.Name = "mToolStripMenuItem2";
-            this.mToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.mToolStripMenuItem2.Size = new System.Drawing.Size(98, 22);
             this.mToolStripMenuItem2.Text = "15m";
             this.mToolStripMenuItem2.Click += new System.EventHandler(this.mToolStripMenuItem2_Click);
             // 
             // dToolStripMenuItem2
             // 
             this.dToolStripMenuItem2.Name = "dToolStripMenuItem2";
-            this.dToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.dToolStripMenuItem2.Size = new System.Drawing.Size(98, 22);
             this.dToolStripMenuItem2.Text = "1d";
             this.dToolStripMenuItem2.Click += new System.EventHandler(this.dToolStripMenuItem2_Click);
             // 
             // wkToolStripMenuItem
             // 
             this.wkToolStripMenuItem.Name = "wkToolStripMenuItem";
-            this.wkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wkToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.wkToolStripMenuItem.Text = "1wk";
             this.wkToolStripMenuItem.Click += new System.EventHandler(this.wkToolStripMenuItem_Click);
             // 
             // moToolStripMenuItem3
             // 
             this.moToolStripMenuItem3.Name = "moToolStripMenuItem3";
-            this.moToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.moToolStripMenuItem3.Size = new System.Drawing.Size(98, 22);
             this.moToolStripMenuItem3.Text = "1mo";
             this.moToolStripMenuItem3.Click += new System.EventHandler(this.moToolStripMenuItem3_Click);
             // 
             // developerModeToolStripMenuItem
             // 
             this.developerModeToolStripMenuItem.Name = "developerModeToolStripMenuItem";
-            this.developerModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.developerModeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.developerModeToolStripMenuItem.Text = "Developer mode";
             this.developerModeToolStripMenuItem.Click += new System.EventHandler(this.developerModeToolStripMenuItem_Click);
             // 
@@ -568,22 +567,11 @@ namespace MyTrade
             this.label8.TabIndex = 12;
             this.label8.Text = "Market Cap";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1187, 32);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 106;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1349, 861);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.tb_listOutput);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.tb_data);
@@ -651,7 +639,6 @@ namespace MyTrade
         private System.Windows.Forms.ToolStripMenuItem themeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blueWhiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grayWhiteToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem chartToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem intervalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rangeToolStripMenuItem;
