@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -267,6 +266,19 @@ namespace MyTrade
             b.Click += btn_ClickMoreInfo;
             b.BackColor = elementColor;
             panelMain.Controls.Add(b);
+        }
+
+        private void visualizeData()
+        {
+            liSQ = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
+
+            liSQ = liSQ.OrderBy(s => s.symbol).ToList();
+
+            createWatchlistOverview();
+
+            //Change Size of Panel
+            panelMain.Height = panelMainHeightExtended;
+            lastClickedBtn = "";
         }
         #endregion
 
@@ -593,6 +605,22 @@ namespace MyTrade
                 frm_watchlist.ActiveForm.Width = 1791;
             }
         }
+
+        private void btn_showData_Click(object sender, EventArgs e)
+        {
+            visualizeData();
+        }
+
+        private void btn_data_Click(object sender, EventArgs e)
+        {
+            //start Task
+            _ = getStockQuoteData();
+        }
+
+        private void sendNewHTTPRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _ = getStockQuoteData();
+        }
         #endregion
 
         #region Set Colors (in Menu-Strip)
@@ -758,39 +786,7 @@ namespace MyTrade
         }
         #endregion
 
-        //Dev Tools
-        #region Developer Info
-        private void btn_showData_Click(object sender, EventArgs e)
-        {
-            visualizeData();
-        }
-
-        private void visualizeData()
-        {
-            liSQ = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
-          
-            liSQ = liSQ.OrderBy(s => s.symbol).ToList();
-
-            createWatchlistOverview();
-
-            //Change Size of Panel
-            panelMain.Height = panelMainHeightExtended;
-            lastClickedBtn = "";
-        }
-
-
-        private void btn_data_Click(object sender, EventArgs e)
-        {
-            //start Task
-            _ = getStockQuoteData();
-        }
-
-        private void sendNewHTTPRequestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _ = getStockQuoteData();
-        }
-        #endregion
-
+        #region Add/Remove Stocks (in Menu-Strip)
         private async void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frm_addStocks faS = new frm_addStocks();
@@ -814,6 +810,7 @@ namespace MyTrade
         {
 
         }
+        #endregion
 
     }
 }

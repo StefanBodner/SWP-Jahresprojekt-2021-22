@@ -43,9 +43,17 @@ namespace MyTrade
 
         private void button3_Click(object sender, EventArgs e)
         {
-            frm_addStocks ass = new frm_addStocks();
+            frm_addStocks fas = new frm_addStocks();
             this.Hide();
-            ass.ShowDialog();
+            fas.ShowDialog();
+            this.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            frm_removeStock frs = new frm_removeStock();
+            this.Hide();
+            frs.ShowDialog();
             this.Show();
         }
     }

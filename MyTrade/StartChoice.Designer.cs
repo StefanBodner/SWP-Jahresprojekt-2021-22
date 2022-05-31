@@ -82,8 +82,9 @@ namespace MyTrade
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(133, 71);
             this.button5.TabIndex = 4;
-            this.button5.Text = "button3";
+            this.button5.Text = "RemoveStocks";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // frm_start
             // 
