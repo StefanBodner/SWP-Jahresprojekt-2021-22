@@ -36,6 +36,9 @@ namespace MyTrade
         string range = "6mo";
         string interval = "1d";
 
+        int panelMainHeightExtended = 773;
+        int panelMainHeightCropped = 404;
+
         static JsonSerializerSettings settings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
@@ -43,7 +46,7 @@ namespace MyTrade
         };
         #endregion
 
-        #region Initial Confiigurations
+        #region Initial Configurations
         public frm_watchlist()
         {
             InitializeComponent();
@@ -51,7 +54,9 @@ namespace MyTrade
 
         private void WatchlistOverview_Load(object sender, EventArgs e)
         {
-            
+            //Just whilst programming
+            webDataStockQuote = tb_data.Text;
+
             libtn.Add(btn_sortSymbol);
             libtn.Add(btn_sortChange);
             libtn.Add(btn_sortPrice);
@@ -64,6 +69,9 @@ namespace MyTrade
             panelMain.AutoScroll = false;
             panelMain.VerticalScroll.Visible = false;
             panelMain.AutoScroll = true;
+
+            tb_ticker.Text = StoreVariables.GetTickerList();
+            this.Width = 1365; 
         }
         #endregion
 
@@ -77,10 +85,12 @@ namespace MyTrade
             {
                 //send request (enter ticker symbol in textbox)
                 var httpClient = new HttpClient();
-                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tb_ticker.Text);
+                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + StoreVariables.GetTickerList());
+
+                tb_ticker.Text = StoreVariables.GetTickerList();
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
-                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", storeVariables.apiKey);
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", StoreVariables.apiKey);
 
                 var webResponse = await httpClient.SendAsync(webRequest);
                 webResponse.EnsureSuccessStatusCode();
@@ -93,12 +103,6 @@ namespace MyTrade
                 MessageBox.Show(e.ToString());
             }
             return 1;
-        }
-
-        private void btn_data_Click(object sender, EventArgs e)
-        {
-            //start Task
-            _ = getStockQuoteData();
         }
 
         private static RootStockQuote DeserialzeStockQuote(string path)
@@ -120,13 +124,25 @@ namespace MyTrade
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString); //https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
-                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", storeVariables.apiKey); 
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", StoreVariables.apiKey); 
 
                  var webResponse = await httpClient.SendAsync(webRequest);
                 webResponse.EnsureSuccessStatusCode();
 
                 webDataChart = await webResponse.Content.ReadAsStringAsync();
                 liC.Add(DeserialzeChart(webDataChart).chart.result[0]);
+
+                //Prevent values like 0 in List
+                for(int x = 0; x < liC.Count; x++)
+                {
+                    for(int y = 0; y < liC[x].indicators.quote[0].close.Count; y++)
+                    {
+                        if (liC[x].indicators.quote[0].close[y] == 0 && y != 0)
+                        {
+                            liC[x].indicators.quote[0].close[y] = liC[x].indicators.quote[0].close[y - 1];
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -294,17 +310,15 @@ namespace MyTrade
                 name = ((PictureBox)sender).Name;
             }
 
-            MessageBox.Show(name);
-
             if (lastClickedBtn.Equals(name))
             {
                 //Change Size of Panel
-                panelMain.Height = 745;
+                panelMain.Height = panelMainHeightExtended;
                 lastClickedBtn = "";
             }
             else
             {
-                panelMain.Height = 377;
+                panelMain.Height = panelMainHeightCropped;
                 Button btn = sender as Button;
                 int i = Int32.Parse(name);
 
@@ -317,13 +331,22 @@ namespace MyTrade
                 moreInfoCreateLabel(setLabelStringPosOrNeg(liSQ[i].regularMarketChange) + " (" + String.Format(decimalsFormat, liSQ[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(liSQ[i].regularMarketChangePercent));
 
                 moreInfoCreateLabel("Open", 10, 110, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketOpen) + " " + liSQ[i].currency, 100, 110, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketOpen), 100, 110, 11, Color.Black);
 
                 moreInfoCreateLabel("High", 10, 140, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayHigh) + " " + liSQ[i].currency, 100, 140, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayHigh), 100, 140, 11, Color.Black);
 
                 moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayLow) + " " + liSQ[i].currency, 100, 170, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayLow), 100, 170, 11, Color.Black);
+
+                moreInfoCreateLabel("MarketCap", 10, 230, 11, Color.Black);
+                moreInfoCreateLabel(formatHugeNumbers(liSQ[i].marketCap), 100, 230, 11, Color.Black);
+
+                moreInfoCreateLabel("P/E", 10, 260, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].trailingPE), 100, 260, 11, Color.Black);
+
+                moreInfoCreateLabel("Yield", 10, 290, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].trailingAnnualDividendRate) + " (" + String.Format(decimalsFormat, liSQ[i].trailingAnnualDividendYield * 100) + "%)", 100, 290, 11, Color.Black);
 
                 moreInfoCreateChart(i);
                 lastClickedBtn = name;
@@ -337,9 +360,7 @@ namespace MyTrade
             while (chartListIndex == -1)
             {
                 for (int x = 0; x < liC.Count; x++)
-                {
-                    //MessageBox.Show("liC: " + liC[x].meta.symbol);
-                    //MessageBox.Show("liSQ: " + liSQ[i].symbol);
+                { 
 
                     if (liC[x].meta.symbol.Equals(liSQ[i].symbol))
                     {
@@ -357,10 +378,8 @@ namespace MyTrade
             Series series = new Series();
             ChartArea chartArea = new ChartArea();
             
-
+            //Convert Timestamp to dateTime
             List<DateTime> dateTime = new List<DateTime>();
-            List<string> valueStock = new List<string>(); 
-
             foreach (int o in liC[chartListIndex].timestamp)
             {
                 dateTime.Add(DateTimeOffset.FromUnixTimeSeconds(o).DateTime);
@@ -382,11 +401,8 @@ namespace MyTrade
             c.ChartAreas.Add(chartArea);
             c.ChartAreas[0].Axes[0].MajorGrid.Enabled = false; //x axis
             c.ChartAreas[0].AxisY.Maximum = liC[chartListIndex].indicators.quote[0].high.Max();
-            c.ChartAreas[0].AxisY.Minimum = liC[chartListIndex].indicators.quote[0].high.Min() * 0.95;
-
-
+            c.ChartAreas[0].AxisY.Minimum = liC[chartListIndex].indicators.quote[0].low.Min();
             panelExtra.Controls.Add(c);
-            //liC.Clear();
         }
         #endregion
 
@@ -567,20 +583,14 @@ namespace MyTrade
             if (devMode)
             {
                 tb_data.Visible = false;
-                tb_listOutput.Visible = false;
                 devMode = false;
                 frm_watchlist.ActiveForm.Width = 1365;
-                frm_watchlist.ActiveForm.StartPosition = FormStartPosition.CenterScreen;
             }
             else
             {
                 tb_data.Visible = true;
-                tb_listOutput.Visible = true;
-                tb_data.BringToFront();
-                tb_listOutput.BringToFront();
                 devMode = true;
                 frm_watchlist.ActiveForm.Width = 1791;
-                frm_watchlist.ActiveForm.StartPosition = FormStartPosition.CenterScreen;
             }
         }
         #endregion
@@ -634,10 +644,21 @@ namespace MyTrade
             return s;
         }
 
+        private string formatHugeNumbers(double num)
+        {
+            int i = 0;
+            string[] arr = { "", "K", "M", "B", "T"};
+            while (num >= 1000)
+            {
+                num = num / 1000;
+                i++;
+            }
+            return String.Format(decimalsFormat, num) + arr[i];
+        }
 
         #endregion
 
-        #region Set Range (in Menu-Strip)
+        #region Set Range (in Menu-Strip) SHOULDN'T BE AS FREELY CHOOSABLE 
         private void dToolStripMenuItem_Click(object sender, EventArgs e)
         {
             liC.Clear();
@@ -697,7 +718,7 @@ namespace MyTrade
             liC.Clear();
             range = "max";
         }
-        #endregion
+        #endregion  
 
         #region Set Interval (in Menu-Strip)
         private void mToolStripMenuItem_Click(object sender, EventArgs e)
@@ -737,8 +758,8 @@ namespace MyTrade
         }
         #endregion
 
-        //Dev Info
-        #region Developer Info (in Textboxes)
+        //Dev Tools
+        #region Developer Info
         private void btn_showData_Click(object sender, EventArgs e)
         {
             visualizeData();
@@ -746,26 +767,53 @@ namespace MyTrade
 
         private void visualizeData()
         {
-            //just temporary -debug purposes only
-            tb_listOutput.Text = "";
-            webDataStockQuote = tb_data.Text;
-
-            //output list entries
-            foreach (var v in liSQ)
-            {
-                foreach (var propertyInfo in v.GetType().GetProperties())
-                {
-                    tb_listOutput.Text += propertyInfo.Name + ", " + propertyInfo.GetValue(v, null) + Environment.NewLine;
-                }
-                tb_listOutput.Text += Environment.NewLine;
-                tb_listOutput.Text += Environment.NewLine;
-            }
-
             liSQ = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
+          
             liSQ = liSQ.OrderBy(s => s.symbol).ToList();
 
             createWatchlistOverview();
+
+            //Change Size of Panel
+            panelMain.Height = panelMainHeightExtended;
+            lastClickedBtn = "";
+        }
+
+
+        private void btn_data_Click(object sender, EventArgs e)
+        {
+            //start Task
+            _ = getStockQuoteData();
+        }
+
+        private void sendNewHTTPRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _ = getStockQuoteData();
         }
         #endregion
+
+        private async void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_addStocks faS = new frm_addStocks();
+            faS.ShowDialog();
+
+            Task t = getStockQuoteData();
+            await t;
+            visualizeData();
+        }
+        private async void removeStockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_removeStock frS = new frm_removeStock();
+            frS.ShowDialog();
+
+            Task t = getStockQuoteData();
+            await t;
+            visualizeData();
+        }
+
+        private void profileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

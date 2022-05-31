@@ -15,7 +15,6 @@ namespace MyTrade
     public partial class frm_addStocks : Form
     {
         static List<ResultSearch> liS = new List<ResultSearch>();
-        string webDataSearch;
         public frm_addStocks()
         {
             InitializeComponent();
@@ -23,45 +22,40 @@ namespace MyTrade
 
         private void AddNewStocks_Load(object sender, EventArgs e)
         {
-
-
             tb_addSearch.Clear();
             tb_addSymbol.Clear();
+            cb_language.DropDownStyle = ComboBoxStyle.DropDownList;
+            cb_language.SelectedIndex = 0;
         }
 
-        private void btn_addSymbol_Click(object sender, EventArgs e)
+        private async Task getSearchData() // https://yfapi.net/v6/finance/autocomplete?region=us&lang=es&query=AMAZON
         {
-            storeVariables.stockName = tb_addSymbol.Text;
-            tb_addSearch.Clear();
-            tb_addSymbol.Clear();
-        }
-
-        private async Task getSearchData() //https://yfapi.net/v6/finance/autocomplete?region=US&lang=en&query=apple
-        {
-            cb_searchResult.Items.Clear();
-            string webRequestString = "https://yfapi.net/v6/finance/autocomplete?region=US&lang=en&query=" + tb_addSearch.Text;
-
-            var httpClient = new HttpClient();
-            var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString);
-
-            webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
-            webRequest.Headers.TryAddWithoutValidation("X-API-KEY", storeVariables.apiKey);
-
-            var webResponse = await httpClient.SendAsync(webRequest);
-            webResponse.EnsureSuccessStatusCode();
-
-            webDataSearch = await webResponse.Content.ReadAsStringAsync();
-            
-            for (int i = 0; i < DeserialzeSearch(webDataSearch).ResultSet.Result.Count; i++)
+            if(tb_addSearch.Text != "")
             {
-                liS.Add(DeserialzeSearch(webDataSearch).ResultSet.Result[i]);
-            }
+                lb_searchResult.Items.Clear();
+                string webRequestString = "https://yfapi.net/v6/finance/autocomplete?region=US&lang=" + cb_language.SelectedItem + "&query=" + tb_addSearch.Text;
 
-            foreach(ResultSearch s in liS)
-            {
-                cb_searchResult.Items.Add(s.name);
+                var httpClient = new HttpClient();
+                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString);
+
+                webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
+                webRequest.Headers.TryAddWithoutValidation("X-API-KEY", StoreVariables.apiKey);
+
+                var webResponse = await httpClient.SendAsync(webRequest);
+                webResponse.EnsureSuccessStatusCode();
+
+                string webDataSearch = await webResponse.Content.ReadAsStringAsync();
+
+                for (int i = 0; i < DeserialzeSearch(webDataSearch).ResultSet.Result.Count; i++)
+                {
+                    liS.Add(DeserialzeSearch(webDataSearch).ResultSet.Result[i]);
+                }
+
+                foreach (ResultSearch s in liS)
+                {
+                    lb_searchResult.Items.Add(s.symbol + " - " + s.name + " (" + s.exchDisp + ")");
+                }
             }
-            liS.Clear();
         }
 
         private void btn_addSearch_Click(object sender, EventArgs e)
@@ -73,6 +67,16 @@ namespace MyTrade
         {
             //convert Json into Object
             return JsonConvert.DeserializeObject<RootSearch>(path);
+        }
+
+        private void btn_addSymbol_Click(object sender, EventArgs e)
+        {
+            StoreVariables.tickerL.Add(liS[lb_searchResult.SelectedIndex].symbol);
+            tb_addSearch.Clear();
+            tb_addSymbol.Clear();
+            lb_searchResult.Items.Clear();
+            lb_searchResult.Text = "";
+            liS.Clear();
         }
     }
 }
