@@ -20,35 +20,25 @@ namespace MyTrade
 
         private void frm_login_Load(object sender, EventArgs e)
         {
-            SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; Integrated Security = sspi;");
 
-            if (SQLInteraction.CMDExecuteScalarInt("SELECT COUNT(*) FROM master.dbo.sysdatabases where name = 'MyTrade';") == 0)
-            {
-                SQLInteraction.CMDExecuteNonQuery("CREATE DATABASE MyTrade");
+            SQLInteraction.SetConnectionString("server=web.hak-kitz.eu;database=maximilian.hager_MyTrade;UID=maximilian.hager;password='MyDatabase025';");
 
-                SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
+            //SQLInteraction.uCreateNewUser("noadmin", "noadmin", "noadmin", "noadmin");
 
-                SQLInteraction.CMDExecuteNonQuery("CREATE TABLE mytrade_UserData(UID int IDENTITY(1, 1), [surname] varchar(50) NOT NULL, [prename] varchar(50) NOT NULL, [user] varchar(80) NOT NULL, [pwd] varchar(70) NOT NULL, [hasAdmin] bit NOT NULL, [ticker] varchar(250) NOT NULL, PRIMARY KEY(UID)); ");
+            //if (!SQLInteraction.CMDExecuteScalar("Select user From MyTrade_UserData Where user = 'admin';").ToString().Equals("admin"))
+            //{
+            //    //Create Admin User
+            //    SQLInteraction.uCreateNewUser("admin", "admin", "admin", "admin");
+            //    //SQLInteraction.CMDExecuteNonQuery("INSERT INTO swp3_Login VALUES ('admin', '"+ BCrypt.HashPassword("admin", BCrypt.GenerateSalt()) + "', 1)");
 
-            }
+            //    //Create More Users to fill Database
+            //    SQLInteraction.uCreateNewUser("noadmin", "noadmin", "noadmin", "noadmin");
 
-            SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
-
-
-            if (!SQLInteraction.CMDExecuteScalar("SELECT [user] FROM mytrade_UserData WHERE [user] = 'admin';").ToString().Equals("admin"))
-            {
-                //Create Admin User
-                SQLInteraction.uCreateNewUser("admin", "admin", "admin", "admin", "1", "AAPL");
-                //SQLInteraction.CMDExecuteNonQuery("INSERT INTO swp3_Login VALUES ('admin', '"+ BCrypt.HashPassword("admin", BCrypt.GenerateSalt()) + "', 1)");
-
-                //Create More Users to fill Database
-                SQLInteraction.uCreateNewUser("noadmin", "noadmin", "noadmin", "noadmin", "0", "AAPL");
-
-            }
-            else
-            {
-                SQLInteraction.CMDExecuteNonQuery("UPDATE mytrade_UserData SET hasAdmin = 1 WHERE [user] = 'admin';");
-            }
+            //}
+            //else
+            //{
+            //    SQLInteraction.CMDExecuteNonQuery("UPDATE mytrade_UserData SET hasAdmin = 1 WHERE [user] = 'admin';");
+            //}
         }
         
 

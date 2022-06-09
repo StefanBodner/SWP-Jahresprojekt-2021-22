@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace MyTrade
 {
     public class SQLInteraction
     {
-        static SqlConnection con = new SqlConnection();
-        static SqlCommand cmd = new SqlCommand();
-        private static SqlDataAdapter sda = new SqlDataAdapter();
-        private static SqlCommandBuilder builder = new SqlCommandBuilder(sda);
+        static MySqlConnection con = new MySqlConnection();
+        static MySqlCommand cmd = new MySqlCommand();
+        private static MySqlDataAdapter sda = new MySqlDataAdapter();
+        private static MySqlCommandBuilder builder = new MySqlCommandBuilder(sda);
         private static DataTable temp = new DataTable();
+        
 
         static bool addUser;
         static int uEditUID;
@@ -44,7 +47,7 @@ namespace MyTrade
             try
             {
                 temp = new DataTable();
-                sda.SelectCommand = new SqlCommand(command, con);
+                sda.SelectCommand = new MySqlCommand(command, con);
                 sda.Fill(temp);
                 return temp;
             }
@@ -198,12 +201,12 @@ namespace MyTrade
 
 
         //Create new login easily
-        public static void uCreateNewUser(string surname, string prename, string username, string password, string hasAdmin, string ticker)
+        public static void uCreateNewUser(string surname, string prename, string username, string password)
         {
             try
             {
                 con.Open();
-                cmd.CommandText = "INSERT INTO mytrade_UserData VALUES ('" + surname + "', '" + prename + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', '" + hasAdmin + "', '" + ticker + "');";
+                cmd.CommandText = "INSERT INTO Mytrade_UserData (surname,prename,username,password) VALUES ('" + surname + "', '" + prename + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "');";
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -213,78 +216,20 @@ namespace MyTrade
                 con.Close();
             }
         }
-        public static void uCreateNewCar(string brand, string model, int acceleration, string fueltype, string color, int sits, string drivetype, int ps, int topspeed, int ccm, int parkingnumber)
-        {
-            try
-            {
-                con.Open();
-                cmd.CommandText = "INSERT INTO caradmin_car VALUES ('" + brand + "', '" + model + "', '" + acceleration + "', '" + fueltype + "', '" + color + "', '" + sits + "', '" + drivetype + "', '" + ps + "', '" + topspeed + "', '" + ccm + "', '" + parkingnumber + "');";
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                con.Close();
-            }
-        }
-        public static void uCreateNewMoto(string brand, string model, int acceleration, int gears, string color, int sits, int weight, int ps, int topspeed, int ccm, int parkingnumber)
-        {
-            try
-            {
-                con.Open();
-                cmd.CommandText = "INSERT INTO caradmin_moto VALUES ('" + brand + "', '" + model + "', '" + acceleration + "', '" + gears + "', '" + color + "', '" + sits + "', '" + weight + "', '" + ps + "', '" + topspeed + "', '" + ccm + "', '" + parkingnumber + "');";
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                con.Close();
-            }
-        }
-        public static void uUpdateCar(string brand, string model, int acceleration, string fueltype, string color, int sits, string drivetype, int ps, int topspeed, int ccm, int parkingnumber)
-        {
-            try
-            {
-                con.Open();
-                cmd.CommandText = "UPDATE caradmin_car SET brand = '" + brand + "', model = '" + model + "', acceleration = '" + acceleration + "', fueltype = '" + fueltype + "', color = '" + color + "', sits = '" + sits + "', drivetype = '" + drivetype + "', ps = '" + ps + "', [top speed] = '" + topspeed + "', ccm = '" + ccm + "', parkingnumber = '" + parkingnumber + "'WHERE [CID] = " + GetuEditID() + ";";
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                con.Close();
-            }
-        }
-        public static void uUpdateMoto(string brand, string model, int acceleration, int gears, string color, int sits, int weight, int ps, int topspeed, int ccm, int parkingnumber)
-        {
-            try
-            {
-                con.Open();
-                cmd.CommandText = "UPDATE caradmin_moto SET brand = '" + brand + "', model = '" + model + "', acceleration = '" + acceleration + "', gears = '" + gears + "', color = '" + color + "', sits = '" + sits + "', weight = '" + weight + "', ps = '" + ps + "', [top speed] = '" + topspeed + "', ccm = '" + ccm + "', parkingnumber = '" + parkingnumber + "'WHERE [CID] = " + GetuEditID() + ";";
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                con.Close();
-            }
-        }
-        public static void uUpdateUser(string surname, string prename, string username, string password, string hasAdmin, bool alreadyHashed)
+
+
+        public static void uUpdateUser(string surname, string prename, string username, string password, bool alreadyHashed)
         {
             try
             {
                 con.Open();
                 if (alreadyHashed)
                 {
-                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + password + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
+                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + password + "' WHERE [UID] = " + GetuEditID() + ";";
                 }
                 else
                 {
-                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "', [hasAdmin] = '" + hasAdmin + "' WHERE [UID] = " + GetuEditID() + ";";
+                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "' WHERE [UID] = " + GetuEditID() + ";";
                 }
                 cmd.ExecuteNonQuery();
                 con.Close();
