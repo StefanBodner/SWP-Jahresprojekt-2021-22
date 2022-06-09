@@ -13,7 +13,8 @@ namespace MyTrade
     public partial class frm_watchlist : Form
     {
         #region Variables
-        static List<ResultStockQuote> liSQ = new List<ResultStockQuote>();
+        static List<ResultStockQuote> liSQWatch = new List<ResultStockQuote>();
+        static List<ResultStockQuote> liSQInvest = new List<ResultStockQuote>();
         static List<ResultChart> liC = new List<ResultChart>();
         static List<Button> libtn = new List<Button>();
         string webDataStockQuote = "";
@@ -61,13 +62,20 @@ namespace MyTrade
             libtn.Add(btn_sortPrice);
             libtn.Add(btn_sortExchange);
 
-            visualizeData();
+            visualizeDataWL();
             panelMain.BringToFront();
 
             panelMain.HorizontalScroll.Maximum = 0;
             panelMain.AutoScroll = false;
             panelMain.VerticalScroll.Visible = false;
             panelMain.AutoScroll = true;
+
+            panelInvest.HorizontalScroll.Maximum = 0;
+            panelInvest.AutoScroll = false;
+            panelInvest.VerticalScroll.Visible = false;
+            panelInvest.AutoScroll = true;
+            panelInvest.Hide();
+            panelInvest.BringToFront();
 
             tb_ticker.Text = StoreVariables.GetTickerList();
             this.Width = 1365; 
@@ -117,7 +125,7 @@ namespace MyTrade
         {
             try
             {
-                string webRequestString = "https://yfapi.net/v8/finance/chart/" + liSQ[i].symbol + "?range=" + range + "&region=DE&interval=" + interval + "&lang=en";
+                string webRequestString = "https://yfapi.net/v8/finance/chart/" + liSQWatch[i].symbol + "?range=" + range + "&region=DE&interval=" + interval + "&lang=en";
 
                 var httpClient = new HttpClient();
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString); //https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en
@@ -166,7 +174,7 @@ namespace MyTrade
             panelMain.Controls.Clear();
             panelMain.Refresh();
 
-            for (int i = 0; i < liSQ.Count; i++)
+            for (int i = 0; i < liSQWatch.Count; i++)
             {
                 setBackColor(i);
 
@@ -175,7 +183,7 @@ namespace MyTrade
                     overviewLabelsCreation(i, j);
                 }
 
-                overviewPictureBoxCreation(i);
+                overviewPictureBoxCreation(i, panelMain);
             }
         }
 
@@ -192,7 +200,7 @@ namespace MyTrade
             }
         }
 
-        private void overviewPictureBoxCreation(int i)
+        private void overviewPictureBoxCreation(int i, Panel p)
         {
             //Create PictureBox for each line as "background"
             PictureBox pb = new PictureBox();
@@ -201,8 +209,8 @@ namespace MyTrade
             pb.Height = 50;
             pb.Click += btn_ClickMoreInfo;
             pb.BackColor = elementColor;
-            pb.Width = panelMain.Width;
-            panelMain.Controls.Add(pb);
+            pb.Width = p.Width;
+            p.Controls.Add(pb);
         }
 
         private void overviewLabelsCreation(int i, int j)
@@ -217,29 +225,29 @@ namespace MyTrade
             switch (j)
             {
                 case 0:
-                    l.Text = liSQ[i].symbol;
+                    l.Text = liSQWatch[i].symbol;
                     break;
                 case 1:
                     l.Text = getStockName(i);
                     l.Left = 200;
                     break;
                 case 2:
-                    l.Text = setLabelStringPosOrNeg(liSQ[i].regularMarketChangePercent) + " %";
-                    l.ForeColor = setLabelColorPosOrNeg(liSQ[i].regularMarketChangePercent);
+                    l.Text = setLabelStringPosOrNeg(liSQWatch[i].regularMarketChangePercent) + " %";
+                    l.ForeColor = setLabelColorPosOrNeg(liSQWatch[i].regularMarketChangePercent);
                     l.TextAlign = ContentAlignment.MiddleRight;
                     l.AutoSize = false;
                     l.Width = 100;
                     l.Left = 600;
                     break;
                 case 3:
-                    l.Text = String.Format(decimalsFormat, liSQ[i].regularMarketPrice) + " " + liSQ[i].currency;
+                    l.Text = String.Format(decimalsFormat, liSQWatch[i].regularMarketPrice) + " " + liSQWatch[i].currency;
                     l.TextAlign = ContentAlignment.MiddleRight;
                     l.AutoSize = false;
                     l.Width = 150;
                     l.Left = 750;
                     break;
                 case 4:
-                    l.Text = liSQ[i].fullExchangeName;
+                    l.Text = liSQWatch[i].fullExchangeName;
                     l.Left = 1000;
                     break;
                 case 5:
@@ -268,11 +276,11 @@ namespace MyTrade
             panelMain.Controls.Add(b);
         }
 
-        private void visualizeData()
+        private void visualizeDataWL()
         {
-            liSQ = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
+            liSQWatch = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
 
-            liSQ = liSQ.OrderBy(s => s.symbol).ToList();
+            liSQWatch = liSQWatch.OrderBy(s => s.symbol).ToList();
 
             createWatchlistOverview();
 
@@ -285,13 +293,13 @@ namespace MyTrade
         #region Text + Chart Creation (Extra Info)
         private string getStockName(int i)
         {
-            if (liSQ[i].longName == null)
+            if (liSQWatch[i].longName == null)
             {
-                return liSQ[i].shortName;
+                return liSQWatch[i].shortName;
             }
             else
             {
-                return liSQ[i].longName;
+                return liSQWatch[i].longName;
             }
 
         }
@@ -338,27 +346,27 @@ namespace MyTrade
 
                 panelExtra.Controls.Clear();
 
-                moreInfoCreateLabel(getStockName(i) + " (" + liSQ[i].symbol + ")", 10, 10, 14, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketPrice) + " " + liSQ[i].currency, 10, 40, 20, Color.Black);
-                moreInfoCreateLabel(setLabelStringPosOrNeg(liSQ[i].regularMarketChange) + " (" + String.Format(decimalsFormat, liSQ[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(liSQ[i].regularMarketChangePercent));
+                moreInfoCreateLabel(getStockName(i) + " (" + liSQWatch[i].symbol + ")", 10, 10, 14, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].regularMarketPrice) + " " + liSQWatch[i].currency, 10, 40, 20, Color.Black);
+                moreInfoCreateLabel(setLabelStringPosOrNeg(liSQWatch[i].regularMarketChange) + " (" + String.Format(decimalsFormat, liSQWatch[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(liSQWatch[i].regularMarketChangePercent));
 
                 moreInfoCreateLabel("Open", 10, 110, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketOpen), 100, 110, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].regularMarketOpen), 100, 110, 11, Color.Black);
 
                 moreInfoCreateLabel("High", 10, 140, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayHigh), 100, 140, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].regularMarketDayHigh), 100, 140, 11, Color.Black);
 
                 moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].regularMarketDayLow), 100, 170, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].regularMarketDayLow), 100, 170, 11, Color.Black);
 
                 moreInfoCreateLabel("MarketCap", 10, 230, 11, Color.Black);
-                moreInfoCreateLabel(formatHugeNumbers(liSQ[i].marketCap), 100, 230, 11, Color.Black);
+                moreInfoCreateLabel(formatHugeNumbers(liSQWatch[i].marketCap), 100, 230, 11, Color.Black);
 
                 moreInfoCreateLabel("P/E", 10, 260, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].trailingPE), 100, 260, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].trailingPE), 100, 260, 11, Color.Black);
 
                 moreInfoCreateLabel("Yield", 10, 290, 11, Color.Black);
-                moreInfoCreateLabel(String.Format(decimalsFormat, liSQ[i].trailingAnnualDividendRate) + " (" + String.Format(decimalsFormat, liSQ[i].trailingAnnualDividendYield * 100) + "%)", 100, 290, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].trailingAnnualDividendRate) + " (" + String.Format(decimalsFormat, liSQWatch[i].trailingAnnualDividendYield * 100) + "%)", 100, 290, 11, Color.Black);
 
                 moreInfoCreateChart(i);
                 lastClickedBtn = name;
@@ -374,7 +382,7 @@ namespace MyTrade
                 for (int x = 0; x < liC.Count; x++)
                 { 
 
-                    if (liC[x].meta.symbol.Equals(liSQ[i].symbol))
+                    if (liC[x].meta.symbol.Equals(liSQWatch[i].symbol))
                     {
                         chartListIndex = x;
                         goto chartCreation; //break out of loop & skip new list entry
@@ -399,7 +407,7 @@ namespace MyTrade
 
             series.Points.DataBindXY(dateTime, liC[chartListIndex].indicators.quote[0].close);
 
-            chartArea.AxisY.LabelStyle.Format = decimalsFormat + " " + liSQ[chartListIndex].currency;
+            chartArea.AxisY.LabelStyle.Format = decimalsFormat + " " + liSQWatch[chartListIndex].currency;
 
             series.ChartType = SeriesChartType.Line;
 
@@ -436,14 +444,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    liSQ = liSQ.OrderBy(s => s.symbol).ToList();
+                    liSQWatch = liSQWatch.OrderBy(s => s.symbol).ToList();
                     btn_sortSymbol.Text += "↓";
                     sortSymbol = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    liSQ = liSQ.OrderByDescending(s => s.symbol).ToList();
+                    liSQWatch = liSQWatch.OrderByDescending(s => s.symbol).ToList();
                     btn_sortSymbol.Text += "↑";
                     sortSymbol = 0;
                     break;
@@ -469,14 +477,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    liSQ = liSQ.OrderByDescending(s => s.regularMarketChangePercent).ToList();
+                    liSQWatch = liSQWatch.OrderByDescending(s => s.regularMarketChangePercent).ToList();
                     btn_sortChange.Text += "↓";
                     sortChange = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    liSQ = liSQ.OrderBy(s => s.regularMarketChangePercent).ToList();
+                    liSQWatch = liSQWatch.OrderBy(s => s.regularMarketChangePercent).ToList();
                     btn_sortChange.Text += "↑";
                     sortChange = 0;
                     break;
@@ -502,14 +510,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    liSQ = liSQ.OrderByDescending(s => s.regularMarketPrice).ToList();
+                    liSQWatch = liSQWatch.OrderByDescending(s => s.regularMarketPrice).ToList();
                     btn_sortPrice.Text += "↓";
                     sortPrice = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    liSQ = liSQ.OrderBy(s => s.regularMarketPrice).ToList();
+                    liSQWatch = liSQWatch.OrderBy(s => s.regularMarketPrice).ToList();
                     btn_sortPrice.Text += "↑";
                     sortPrice = 0;
                     break;
@@ -535,14 +543,14 @@ namespace MyTrade
             {
                 case 0:
                     //Pfeil nach unten
-                    liSQ = liSQ.OrderBy(s => s.exchange).ToList();
+                    liSQWatch = liSQWatch.OrderBy(s => s.exchange).ToList();
                     btn_sortExchange.Text += "↓";
                     sortExchange = 1;
 
                     break;
                 case 1:
                     //Pfeil nach oben
-                    liSQ = liSQ.OrderByDescending(s => s.exchange).ToList();
+                    liSQWatch = liSQWatch.OrderByDescending(s => s.exchange).ToList();
                     btn_sortExchange.Text += "↑";
                     sortExchange = 0;
                     break;
@@ -608,7 +616,7 @@ namespace MyTrade
 
         private void btn_showData_Click(object sender, EventArgs e)
         {
-            visualizeData();
+            visualizeDataWL();
         }
 
         private void btn_data_Click(object sender, EventArgs e)
@@ -794,7 +802,7 @@ namespace MyTrade
 
             Task t = getStockQuoteData();
             await t;
-            visualizeData();
+            visualizeDataWL();
         }
         private async void removeStockToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -803,7 +811,7 @@ namespace MyTrade
 
             Task t = getStockQuoteData();
             await t;
-            visualizeData();
+            visualizeDataWL();
         }
 
         private void profileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -812,5 +820,94 @@ namespace MyTrade
         }
         #endregion
 
+        private void ms_showInvestments_Click(object sender, EventArgs e)
+        {
+            panelInvest.Show();
+
+            createInvestmentOverview();
+        }
+
+        private void ms_showWatchlist_Click(object sender, EventArgs e)
+        {
+            panelInvest.Hide();
+        }
+
+        //Investment Tab
+        #region Investment Tab
+        private void createInvestmentOverview()
+        {
+            panelInvest.Controls.Clear();
+            panelInvest.Refresh();
+
+            for (int i = 0; i < liSQInvest.Count; i++)
+            {
+                setBackColor(i);
+
+                for (int j = 0; j < 6; j++)
+                {
+                    investLabelsCreation(i, j);
+                }
+
+                overviewPictureBoxCreation(i, panelMain);
+            }
+        }
+
+        private void visualizeDataIV()
+        {
+            liSQInvest = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
+
+            liSQInvest = liSQInvest.OrderBy(s => s.symbol).ToList();
+
+            createInvestmentOverview();
+
+            //Change Size of Panel
+            //panelMain.Height = panelMainHeightExtended;
+            //lastClickedBtn = "";
+        }
+
+        private void investLabelsCreation(int i, int j)
+        {
+            //Create Labels for Overview
+            Label l = new Label();
+            l.AutoSize = true;
+            l.Top = i * 50 + 15;
+            l.Font = new Font("Arial", 11, FontStyle.Bold);
+            l.BackColor = elementColor;
+
+            switch (j)
+            {
+                case 0:
+                    l.Text = liSQInvest[i].symbol;
+                    break;
+                case 1:
+                    l.Text = getStockName(i);
+                    l.Left = 200;
+                    break;
+                case 2:
+                    l.Text = setLabelStringPosOrNeg(liSQInvest[i].regularMarketChangePercent) + " %";
+                    l.ForeColor = setLabelColorPosOrNeg(liSQInvest[i].regularMarketChangePercent);
+                    l.TextAlign = ContentAlignment.MiddleRight;
+                    l.AutoSize = false;
+                    l.Width = 100;
+                    l.Left = 600;
+                    break;
+                case 3:
+                    l.Text = String.Format(decimalsFormat, liSQInvest[i].regularMarketPrice) + " " + liSQInvest[i].currency;
+                    l.TextAlign = ContentAlignment.MiddleRight;
+                    l.AutoSize = false;
+                    l.Width = 150;
+                    l.Left = 750;
+                    break;
+                case 4:
+                    l.Text = liSQInvest[i].fullExchangeName;
+                    l.Left = 1000;
+                    break;
+                case 5:
+                    overviewButtonCreation(i);
+                    break;
+            }
+            panelMain.Controls.Add(l);
+        }
+        #endregion
     }
 }
