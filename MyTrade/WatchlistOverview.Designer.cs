@@ -89,6 +89,7 @@ namespace MyTrade
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panelInvest = new System.Windows.Forms.Panel();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -183,7 +184,8 @@ namespace MyTrade
             this.themeToolStripMenuItem,
             this.chartToolStripMenuItem,
             this.developerModeToolStripMenuItem,
-            this.sendNewHTTPRequestToolStripMenuItem});
+            this.sendNewHTTPRequestToolStripMenuItem,
+            this.testToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -593,10 +595,17 @@ namespace MyTrade
             // panelInvest
             // 
             this.panelInvest.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.panelInvest.Location = new System.Drawing.Point(11, 76);
+            this.panelInvest.Location = new System.Drawing.Point(11, 33);
             this.panelInvest.Name = "panelInvest";
-            this.panelInvest.Size = new System.Drawing.Size(1331, 770);
+            this.panelInvest.Size = new System.Drawing.Size(1331, 813);
             this.panelInvest.TabIndex = 0;
+            // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.testToolStripMenuItem.Text = "Test";
+            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // frm_watchlist
             // 
@@ -619,6 +628,7 @@ namespace MyTrade
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frm_watchlist";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MyTrade";
             this.Load += new System.EventHandler(this.WatchlistOverview_Load);
@@ -692,5 +702,6 @@ namespace MyTrade
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeStockToolStripMenuItem;
         private System.Windows.Forms.Panel panelInvest;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
     }
 }

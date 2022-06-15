@@ -11,9 +11,11 @@ namespace MyTrade
         #region Variables
         public static string stockName { get; set; }
 
-        public static string apiKey = "C95skcumzK61z7ipKpap4JIqodQdLb57JN2Xthr7";
+        public static string apiKey = "1WOcW3A2Tr65k1oi9KF307IJJmmVvqIl20fTvSeI";
 
-        public static List<string> tickerL = new List<string>() { "AAPL", "TSLA", "MSFT", "AMZN", "NFLX", "FB", "GOOGL", "BTC-USD", "MRNA", "BNTX"};
+        public static List<string> tickerWL = new List<string>() { "AAPL", "TSLA", "MSFT", "AMZN", "NFLX", "FB", "GOOGL", "BTC-USD", "MRNA", "BNTX"};
+
+        
         #endregion
 
         #region Methods
@@ -21,7 +23,7 @@ namespace MyTrade
         {
             string tickerString = "";
 
-            foreach(string s in tickerL)
+            foreach(string s in tickerWL)
             {
                 tickerString += s + ",";
             }

@@ -29,6 +29,7 @@ namespace MyTrade
         bool devMode = false;
         string lastClickedBtn = "";
 
+        int currentMenuStripItem = 0;
         Color elementColor = Color.White;
         Color themeColorA = Color.LightSteelBlue;
         Color themeColorB = Color.White;
@@ -36,8 +37,8 @@ namespace MyTrade
         string range = "6mo";
         string interval = "1d";
 
-        int panelMainHeightExtended = 773;
-        int panelMainHeightCropped = 404;
+        int panelHeightExtended = 773;
+        int panelHeightCropped = 404;
 
         static JsonSerializerSettings settings = new JsonSerializerSettings
         {
@@ -78,7 +79,10 @@ namespace MyTrade
             panelInvest.BringToFront();
 
             tb_ticker.Text = StoreVariables.GetTickerList();
-            this.Width = 1365; 
+            this.Width = 1365;
+
+            menuStrip1.Items[currentMenuStripItem].BackColor = themeColorB;
+            menuStrip1.BackColor = themeColorA;
         }
         #endregion
 
@@ -133,7 +137,7 @@ namespace MyTrade
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
                 webRequest.Headers.TryAddWithoutValidation("X-API-KEY", StoreVariables.apiKey); 
 
-                 var webResponse = await httpClient.SendAsync(webRequest);
+                var webResponse = await httpClient.SendAsync(webRequest);
                 webResponse.EnsureSuccessStatusCode();
 
                 webDataChart = await webResponse.Content.ReadAsStringAsync();
@@ -285,7 +289,7 @@ namespace MyTrade
             createWatchlistOverview();
 
             //Change Size of Panel
-            panelMain.Height = panelMainHeightExtended;
+            panelMain.Height = panelHeightExtended;
             lastClickedBtn = "";
         }
         #endregion
@@ -333,12 +337,12 @@ namespace MyTrade
             if (lastClickedBtn.Equals(name))
             {
                 //Change Size of Panel
-                panelMain.Height = panelMainHeightExtended;
+                panelMain.Height = panelHeightExtended;
                 lastClickedBtn = "";
             }
             else
             {
-                panelMain.Height = panelMainHeightCropped;
+                panelMain.Height = panelHeightCropped;
                 Button btn = sender as Button;
                 int i = Int32.Parse(name);
 
@@ -636,13 +640,35 @@ namespace MyTrade
         {
             themeColorA = Color.LightSteelBlue;
             themeColorB = Color.White;
+
+            changeMenuStripColor(0);
+
             createWatchlistOverview();
         }
         private void grayWhiteToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             themeColorA = Color.LightGray;
             themeColorB = Color.White;
+
+            changeMenuStripColor(0);
+
             createWatchlistOverview();
+        }
+
+        private void changeMenuStripColor(int i)
+        {
+            for(int x = 0; x < menuStrip1.Items.Count - 1; x++)
+            {
+                if(x == i)
+                {
+                    menuStrip1.Items[i].BackColor = themeColorB;
+                    menuStrip1.BackColor = themeColorA;
+                }
+                else
+                {
+                    menuStrip1.Items[x].BackColor = themeColorA;
+                }
+            }
         }
         #endregion
 
@@ -816,19 +842,21 @@ namespace MyTrade
 
         private void profileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            changeMenuStripColor(2);
         }
         #endregion
 
+        
         private void ms_showInvestments_Click(object sender, EventArgs e)
         {
             panelInvest.Show();
-
+            changeMenuStripColor(1);
             createInvestmentOverview();
         }
 
         private void ms_showWatchlist_Click(object sender, EventArgs e)
         {
+            changeMenuStripColor(0);
             panelInvest.Hide();
         }
 
@@ -848,7 +876,7 @@ namespace MyTrade
                     investLabelsCreation(i, j);
                 }
 
-                overviewPictureBoxCreation(i, panelMain);
+                overviewPictureBoxCreation(i, panelInvest);
             }
         }
 
@@ -861,8 +889,8 @@ namespace MyTrade
             createInvestmentOverview();
 
             //Change Size of Panel
-            //panelMain.Height = panelMainHeightExtended;
-            //lastClickedBtn = "";
+            panelInvest.Height = panelHeightExtended;
+            lastClickedBtn = "";
         }
 
         private void investLabelsCreation(int i, int j)
@@ -906,8 +934,15 @@ namespace MyTrade
                     overviewButtonCreation(i);
                     break;
             }
-            panelMain.Controls.Add(l);
+            panelInvest.Controls.Add(l);
         }
         #endregion
+
+        private async void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Task t = getStockQuoteData();
+            await t; 
+            visualizeDataIV();
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace MyTrade
 
         private void btn_addSymbol_Click(object sender, EventArgs e)
         {
-            StoreVariables.tickerL.Add(liS[lb_searchResult.SelectedIndex].symbol);
+            StoreVariables.tickerWL.Add(liS[lb_searchResult.SelectedIndex].symbol);
             tb_addSearch.Clear();
             tb_addSymbol.Clear();
             lb_searchResult.Items.Clear();

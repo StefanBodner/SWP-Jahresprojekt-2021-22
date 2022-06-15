@@ -21,7 +21,7 @@ namespace MyTrade
         {
             lb_stocks.Items.Clear();
 
-            foreach(string s in StoreVariables.tickerL)
+            foreach(string s in StoreVariables.tickerWL)
             {
                 lb_stocks.Items.Add(s);
             }
@@ -31,10 +31,10 @@ namespace MyTrade
         {
             if(lb_stocks.SelectedIndex != -1)
             {
-                StoreVariables.tickerL.RemoveAt(lb_stocks.SelectedIndex);
+                StoreVariables.tickerWL.RemoveAt(lb_stocks.SelectedIndex);
                 lb_stocks.Items.Clear();
 
-                foreach (string s in StoreVariables.tickerL)
+                foreach (string s in StoreVariables.tickerWL)
                 {
                     lb_stocks.Items.Add(s);
                 }
@@ -45,7 +45,7 @@ namespace MyTrade
                 }
                 else
                 {
-                    StoreVariables.tickerL.Add("^DJI");
+                    StoreVariables.tickerWL.Add("^DJI");
                 }
 
                 lb_stocks.Refresh();
