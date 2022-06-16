@@ -16,7 +16,7 @@ namespace MyTrade
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_start());
+            Application.Run(new frm_login());
         }
     }
 }

@@ -1,71 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace MyTrade
 {
-    public class SQLInteraction
+    class SQLInteraction
     {
-        static MySqlConnection con = new MySqlConnection();
-        static MySqlCommand cmd = new MySqlCommand();
-        private static MySqlDataAdapter sda = new MySqlDataAdapter();
-        private static MySqlCommandBuilder builder = new MySqlCommandBuilder(sda);
-        private static DataTable temp = new DataTable();
-        
+        #region Variables
+        static SqlConnection con = new SqlConnection();
+        static SqlCommand cmd = new SqlCommand();
 
-        static bool addUser;
+        private static SqlDataReader dr = null;
+
         static int uEditUID;
-        static string username;
-        static bool editvehicle;
+        #endregion
 
-        //Check if connection to server is possible
-        public static bool TryConnection()
+        //Get ticker List from database (WatchList)
+        public static List<string> uGetTickerWL()
         {
+            List<string> list = new List<string>();
             try
             {
                 con.Open();
-                con.Close();
-                return true;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                return false;
-            }
-        }
-
-
-        public static DataTable GetDataTable(string command)
-        {
-            try
-            {
-                temp = new DataTable();
-                sda.SelectCommand = new MySqlCommand(command, con);
-                sda.Fill(temp);
-                return temp;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                temp = new DataTable();
-                return temp;
-            }
-        }
-
-        public static void SaveChanges()
-        {
-            try
-            {
-                con.Open();
-                sda.UpdateCommand = builder.GetUpdateCommand();
-                sda.Update(temp);
+                cmd.CommandText = "SELECT [ticker] FROM myTrade_UserWL WHERE [UID] = '" + SQLInteraction.GetUID() + "';";
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    list.Add(dr[0].ToString());
+                }
+                dr.Close();
                 con.Close();
             }
             catch (Exception e)
@@ -73,10 +38,11 @@ namespace MyTrade
                 MessageBox.Show(e.Message);
                 con.Close();
             }
+            return list;
         }
 
 
-        //Easily execute SQL-Commands
+        #region Easily execute SQL-Commands
         public static void CMDExecuteNonQuery(string UserCommand)
         {
             try
@@ -134,46 +100,8 @@ namespace MyTrade
                 return temp;
             }
         }
-        public static bool CMDExecuteScalarBool(string UserCommand)
-        {
-            bool temp = false;
-            try
-            {
-                con.Open();
-                cmd.CommandText = UserCommand;
-                temp = (bool)cmd.ExecuteScalar();
-                con.Close();
-                return temp;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                con.Close();
-                return temp;
-            }
-        }
-        public static DateTime CMDExecuteScalarDateTime(string UserCommand)
-        {
-            DateTime temp = new DateTime(2000, 01, 01);
-            try
-            {
-                con.Open();
-                cmd.CommandText = UserCommand;
-                temp = (DateTime)cmd.ExecuteScalar();
-                if (temp == null)
-                {
-                    temp = new DateTime(2000, 01, 01); ;
-                }
-                con.Close();
-                return temp;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                con.Close();
-                return temp;
-            }
-        }
+
+        #endregion
 
 
         //Check if Login is correct
@@ -181,7 +109,7 @@ namespace MyTrade
         {
             try
             {
-                string temp = CMDExecuteScalar("SELECT [pwd] FROM mytrade_UserData WHERE [user] = '" + username + "';");
+                string temp = CMDExecuteScalar("SELECT [pwd] FROM myTrade_Login WHERE [user] = '" + username + "';");
                 if (BCrypt.CheckPassword(password, temp))
                 {
                     return true;
@@ -194,19 +122,19 @@ namespace MyTrade
             }
             catch (Exception)
             {
-                MessageBox.Show("Username does not exis t!");
+                MessageBox.Show("Username does not exist!");
                 return false;
             }
         }
 
 
         //Create new login easily
-        public static void uCreateNewUser(string surname, string prename, string username, string password)
+        public static void uCreateNewUser(string surname, string prename, string email, string username, string password)
         {
             try
             {
                 con.Open();
-                cmd.CommandText = "INSERT INTO Mytrade_UserData (surname,prename,username,password) VALUES ('" + surname + "', '" + prename + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "');";
+                cmd.CommandText = "INSERT INTO myTrade_Login VALUES ('" + surname + "', '" + prename + "', '" + email + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "');";
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -217,20 +145,25 @@ namespace MyTrade
             }
         }
 
+        public static bool UsernameExists(string uUsername, string UID)
+        {
+            if (CMDExecuteScalar("SELECT [user] FROM myTrade_Login WHERE [user] = '" + uUsername + "' EXCEPT SELECT [user] FROM myTrade_Login WHERE [UID] = '" + UID + "';").Equals(""))
+            {
+                return false;
+            }
+            else
+            {
+                MessageBox.Show("Username already exists!");
+                return true;
+            }
+        }
 
-        public static void uUpdateUser(string surname, string prename, string username, string password, bool alreadyHashed)
+        public static void uUpdateUser(string surname, string prename, string email, string username, string password)
         {
             try
             {
                 con.Open();
-                if (alreadyHashed)
-                {
-                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + password + "' WHERE [UID] = " + GetuEditID() + ";";
-                }
-                else
-                {
-                    cmd.CommandText = "UPDATE mytrade_UserData SET surname = '" + surname + "', prename = '" + prename + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "' WHERE [UID] = " + GetuEditID() + ";";
-                }
+                cmd.CommandText = "UPDATE myTrade_Login SET surname = '" + surname + "', prename = '" + prename + "', email = '" + email + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "' WHERE [UID] = " + GetUID() + ";";
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -255,48 +188,15 @@ namespace MyTrade
                 MessageBox.Show(e.Message);
             }
         }
-        public static string GetConnectionString()
-        {
-            return con.ConnectionString;
-        }
 
-        public static void SetAddUser(bool temp)
+        public static void SetUID(int UID)
         {
-            addUser = temp;
+            uEditUID = UID;
         }
-        public static bool GetAddUser()
-        {
-            return addUser;
-        }
-
-        public static void SetuEditID(int ID)
-        {
-            uEditUID = ID;
-        }
-        public static string GetuEditID()
+        public static string GetUID()
         {
             return uEditUID.ToString();
-        }
-
-        public static void SetuUsernameLogin(string u)
-        {
-            username = u;
-        }
-        public static string GetuUsernameLogin()
-        {
-            return username;
-        }
-
-        public static void SetEditveh(bool temp)
-        {
-            editvehicle = temp;
-        }
-        public static bool GetEditveh()
-        {
-            return editvehicle;
         }
         #endregion
     }
 }
-
-

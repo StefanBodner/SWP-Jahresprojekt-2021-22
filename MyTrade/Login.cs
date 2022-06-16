@@ -21,24 +21,30 @@ namespace MyTrade
         private void frm_login_Load(object sender, EventArgs e)
         {
 
-            SQLInteraction.SetConnectionString("server=web.hak-kitz.eu;database=maximilian.hager_MyTrade;UID=maximilian.hager;password='MyDatabase025';");
+            //Connect to Server
+            SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; Integrated Security = sspi;");
 
-            //SQLInteraction.uCreateNewUser("noadmin", "noadmin", "noadmin", "noadmin");
+            if (SQLInteraction.CMDExecuteScalarInt("SELECT COUNT(*) FROM master.dbo.sysdatabases where name = 'MyTrade';") == 0)
+            {
+                
+                //Create Database
+                SQLInteraction.CMDExecuteNonQuery("CREATE DATABASE MyTrade");
+                
+                //Connect to Server & Database
+                SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
+                
+                //Create Login Table
+                SQLInteraction.CMDExecuteNonQuery("CREATE TABLE myTrade_Login(UID int IDENTITY(1, 1), [surname] varchar(50) NOT NULL, [prename] varchar(50) NOT NULL, [email] varchar(80) NOT NULL, [user] varchar(80) NOT NULL, [pwd] varchar(70) NOT NULL, PRIMARY KEY(UID));");
+                
+                //Create User Data
+                SQLInteraction.CMDExecuteNonQuery("CREATE TABLE myTrade_UserWL(WLID int IDENTITY(1, 1), [UID] int NOT NULL, [ticker] varchar(50) NOT NULL, PRIMARY KEY(WLID));");
 
-            //if (!SQLInteraction.CMDExecuteScalar("Select user From MyTrade_UserData Where user = 'admin';").ToString().Equals("admin"))
-            //{
-            //    //Create Admin User
-            //    SQLInteraction.uCreateNewUser("admin", "admin", "admin", "admin");
-            //    //SQLInteraction.CMDExecuteNonQuery("INSERT INTO swp3_Login VALUES ('admin', '"+ BCrypt.HashPassword("admin", BCrypt.GenerateSalt()) + "', 1)");
+                //Create default User
+                SQLInteraction.uCreateNewUser("User", "Test", "user.test@gmail.com", "user", "Test1!");
+            }
 
-            //    //Create More Users to fill Database
-            //    SQLInteraction.uCreateNewUser("noadmin", "noadmin", "noadmin", "noadmin");
-
-            //}
-            //else
-            //{
-            //    SQLInteraction.CMDExecuteNonQuery("UPDATE mytrade_UserData SET hasAdmin = 1 WHERE [user] = 'admin';");
-            //}
+            //Connect to Server & Database
+            SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
         }
         
 
@@ -48,49 +54,20 @@ namespace MyTrade
             Environment.Exit(0);
         }
 
-        private bool isValid()
-        {
-            if (tb_username.Text.TrimStart() == string.Empty)
-            {
-                MessageBox.Show("Textbox (username) is empty!!!!!!!\r\rEnter valid username.");
-                return false;
-            }
-
-            else if (tb_password.Text.TrimStart() == string.Empty)
-            {
-                MessageBox.Show("Textbox (password) is empty!!!!!!!\r\rEnter valid password.");
-                return false;
-            }
-
-            return true;
-        }
-
-        
-
         private void btn_login_Click(object sender, EventArgs e)
         {
             if (SQLInteraction.uLogin(tb_username.Text, tb_password.Text))
             {
-                SQLInteraction.SetuUsernameLogin(tb_username.Text);
+                SQLInteraction.SetUID(SQLInteraction.CMDExecuteScalarInt("SELECT [UID] FROM myTrade_Login WHERE [user] = '" + tb_username.Text + "';"));
 
-                SQLInteraction.SetuEditID(SQLInteraction.CMDExecuteScalarInt("SELECT [UID] FROM mytrade_UserData WHERE [user] = '" + tb_username.Text + "';"));
-                SQLInteraction.SetAddUser(false);
+                StoreVariables.tickerWL = SQLInteraction.uGetTickerWL();
 
-                if (SQLInteraction.CMDExecuteScalarBool("SELECT [hasAdmin] FROM mytrade_UserData WHERE [uid] = " + SQLInteraction.GetuEditID() + ";"))
-                {
-                    frm_chart ch = new frm_chart();
-                    this.Hide();
-                    ch.ShowDialog();
-                    this.Show();
-                }
-                else
-                {
-                    frm_chart ov = new frm_chart();
-                    this.Hide();
-                    ov.ShowDialog();
-                    this.Show();
-                }
+                frm_watchlist frm_Watchlist = new frm_watchlist();
+                this.Hide();
+                frm_Watchlist.ShowDialog();
+                this.Show();
             }
+
         }
 
         private void cb_show_CheckedChanged(object sender, EventArgs e)
@@ -103,6 +80,14 @@ namespace MyTrade
             {
                 tb_password.UseSystemPasswordChar = true;
             }
+        }
+
+        private void btn_register_Click(object sender, EventArgs e)
+        {
+            frm_register frm_Register = new frm_register();
+            this.Hide();
+            frm_Register.ShowDialog();
+            this.Show();
         }
     }
 }

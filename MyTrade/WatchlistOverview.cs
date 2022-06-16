@@ -53,18 +53,13 @@ namespace MyTrade
             InitializeComponent();
         }
 
-        private void WatchlistOverview_Load(object sender, EventArgs e)
+        private async void WatchlistOverview_Load(object sender, EventArgs e)
         {
-            //Just whilst programming
-            webDataStockQuote = tb_data.Text;
-
             libtn.Add(btn_sortSymbol);
             libtn.Add(btn_sortChange);
             libtn.Add(btn_sortPrice);
             libtn.Add(btn_sortExchange);
-
-            visualizeDataWL();
-            panelMain.BringToFront();
+            
 
             panelMain.HorizontalScroll.Maximum = 0;
             panelMain.AutoScroll = false;
@@ -83,6 +78,10 @@ namespace MyTrade
 
             menuStrip1.Items[currentMenuStripItem].BackColor = themeColorB;
             menuStrip1.BackColor = themeColorA;
+
+            _ = await getStockQuoteData();
+            visualizeDataWL();
+            panelMain.BringToFront();
         }
         #endregion
 
@@ -175,9 +174,6 @@ namespace MyTrade
         #region Create Overview Table (Main)
         private void createWatchlistOverview()
         {
-            panelMain.Controls.Clear();
-            panelMain.Refresh();
-
             for (int i = 0; i < liSQWatch.Count; i++)
             {
                 setBackColor(i);
@@ -282,15 +278,22 @@ namespace MyTrade
 
         private void visualizeDataWL()
         {
-            liSQWatch = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
+            panelMain.Controls.Clear();
+            panelMain.Refresh();
 
-            liSQWatch = liSQWatch.OrderBy(s => s.symbol).ToList();
+            if (DeserialzeStockQuote(webDataStockQuote).quoteResponse != null)
+            {
+                liSQWatch = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
 
-            createWatchlistOverview();
+                liSQWatch = liSQWatch.OrderBy(s => s.symbol).ToList();
 
-            //Change Size of Panel
-            panelMain.Height = panelHeightExtended;
-            lastClickedBtn = "";
+                createWatchlistOverview();
+
+                //Change Size of Panel
+                panelMain.Height = panelHeightExtended;
+                lastClickedBtn = "";
+            }
+            
         }
         #endregion
 
@@ -470,7 +473,7 @@ namespace MyTrade
             sortPrice = 0;
             sortExchange = 0;
 
-            createWatchlistOverview();
+            visualizeDataWL();
         }
 
         private void btn_sortChange_Click(object sender, EventArgs e)
@@ -503,7 +506,7 @@ namespace MyTrade
             sortPrice = 0;
             sortExchange = 0;
 
-            createWatchlistOverview();
+            visualizeDataWL();
         }
 
         private void btn_sortPrice_Click(object sender, EventArgs e)
@@ -531,12 +534,11 @@ namespace MyTrade
                     sortPrice = 0;
                     break;
             }
-
             sortSymbol = 0;
             sortChange = 0;
             sortExchange = 0;
 
-            createWatchlistOverview();
+            visualizeDataWL(); 
         }
 
         private void btn_sortExchange_Click(object sender, EventArgs e)
@@ -564,12 +566,11 @@ namespace MyTrade
                     sortExchange = 0;
                     break;
             }
-
             sortSymbol = 0;
             sortChange = 0;
             sortPrice = 0;
 
-            createWatchlistOverview();
+            visualizeDataWL();
         }
 
         #endregion
@@ -837,30 +838,21 @@ namespace MyTrade
 
             Task t = getStockQuoteData();
             await t;
+
             visualizeDataWL();
         }
 
         private void profileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             changeMenuStripColor(2);
+
+            frm_profile profile = new frm_profile();
+            profile.ShowDialog();
         }
         #endregion
 
-        
-        private void ms_showInvestments_Click(object sender, EventArgs e)
-        {
-            panelInvest.Show();
-            changeMenuStripColor(1);
-            createInvestmentOverview();
-        }
 
-        private void ms_showWatchlist_Click(object sender, EventArgs e)
-        {
-            changeMenuStripColor(0);
-            panelInvest.Hide();
-        }
-
-        //Investment Tab
+        //Investment Tab (not finished!!!!)
         #region Investment Tab
         private void createInvestmentOverview()
         {
@@ -909,7 +901,7 @@ namespace MyTrade
                     break;
                 case 1:
                     l.Text = getStockName(i);
-                    l.Left = 200;
+                    l.Left = 150;
                     break;
                 case 2:
                     l.Text = setLabelStringPosOrNeg(liSQInvest[i].regularMarketChangePercent) + " %";
@@ -936,13 +928,34 @@ namespace MyTrade
             }
             panelInvest.Controls.Add(l);
         }
-        #endregion
+
+
+
+        private void ms_showInvestments_Click(object sender, EventArgs e)
+        {
+            panelInvest.Show();
+            panelInvest.BringToFront();
+            changeMenuStripColor(1);
+            createInvestmentOverview();
+        }
+
+        private void ms_showWatchlist_Click(object sender, EventArgs e)
+        {
+            changeMenuStripColor(0);
+            panelInvest.Hide();
+        }
 
         private async void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Task t = getStockQuoteData();
-            await t; 
+            await t;
             visualizeDataIV();
         }
+
+        private void addStockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

@@ -71,12 +71,16 @@ namespace MyTrade
 
         private void btn_addSymbol_Click(object sender, EventArgs e)
         {
-            StoreVariables.tickerWL.Add(liS[lb_searchResult.SelectedIndex].symbol);
-            tb_addSearch.Clear();
-            tb_addSymbol.Clear();
-            lb_searchResult.Items.Clear();
-            lb_searchResult.Text = "";
-            liS.Clear();
+            if (lb_searchResult.SelectedIndex == 0)
+            {
+                StoreVariables.tickerWL.Add(liS[lb_searchResult.SelectedIndex].symbol);
+                SQLInteraction.CMDExecuteNonQuery("INSERT INTO myTrade_UserWL VALUES ('" + SQLInteraction.GetUID() + "', '" + liS[lb_searchResult.SelectedIndex].symbol + "')");
+                tb_addSearch.Clear();
+                tb_addSymbol.Clear();
+                lb_searchResult.Items.Clear();
+                lb_searchResult.Text = "";
+                liS.Clear(); 
+            }
         }
     }
 }

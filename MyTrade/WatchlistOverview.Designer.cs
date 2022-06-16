@@ -38,6 +38,8 @@ namespace MyTrade
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeStockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_showInvestments = new System.Windows.Forms.ToolStripMenuItem();
+            this.addStockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeStockToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_decimal = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +71,7 @@ namespace MyTrade
             this.moToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.developerModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendNewHTTPRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_sortSymbol = new System.Windows.Forms.Button();
             this.btn_sortChange = new System.Windows.Forms.Button();
             this.btn_sortPrice = new System.Windows.Forms.Button();
@@ -89,10 +92,11 @@ namespace MyTrade
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panelInvest = new System.Windows.Forms.Panel();
-            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label9 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.panelInvest.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_data
@@ -152,23 +156,39 @@ namespace MyTrade
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addToolStripMenuItem.Text = "Add Stock";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // removeStockToolStripMenuItem
             // 
             this.removeStockToolStripMenuItem.Name = "removeStockToolStripMenuItem";
-            this.removeStockToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.removeStockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removeStockToolStripMenuItem.Text = "Remove Stock";
             this.removeStockToolStripMenuItem.Click += new System.EventHandler(this.removeStockToolStripMenuItem_Click);
             // 
             // ms_showInvestments
             // 
+            this.ms_showInvestments.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addStockToolStripMenuItem,
+            this.removeStockToolStripMenuItem1});
             this.ms_showInvestments.Name = "ms_showInvestments";
             this.ms_showInvestments.Size = new System.Drawing.Size(89, 20);
             this.ms_showInvestments.Text = "Investements";
             this.ms_showInvestments.Click += new System.EventHandler(this.ms_showInvestments_Click);
+            // 
+            // addStockToolStripMenuItem
+            // 
+            this.addStockToolStripMenuItem.Name = "addStockToolStripMenuItem";
+            this.addStockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addStockToolStripMenuItem.Text = "Add Stock";
+            this.addStockToolStripMenuItem.Click += new System.EventHandler(this.addStockToolStripMenuItem_Click);
+            // 
+            // removeStockToolStripMenuItem1
+            // 
+            this.removeStockToolStripMenuItem1.Name = "removeStockToolStripMenuItem1";
+            this.removeStockToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.removeStockToolStripMenuItem1.Text = "Remove Stock";
             // 
             // profileToolStripMenuItem
             // 
@@ -417,6 +437,13 @@ namespace MyTrade
             this.sendNewHTTPRequestToolStripMenuItem.Text = "Send new HTTP request";
             this.sendNewHTTPRequestToolStripMenuItem.Click += new System.EventHandler(this.sendNewHTTPRequestToolStripMenuItem_Click);
             // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.testToolStripMenuItem.Text = "Temporary (Invest)";
+            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            // 
             // btn_sortSymbol
             // 
             this.btn_sortSymbol.Location = new System.Drawing.Point(12, 33);
@@ -595,17 +622,21 @@ namespace MyTrade
             // panelInvest
             // 
             this.panelInvest.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.panelInvest.Location = new System.Drawing.Point(11, 33);
+            this.panelInvest.Controls.Add(this.label9);
+            this.panelInvest.Location = new System.Drawing.Point(12, 33);
             this.panelInvest.Name = "panelInvest";
-            this.panelInvest.Size = new System.Drawing.Size(1331, 813);
+            this.panelInvest.Size = new System.Drawing.Size(1331, 816);
             this.panelInvest.TabIndex = 0;
             // 
-            // testToolStripMenuItem
+            // label9
             // 
-            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.testToolStripMenuItem.Text = "Test";
-            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(495, 353);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(474, 73);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Not finished yet";
             // 
             // frm_watchlist
             // 
@@ -636,6 +667,8 @@ namespace MyTrade
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.panelInvest.ResumeLayout(false);
+            this.panelInvest.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -703,5 +736,8 @@ namespace MyTrade
         private System.Windows.Forms.ToolStripMenuItem removeStockToolStripMenuItem;
         private System.Windows.Forms.Panel panelInvest;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addStockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeStockToolStripMenuItem1;
+        private System.Windows.Forms.Label label9;
     }
 }

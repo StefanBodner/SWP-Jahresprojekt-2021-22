@@ -11,11 +11,11 @@ namespace MyTrade
         #region Variables
         public static string stockName { get; set; }
 
-        public static string apiKey = "1WOcW3A2Tr65k1oi9KF307IJJmmVvqIl20fTvSeI";
+        //https://www.yahoofinanceapi.com/
+
+        public static string apiKey = "5O3GWaacy35x7zAPHAWyuVtgseT1IS45zcZdpKLd";
 
         public static List<string> tickerWL = new List<string>() { "AAPL", "TSLA", "MSFT", "AMZN", "NFLX", "FB", "GOOGL", "BTC-USD", "MRNA", "BNTX"};
-
-        
         #endregion
 
         #region Methods

@@ -31,6 +31,8 @@ namespace MyTrade
         {
             if(lb_stocks.SelectedIndex != -1)
             {
+                SQLInteraction.CMDExecuteNonQuery("DELETE FROM myTrade_UserWL WHERE ticker ='" + StoreVariables.tickerWL[lb_stocks.SelectedIndex] + "';");
+
                 StoreVariables.tickerWL.RemoveAt(lb_stocks.SelectedIndex);
                 lb_stocks.Items.Clear();
 
@@ -43,11 +45,7 @@ namespace MyTrade
                 {
                     lb_stocks.SelectedIndex = 0;
                 }
-                else
-                {
-                    StoreVariables.tickerWL.Add("^DJI");
-                }
-
+                
                 lb_stocks.Refresh();
             }
         }
