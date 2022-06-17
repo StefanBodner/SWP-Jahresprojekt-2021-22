@@ -23,7 +23,6 @@ namespace MyTrade
         private void AddNewStocks_Load(object sender, EventArgs e)
         {
             tb_addSearch.Clear();
-            tb_addSymbol.Clear();
             cb_language.DropDownStyle = ComboBoxStyle.DropDownList;
             cb_language.SelectedIndex = 0;
         }
@@ -76,7 +75,6 @@ namespace MyTrade
                 StoreVariables.tickerWL.Add(liS[lb_searchResult.SelectedIndex].symbol);
                 SQLInteraction.CMDExecuteNonQuery("INSERT INTO myTrade_UserWL VALUES ('" + SQLInteraction.GetUID() + "', '" + liS[lb_searchResult.SelectedIndex].symbol + "')");
                 tb_addSearch.Clear();
-                tb_addSymbol.Clear();
                 lb_searchResult.Items.Clear();
                 lb_searchResult.Text = "";
                 liS.Clear(); 
