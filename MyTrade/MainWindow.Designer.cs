@@ -89,14 +89,14 @@ namespace MyTrade
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panelInvest = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            this.panelInvest.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.panelInvest.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_data
@@ -156,14 +156,14 @@ namespace MyTrade
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.addToolStripMenuItem.Text = "Add Stock";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // removeStockToolStripMenuItem
             // 
             this.removeStockToolStripMenuItem.Name = "removeStockToolStripMenuItem";
-            this.removeStockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeStockToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.removeStockToolStripMenuItem.Text = "Remove Stock";
             this.removeStockToolStripMenuItem.Click += new System.EventHandler(this.removeStockToolStripMenuItem_Click);
             // 
@@ -189,6 +189,7 @@ namespace MyTrade
             this.removeStockToolStripMenuItem1.Name = "removeStockToolStripMenuItem1";
             this.removeStockToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.removeStockToolStripMenuItem1.Text = "Remove Stock";
+            this.removeStockToolStripMenuItem1.Click += new System.EventHandler(this.removeStockToolStripMenuItem1_Click);
             // 
             // profileToolStripMenuItem
             // 
@@ -601,24 +602,6 @@ namespace MyTrade
             this.label8.TabIndex = 12;
             this.label8.Text = "Market Cap";
             // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox3.Location = new System.Drawing.Point(12, 68);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(1331, 2);
-            this.pictureBox3.TabIndex = 105;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox2.Location = new System.Drawing.Point(12, 487);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(1331, 2);
-            this.pictureBox2.TabIndex = 104;
-            this.pictureBox2.TabStop = false;
-            // 
             // panelInvest
             // 
             this.panelInvest.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -637,6 +620,24 @@ namespace MyTrade
             this.label9.Size = new System.Drawing.Size(474, 73);
             this.label9.TabIndex = 0;
             this.label9.Text = "Not finished yet";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox3.Location = new System.Drawing.Point(12, 68);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(1331, 2);
+            this.pictureBox3.TabIndex = 105;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBox2.Location = new System.Drawing.Point(12, 487);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(1331, 2);
+            this.pictureBox2.TabIndex = 104;
+            this.pictureBox2.TabStop = false;
             // 
             // frm_watchlist
             // 
@@ -665,10 +666,10 @@ namespace MyTrade
             this.Load += new System.EventHandler(this.WatchlistOverview_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panelInvest.ResumeLayout(false);
             this.panelInvest.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -59,12 +59,16 @@ namespace MyTrade
                 {
                     if (tb_password.Text.Equals(tb_repeatPWD.Text))
                     {
-                        if (!SQLInteraction.UsernameExists(tb_username.Text, SQLInteraction.GetUID()))
+                        if (!SQLInteraction.UsernameExists(tb_username.Text))
                         {
                             SQLInteraction.uCreateNewUser(tb_surname.Text, tb_prename.Text, tb_email.Text, tb_username.Text, tb_password.Text);
                             
                             MessageBox.Show("Successfully Registered!");
                             this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Username already exists!");
                         }
                     }
                     else

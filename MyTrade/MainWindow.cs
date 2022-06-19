@@ -37,8 +37,10 @@ namespace MyTrade
         string range = "6mo";
         string interval = "1d";
 
-        int panelHeightExtended = 773;
-        int panelHeightCropped = 404;
+        int panelWLHeightExtended = 773;
+        int panelWLHeightCropped = 404;
+        int panelIVHeightExtended = 816;
+
 
         static JsonSerializerSettings settings = new JsonSerializerSettings
         {
@@ -59,7 +61,8 @@ namespace MyTrade
             libtn.Add(btn_sortChange);
             libtn.Add(btn_sortPrice);
             libtn.Add(btn_sortExchange);
-            
+
+            panelMain.BringToFront();
 
             panelMain.HorizontalScroll.Maximum = 0;
             panelMain.AutoScroll = false;
@@ -73,21 +76,21 @@ namespace MyTrade
             panelInvest.Hide();
             panelInvest.BringToFront();
 
-            tb_ticker.Text = StoreVariables.GetTickerList();
+            tb_ticker.Text = StoreVariables.GetTickerWL();
             this.Width = 1365;
 
             menuStrip1.Items[currentMenuStripItem].BackColor = themeColorB;
             menuStrip1.BackColor = themeColorA;
 
-            _ = await getStockQuoteData();
+            _ = await getStockQuoteData(StoreVariables.GetTickerWL());
             visualizeDataWL();
-            panelMain.BringToFront();
+            
         }
         #endregion
 
         //API + JSON String
         #region Recieve StockQuote Data (Web Request + Deserialization)
-        public async Task<int> getStockQuoteData()
+        public async Task<int> getStockQuoteData(string tickerList)
         {
             //source: https://www.yahoofinanceapi.com/dashboard
 
@@ -95,9 +98,9 @@ namespace MyTrade
             {
                 //send request (enter ticker symbol in textbox)
                 var httpClient = new HttpClient();
-                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + StoreVariables.GetTickerList());
+                var webRequest = new HttpRequestMessage(new HttpMethod("GET"), "https://yfapi.net/v6/finance/quote?region=DE&lang=DE&symbols=" + tickerList);
 
-                tb_ticker.Text = StoreVariables.GetTickerList();
+                tb_ticker.Text = StoreVariables.GetTickerWL();
 
                 webRequest.Headers.TryAddWithoutValidation("accept", "application/json");
                 webRequest.Headers.TryAddWithoutValidation("X-API-KEY", StoreVariables.apiKey);
@@ -228,7 +231,7 @@ namespace MyTrade
                     l.Text = liSQWatch[i].symbol;
                     break;
                 case 1:
-                    l.Text = getStockName(i);
+                    l.Text = getStockNameWL(i);
                     l.Left = 200;
                     break;
                 case 2:
@@ -290,7 +293,7 @@ namespace MyTrade
                 createWatchlistOverview();
 
                 //Change Size of Panel
-                panelMain.Height = panelHeightExtended;
+                panelMain.Height = panelWLHeightExtended;
                 lastClickedBtn = "";
             }
             
@@ -298,7 +301,7 @@ namespace MyTrade
         #endregion
 
         #region Text + Chart Creation (Extra Info)
-        private string getStockName(int i)
+        private string getStockNameWL(int i)
         {
             if (liSQWatch[i].longName == null)
             {
@@ -340,12 +343,12 @@ namespace MyTrade
             if (lastClickedBtn.Equals(name))
             {
                 //Change Size of Panel
-                panelMain.Height = panelHeightExtended;
+                panelMain.Height = panelWLHeightExtended;
                 lastClickedBtn = "";
             }
             else
             {
-                panelMain.Height = panelHeightCropped;
+                panelMain.Height = panelWLHeightCropped;
                 Button btn = sender as Button;
                 int i = Int32.Parse(name);
 
@@ -353,7 +356,7 @@ namespace MyTrade
 
                 panelExtra.Controls.Clear();
 
-                moreInfoCreateLabel(getStockName(i) + " (" + liSQWatch[i].symbol + ")", 10, 10, 14, Color.Black);
+                moreInfoCreateLabel(getStockNameWL(i) + " (" + liSQWatch[i].symbol + ")", 10, 10, 14, Color.Black);
                 moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].regularMarketPrice) + " " + liSQWatch[i].currency, 10, 40, 20, Color.Black);
                 moreInfoCreateLabel(setLabelStringPosOrNeg(liSQWatch[i].regularMarketChange) + " (" + String.Format(decimalsFormat, liSQWatch[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(liSQWatch[i].regularMarketChangePercent));
 
@@ -627,12 +630,12 @@ namespace MyTrade
         private void btn_data_Click(object sender, EventArgs e)
         {
             //start Task
-            _ = getStockQuoteData();
+            _ = getStockQuoteData(StoreVariables.GetTickerWL());
         }
 
         private void sendNewHTTPRequestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _ = getStockQuoteData();
+            _ = getStockQuoteData(StoreVariables.GetTickerWL());
         }
         #endregion
 
@@ -827,7 +830,7 @@ namespace MyTrade
             frm_addStocks faS = new frm_addStocks();
             faS.ShowDialog();
 
-            Task t = getStockQuoteData();
+            Task t = getStockQuoteData(StoreVariables.GetTickerWL());
             await t;
             visualizeDataWL();
         }
@@ -836,7 +839,7 @@ namespace MyTrade
             frm_removeStock frS = new frm_removeStock();
             frS.ShowDialog();
 
-            Task t = getStockQuoteData();
+            Task t = getStockQuoteData(StoreVariables.GetTickerWL());
             await t;
 
             visualizeDataWL();
@@ -881,8 +884,35 @@ namespace MyTrade
             createInvestmentOverview();
 
             //Change Size of Panel
-            panelInvest.Height = panelHeightExtended;
+            panelInvest.Height = panelIVHeightExtended;
             lastClickedBtn = "";
+        }
+        private string getStockNameIV(int i)
+        {
+            if (liSQInvest[i].longName == null)
+            {
+                return liSQInvest[i].shortName;
+            }
+            else
+            {
+                return liSQInvest[i].longName;
+            }
+
+        }
+
+        public static double ConvertCurrency(double price)
+        {
+            List<string> liCurrency = new List<string>();
+            int temp = liSQInvest.Count;
+            for(int i = 0; i < temp; i++)
+            {
+                if (!liCurrency.Contains(liSQInvest[i].currency))
+                {
+                    liCurrency.Add(liSQInvest[i].currency);
+                }
+            }
+
+            return price;
         }
 
         private void investLabelsCreation(int i, int j)
@@ -900,7 +930,7 @@ namespace MyTrade
                     l.Text = liSQInvest[i].symbol;
                     break;
                 case 1:
-                    l.Text = getStockName(i);
+                    l.Text = getStockNameIV(i);
                     l.Left = 150;
                     break;
                 case 2:
@@ -919,11 +949,10 @@ namespace MyTrade
                     l.Left = 750;
                     break;
                 case 4:
-                    l.Text = liSQInvest[i].fullExchangeName;
-                    l.Left = 1000;
+                    
                     break;
                 case 5:
-                    overviewButtonCreation(i);
+
                     break;
             }
             panelInvest.Controls.Add(l);
@@ -947,15 +976,26 @@ namespace MyTrade
 
         private async void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Task t = getStockQuoteData();
+            Task t = getStockQuoteData(StoreVariables.GetTickerIV());
             await t;
             visualizeDataIV();
         }
 
-        private void addStockToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void addStockToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            frm_IvAddStocks frm_IvAddStocks = new frm_IvAddStocks();
+            frm_IvAddStocks.ShowDialog();
 
+            Task t = getStockQuoteData(StoreVariables.GetTickerIV());
+            await t;
+            visualizeDataIV();
         }
         #endregion
+
+        private void removeStockToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frm_IvRemoveStock frm_IvRemoveStock = new frm_IvRemoveStock();
+            frm_IvRemoveStock.ShowDialog();
+        }
     }
 }

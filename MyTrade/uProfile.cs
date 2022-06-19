@@ -59,13 +59,10 @@ namespace MyTrade
                 {
                     if (tb_password.Text.Equals(tb_repeatPWD.Text))
                     {
-                        if (!SQLInteraction.UsernameExists(tb_username.Text, SQLInteraction.GetUID()))
-                        {
-                            SQLInteraction.uUpdateUser(tb_surname.Text, tb_prename.Text, tb_email.Text, tb_username.Text, tb_password.Text);
+                        SQLInteraction.uUpdateUser(tb_surname.Text, tb_prename.Text, tb_email.Text, tb_username.Text, tb_password.Text);
 
-                            MessageBox.Show("Successfully Updated Profile!");
-                            this.Close();
-                        }
+                        MessageBox.Show("Successfully Updated Profile!");
+                        this.Close();
                     }
                     else
                     {
@@ -81,10 +78,10 @@ namespace MyTrade
 
         private void frm_profile_Load(object sender, EventArgs e)
         {
-            tb_prename.Text = SQLInteraction.CMDExecuteScalar("SELECT [prename] FROM myTrade_Login WHERE [UID] = '" + SQLInteraction.GetUID() + "';");
-            tb_surname.Text = SQLInteraction.CMDExecuteScalar("SELECT [surname] FROM myTrade_Login WHERE [UID] = '" + SQLInteraction.GetUID() + "';");
-            tb_email.Text = SQLInteraction.CMDExecuteScalar("SELECT [email] FROM myTrade_Login WHERE [UID] = '" + SQLInteraction.GetUID() + "';");
-            tb_username.Text =  SQLInteraction.CMDExecuteScalar("SELECT [user] FROM myTrade_Login WHERE [UID] = '" + SQLInteraction.GetUID() + "';");
+            tb_prename.Text = SQLInteraction.CMDExecuteScalar("SELECT prename FROM myTrade_Login WHERE UID = '" + SQLInteraction.GetUID() + "';");
+            tb_surname.Text = SQLInteraction.CMDExecuteScalar("SELECT surname FROM myTrade_Login WHERE UID = '" + SQLInteraction.GetUID() + "';");
+            tb_email.Text = SQLInteraction.CMDExecuteScalar("SELECT email FROM myTrade_Login WHERE UID = '" + SQLInteraction.GetUID() + "';");
+            tb_username.Text =  SQLInteraction.CMDExecuteScalar("SELECT user FROM myTrade_Login WHERE UID = '" + SQLInteraction.GetUID() + "';");
         }
 
         private void cb_show_CheckedChanged(object sender, EventArgs e)

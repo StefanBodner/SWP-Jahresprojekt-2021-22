@@ -22,29 +22,26 @@ namespace MyTrade
         {
 
             //Connect to Server
-            SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; Integrated Security = sspi;");
+            SQLInteraction.SetConnectionString("server=web.hak-kitz.eu;database=stefan.bodner_mytrade;UID=stefan.bodner;password='MyDatabase020';");
 
-            if (SQLInteraction.CMDExecuteScalarInt("SELECT COUNT(*) FROM master.dbo.sysdatabases where name = 'MyTrade';") == 0)
+            //Create Database
+            //SQLInteraction.CMDExecuteNonQuery("CREATE DATABASE IF NOT EXISTS 'stefan.bodner_MyTrade';");
+            //MessageBox.Show("Database created!");
+
+            //Create Login Table
+            SQLInteraction.CMDExecuteNonQuery("CREATE TABLE IF NOT EXISTS myTrade_Login(UID int NOT NULL Primary Key AUTO_INCREMENT, surname varchar(50) NOT NULL, prename varchar(50) NOT NULL, email varchar(80) NOT NULL, user varchar(80) NOT NULL, pwd varchar(70) NOT NULL);");
+
+            //Create User Watchlist
+            SQLInteraction.CMDExecuteNonQuery("CREATE TABLE IF NOT EXISTS myTrade_UserWL(WLID int NOT NULL PRIMARY KEY AUTO_INCREMENT, UID int NOT NULL, ticker varchar(50) NOT NULL);");
+
+            //Create User Investments
+            SQLInteraction.CMDExecuteNonQuery("CREATE TABLE IF NOT EXISTS myTrade_UserIV(IVID int NOT NULL PRIMARY KEY AUTO_INCREMENT, UID int NOT NULL, ticker varchar(50) NOT NULL, amount double NOT NULL, avgPrice double NOT NULL, fees double NOT NULL);");
+
+            //Create default User
+            if (!SQLInteraction.UsernameExists("user"))
             {
-                
-                //Create Database
-                SQLInteraction.CMDExecuteNonQuery("CREATE DATABASE MyTrade");
-                
-                //Connect to Server & Database
-                SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
-                
-                //Create Login Table
-                SQLInteraction.CMDExecuteNonQuery("CREATE TABLE myTrade_Login(UID int IDENTITY(1, 1), [surname] varchar(50) NOT NULL, [prename] varchar(50) NOT NULL, [email] varchar(80) NOT NULL, [user] varchar(80) NOT NULL, [pwd] varchar(70) NOT NULL, PRIMARY KEY(UID));");
-                
-                //Create User Data
-                SQLInteraction.CMDExecuteNonQuery("CREATE TABLE myTrade_UserWL(WLID int IDENTITY(1, 1), [UID] int NOT NULL, [ticker] varchar(50) NOT NULL, PRIMARY KEY(WLID));");
-
-                //Create default User
                 SQLInteraction.uCreateNewUser("User", "Test", "user.test@gmail.com", "user", "Test1!");
             }
-
-            //Connect to Server & Database
-            SQLInteraction.SetConnectionString("server = (localdb)\\MSSQLLocalDB; database = MyTrade; Integrated Security = sspi;");
         }
         
 
@@ -58,9 +55,11 @@ namespace MyTrade
         {
             if (SQLInteraction.uLogin(tb_username.Text, tb_password.Text))
             {
-                SQLInteraction.SetUID(SQLInteraction.CMDExecuteScalarInt("SELECT [UID] FROM myTrade_Login WHERE [user] = '" + tb_username.Text + "';"));
+                SQLInteraction.SetUID(SQLInteraction.CMDExecuteScalarInt("SELECT UID FROM myTrade_Login WHERE user = '" + tb_username.Text + "';"));
 
                 StoreVariables.tickerWL = SQLInteraction.uGetTickerWL();
+                
+                SQLInteraction.FillIVList();
 
                 frm_watchlist frm_Watchlist = new frm_watchlist();
                 this.Hide();

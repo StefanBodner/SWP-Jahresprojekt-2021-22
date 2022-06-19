@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using MySql.Data.MySqlClient;
 
 namespace MyTrade
 {
     class SQLInteraction
     {
         #region Variables
-        static SqlConnection con = new SqlConnection();
-        static SqlCommand cmd = new SqlCommand();
+        static MySqlConnection con = new MySqlConnection();
+        static MySqlCommand cmd = new MySqlCommand();
 
-        private static SqlDataReader dr = null;
+        private static MySqlDataReader dr = null;
 
         static int uEditUID;
         #endregion
@@ -24,7 +23,7 @@ namespace MyTrade
             try
             {
                 con.Open();
-                cmd.CommandText = "SELECT [ticker] FROM myTrade_UserWL WHERE [UID] = '" + SQLInteraction.GetUID() + "';";
+                cmd.CommandText = "SELECT ticker FROM myTrade_UserWL WHERE UID = '" + SQLInteraction.GetUID() + "';";
                 dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
@@ -39,6 +38,28 @@ namespace MyTrade
                 con.Close();
             }
             return list;
+        }
+
+        public static void FillIVList()
+        {
+            StoreVariables.tickerIV.Clear();
+            try
+            {
+                con.Open();
+                cmd.CommandText = "SELECT * FROM myTrade_UserIV WHERE UID = '" + SQLInteraction.GetUID() + "';";
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    StoreVariables.tickerIV.Add(new uInvestments(dr.GetString(2), dr.GetDouble(3), dr.GetDouble(4), dr.GetDouble(5)));
+                }
+                dr.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                con.Close();
+            }
         }
 
 
@@ -109,7 +130,7 @@ namespace MyTrade
         {
             try
             {
-                string temp = CMDExecuteScalar("SELECT [pwd] FROM myTrade_Login WHERE [user] = '" + username + "';");
+                string temp = CMDExecuteScalar("SELECT pwd FROM myTrade_Login WHERE user = '" + username + "';");
                 if (BCrypt.CheckPassword(password, temp))
                 {
                     return true;
@@ -134,7 +155,7 @@ namespace MyTrade
             try
             {
                 con.Open();
-                cmd.CommandText = "INSERT INTO myTrade_Login VALUES ('" + surname + "', '" + prename + "', '" + email + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "');";
+                cmd.CommandText = "INSERT INTO myTrade_Login(surname, prename, email, user, pwd) VALUES ('" + surname + "', '" + prename + "', '" + email + "', '" + username + "', '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "') ";
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -145,15 +166,14 @@ namespace MyTrade
             }
         }
 
-        public static bool UsernameExists(string uUsername, string UID)
+        public static bool UsernameExists(string uUsername)
         {
-            if (CMDExecuteScalar("SELECT [user] FROM myTrade_Login WHERE [user] = '" + uUsername + "' EXCEPT SELECT [user] FROM myTrade_Login WHERE [UID] = '" + UID + "';").Equals(""))
+            if (CMDExecuteScalar("SELECT user FROM myTrade_Login WHERE user = '" + uUsername + "';").Equals(""))
             {
                 return false;
             }
             else
             {
-                MessageBox.Show("Username already exists!");
                 return true;
             }
         }
@@ -163,7 +183,7 @@ namespace MyTrade
             try
             {
                 con.Open();
-                cmd.CommandText = "UPDATE myTrade_Login SET surname = '" + surname + "', prename = '" + prename + "', email = '" + email + "', [user] = '" + username + "', [pwd] = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "' WHERE [UID] = " + GetUID() + ";";
+                cmd.CommandText = "UPDATE myTrade_Login SET surname = '" + surname + "', prename = '" + prename + "', email = '" + email + "', user = '" + username + "', pwd = '" + BCrypt.HashPassword(password, BCrypt.GenerateSalt()) + "' WHERE UID = " + GetUID() + ";";
                 cmd.ExecuteNonQuery();
                 con.Close();
             }

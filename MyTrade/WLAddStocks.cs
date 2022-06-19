@@ -22,6 +22,7 @@ namespace MyTrade
 
         private void AddNewStocks_Load(object sender, EventArgs e)
         {
+            lb_searchResult.Items.Clear();
             tb_addSearch.Clear();
             cb_language.DropDownStyle = ComboBoxStyle.DropDownList;
             cb_language.SelectedIndex = 0;
@@ -31,7 +32,6 @@ namespace MyTrade
         {
             if(tb_addSearch.Text != "")
             {
-                lb_searchResult.Items.Clear();
                 string webRequestString = "https://yfapi.net/v6/finance/autocomplete?region=US&lang=" + cb_language.SelectedItem + "&query=" + tb_addSearch.Text;
 
                 var httpClient = new HttpClient();
@@ -60,6 +60,8 @@ namespace MyTrade
         private void btn_addSearch_Click(object sender, EventArgs e)
         {
             _ = getSearchData();
+            lb_searchResult.Items.Clear();
+            liS.Clear();
         }
 
         private static RootSearch DeserialzeSearch(string path)
@@ -70,15 +72,38 @@ namespace MyTrade
 
         private void btn_addSymbol_Click(object sender, EventArgs e)
         {
-            if (lb_searchResult.SelectedIndex == 0)
+            if (lb_searchResult.SelectedIndex >= 0)
             {
-                StoreVariables.tickerWL.Add(liS[lb_searchResult.SelectedIndex].symbol);
-                SQLInteraction.CMDExecuteNonQuery("INSERT INTO myTrade_UserWL VALUES ('" + SQLInteraction.GetUID() + "', '" + liS[lb_searchResult.SelectedIndex].symbol + "')");
-                tb_addSearch.Clear();
-                lb_searchResult.Items.Clear();
-                lb_searchResult.Text = "";
-                liS.Clear(); 
+                if (!StockAlreadyAdded(liS[lb_searchResult.SelectedIndex].symbol))
+                {
+                    StoreVariables.tickerWL.Add(liS[lb_searchResult.SelectedIndex].symbol);
+                    SQLInteraction.CMDExecuteNonQuery("INSERT INTO myTrade_UserWL(UID, ticker) VALUES('" + SQLInteraction.GetUID() + "', '" + liS[lb_searchResult.SelectedIndex].symbol + "');");
+                    tb_addSearch.Clear();
+                    lb_searchResult.Items.Clear();
+                    lb_searchResult.Text = "";
+                    liS.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("Already added " + liS[lb_searchResult.SelectedIndex].symbol + " to your WatchList");
+                    tb_addSearch.Clear();
+                    lb_searchResult.Items.Clear();
+                    lb_searchResult.Text = "";
+                    liS.Clear();
+                }
             }
+        }
+        private static bool StockAlreadyAdded(string symbol)
+        {
+            bool x = false;
+            foreach (string s in StoreVariables.tickerWL)
+            {
+                if (s.Equals(symbol))
+                {
+                    x = true;
+                }
+            }
+            return x;
         }
     }
 }
