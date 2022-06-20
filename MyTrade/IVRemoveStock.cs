@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MyTrade
@@ -21,7 +14,7 @@ namespace MyTrade
         {
             if (lb_stocks.SelectedIndex != -1)
             {
-                SQLInteraction.CMDExecuteNonQuery("DELETE FROM myTrade_UserIV WHERE ticker ='" + StoreVariables.tickerIV[lb_stocks.SelectedIndex] + "';");
+                SQLInteraction.CMDExecuteNonQuery("DELETE FROM myTrade_UserIV WHERE ticker ='" + StoreVariables.tickerIV[lb_stocks.SelectedIndex].ticker + "';");
 
                 StoreVariables.tickerIV.RemoveAt(lb_stocks.SelectedIndex);
                 lb_stocks.Items.Clear();

@@ -90,11 +90,15 @@ namespace MyTrade
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panelInvest = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
-            this.panelInvest.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -125,7 +129,6 @@ namespace MyTrade
             this.btn_showData.TabIndex = 7;
             this.btn_showData.Text = "Refresh";
             this.btn_showData.UseVisualStyleBackColor = true;
-            this.btn_showData.Click += new System.EventHandler(this.btn_showData_Click);
             // 
             // menuStrip1
             // 
@@ -180,14 +183,14 @@ namespace MyTrade
             // addStockToolStripMenuItem
             // 
             this.addStockToolStripMenuItem.Name = "addStockToolStripMenuItem";
-            this.addStockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addStockToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.addStockToolStripMenuItem.Text = "Add Stock";
             this.addStockToolStripMenuItem.Click += new System.EventHandler(this.addStockToolStripMenuItem_Click);
             // 
             // removeStockToolStripMenuItem1
             // 
             this.removeStockToolStripMenuItem1.Name = "removeStockToolStripMenuItem1";
-            this.removeStockToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.removeStockToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.removeStockToolStripMenuItem1.Text = "Remove Stock";
             this.removeStockToolStripMenuItem1.Click += new System.EventHandler(this.removeStockToolStripMenuItem1_Click);
             // 
@@ -443,7 +446,6 @@ namespace MyTrade
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.testToolStripMenuItem.Text = "Temporary (Invest)";
-            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // btn_sortSymbol
             // 
@@ -604,22 +606,11 @@ namespace MyTrade
             // 
             // panelInvest
             // 
-            this.panelInvest.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.panelInvest.Controls.Add(this.label9);
-            this.panelInvest.Location = new System.Drawing.Point(12, 33);
+            this.panelInvest.BackColor = System.Drawing.SystemColors.Control;
+            this.panelInvest.Location = new System.Drawing.Point(12, 76);
             this.panelInvest.Name = "panelInvest";
-            this.panelInvest.Size = new System.Drawing.Size(1331, 816);
+            this.panelInvest.Size = new System.Drawing.Size(1331, 773);
             this.panelInvest.TabIndex = 0;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(495, 353);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(474, 73);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Not finished yet";
             // 
             // pictureBox3
             // 
@@ -639,11 +630,77 @@ namespace MyTrade
             this.pictureBox2.TabIndex = 104;
             this.pictureBox2.TabStop = false;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(12, 38);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(49, 18);
+            this.label9.TabIndex = 106;
+            this.label9.Text = "Ticker";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(149, 38);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(49, 18);
+            this.label10.TabIndex = 107;
+            this.label10.Text = "Ticker";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(530, 38);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(49, 18);
+            this.label11.TabIndex = 108;
+            this.label11.Text = "Ticker";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(749, 38);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(49, 18);
+            this.label12.TabIndex = 109;
+            this.label12.Text = "Ticker";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(923, 38);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 18);
+            this.label13.TabIndex = 110;
+            this.label13.Text = "Ticker";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(1111, 38);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(49, 18);
+            this.label14.TabIndex = 111;
+            this.label14.Text = "Ticker";
+            // 
             // frm_watchlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1781, 861);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.panelInvest);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.tb_data);
@@ -666,8 +723,6 @@ namespace MyTrade
             this.Load += new System.EventHandler(this.WatchlistOverview_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.panelInvest.ResumeLayout(false);
-            this.panelInvest.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -740,5 +795,10 @@ namespace MyTrade
         private System.Windows.Forms.ToolStripMenuItem addStockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeStockToolStripMenuItem1;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
     }
 }

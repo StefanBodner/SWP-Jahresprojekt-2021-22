@@ -15,7 +15,9 @@ namespace MyTrade
         #region Variables
         static List<ResultStockQuote> liSQWatch = new List<ResultStockQuote>();
         static List<ResultStockQuote> liSQInvest = new List<ResultStockQuote>();
-        static List<ResultChart> liC = new List<ResultChart>();
+        static List<ResultStockQuote> liSQCurrency = new List<ResultStockQuote>();
+        static List<ResultChart> liCWatch = new List<ResultChart>();
+        static List<ResultChart> liCInvest = new List<ResultChart>();
         static List<Button> libtn = new List<Button>();
         string webDataStockQuote = "";
         string webDataChart = "";
@@ -27,7 +29,8 @@ namespace MyTrade
 
         string decimalsFormat = "{0:#,##0.00}";
         bool devMode = false;
-        string lastClickedBtn = "";
+        string lastClickedBtnWL = "";
+        string lastClickedBtnIV = "";
 
         int currentMenuStripItem = 0;
         Color elementColor = Color.White;
@@ -37,9 +40,9 @@ namespace MyTrade
         string range = "6mo";
         string interval = "1d";
 
-        int panelWLHeightExtended = 773;
-        int panelWLHeightCropped = 404;
-        int panelIVHeightExtended = 816;
+        int panelHeightExtended = 773;
+        int panelHeightCropped = 404;
+
 
 
         static JsonSerializerSettings settings = new JsonSerializerSettings
@@ -62,8 +65,12 @@ namespace MyTrade
             libtn.Add(btn_sortPrice);
             libtn.Add(btn_sortExchange);
 
-            panelMain.BringToFront();
+            foreach (Label l in this.Controls.OfType<Label>())
+            {
+                l.Hide();
+            }
 
+            panelMain.BringToFront();
             panelMain.HorizontalScroll.Maximum = 0;
             panelMain.AutoScroll = false;
             panelMain.VerticalScroll.Visible = false;
@@ -84,7 +91,11 @@ namespace MyTrade
 
             _ = await getStockQuoteData(StoreVariables.GetTickerWL());
             visualizeDataWL();
-            
+
+            _ = await getStockQuoteData(StoreVariables.GetTickerIV());
+            visualizeDataIV();
+
+            GetAllCurrencies();
         }
         #endregion
 
@@ -120,18 +131,26 @@ namespace MyTrade
 
         private static RootStockQuote DeserialzeStockQuote(string path)
         {
-            //convert Json into Object
-            return JsonConvert.DeserializeObject<RootStockQuote>(path);
+            if (!path.Equals(""))
+            {
+                //convert Json into Object
+                return JsonConvert.DeserializeObject<RootStockQuote>(path);
+            }
+            else
+            {
+                MessageBox.Show("API Key not working! Please choose a different one!");
+                return null;
+            }
         }
 
         #endregion
 
         #region Recieve Chart Data (Web Request + Deserialization)
-        public async Task<int> getChartData(int i)
+        public async Task<int> getChartData(int i, List<ResultChart> li, List<ResultStockQuote> liStock)
         {
             try
             {
-                string webRequestString = "https://yfapi.net/v8/finance/chart/" + liSQWatch[i].symbol + "?range=" + range + "&region=DE&interval=" + interval + "&lang=en";
+                string webRequestString = "https://yfapi.net/v8/finance/chart/" + liStock[i].symbol + "?range=" + range + "&region=DE&interval=" + interval + "&lang=en";
 
                 var httpClient = new HttpClient();
                 var webRequest = new HttpRequestMessage(new HttpMethod("GET"), webRequestString); //https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2CFB%2C&range=6mo&region=US&interval=1d&lang=en
@@ -143,16 +162,16 @@ namespace MyTrade
                 webResponse.EnsureSuccessStatusCode();
 
                 webDataChart = await webResponse.Content.ReadAsStringAsync();
-                liC.Add(DeserialzeChart(webDataChart).chart.result[0]);
+                li.Add(DeserialzeChart(webDataChart).chart.result[0]);
 
                 //Prevent values like 0 in List
-                for(int x = 0; x < liC.Count; x++)
+                for(int x = 0; x < li.Count; x++)
                 {
-                    for(int y = 0; y < liC[x].indicators.quote[0].close.Count; y++)
+                    for(int y = 0; y < li[x].indicators.quote[0].close.Count; y++)
                     {
-                        if (liC[x].indicators.quote[0].close[y] == 0 && y != 0)
+                        if (li[x].indicators.quote[0].close[y] == 0 && y != 0)
                         {
-                            liC[x].indicators.quote[0].close[y] = liC[x].indicators.quote[0].close[y - 1];
+                            li[x].indicators.quote[0].close[y] = li[x].indicators.quote[0].close[y - 1];
                         }
                     }
                 }
@@ -210,7 +229,15 @@ namespace MyTrade
             pb.Name = i.ToString();
             pb.Top = i * 50;
             pb.Height = 50;
-            pb.Click += btn_ClickMoreInfo;
+            if (p.Name.Equals("panelMain"))
+            {
+                pb.Click += btn_MoreInfoWL;
+            }
+            else
+            {
+                pb.Click += btn_MoreInfoIV;
+            }
+            
             pb.BackColor = elementColor;
             pb.Width = p.Width;
             p.Controls.Add(pb);
@@ -258,6 +285,7 @@ namespace MyTrade
                     break;
             }
             panelMain.Controls.Add(l);
+            panelMain.BringToFront();
         }
 
         private void overviewButtonCreation(int i)
@@ -274,7 +302,7 @@ namespace MyTrade
             b.AutoSize = false;
             b.TextAlign = ContentAlignment.MiddleCenter;
             b.Font = new Font("Arial", 8, FontStyle.Bold);
-            b.Click += btn_ClickMoreInfo;
+            b.Click += btn_MoreInfoWL;
             b.BackColor = elementColor;
             panelMain.Controls.Add(b);
         }
@@ -284,7 +312,7 @@ namespace MyTrade
             panelMain.Controls.Clear();
             panelMain.Refresh();
 
-            if (DeserialzeStockQuote(webDataStockQuote).quoteResponse != null)
+            if (!webDataStockQuote.Equals(""))
             {
                 liSQWatch = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
 
@@ -293,10 +321,9 @@ namespace MyTrade
                 createWatchlistOverview();
 
                 //Change Size of Panel
-                panelMain.Height = panelWLHeightExtended;
-                lastClickedBtn = "";
+                panelMain.Height = panelHeightExtended;
+                lastClickedBtnWL = "";
             }
-            
         }
         #endregion
 
@@ -328,7 +355,7 @@ namespace MyTrade
             panelExtra.Controls.Add(l);
         }
 
-        private void btn_ClickMoreInfo(object sender, EventArgs e)
+        private void btn_MoreInfoWL(object sender, EventArgs e)
         {
             string name = "";
             if (sender is Button)
@@ -340,15 +367,16 @@ namespace MyTrade
                 name = ((PictureBox)sender).Name;
             }
 
-            if (lastClickedBtn.Equals(name))
+            if (lastClickedBtnWL.Equals(name))
             {
                 //Change Size of Panel
-                panelMain.Height = panelWLHeightExtended;
-                lastClickedBtn = "";
+                panelMain.Height = panelHeightExtended;
+                panelExtra.SendToBack();
+                lastClickedBtnWL = "";
             }
             else
             {
-                panelMain.Height = panelWLHeightCropped;
+                panelMain.Height = panelHeightCropped;
                 Button btn = sender as Button;
                 int i = Int32.Parse(name);
 
@@ -378,28 +406,28 @@ namespace MyTrade
                 moreInfoCreateLabel("Yield", 10, 290, 11, Color.Black);
                 moreInfoCreateLabel(String.Format(decimalsFormat, liSQWatch[i].trailingAnnualDividendRate) + " (" + String.Format(decimalsFormat, liSQWatch[i].trailingAnnualDividendYield * 100) + "%)", 100, 290, 11, Color.Black);
 
-                moreInfoCreateChart(i);
-                lastClickedBtn = name;
+                moreInfoCreateChart(i, liCWatch, liSQWatch);
+                lastClickedBtnWL = name;
             }
         }
 
-        private async void moreInfoCreateChart(int i)
+        private async void moreInfoCreateChart(int i, List<ResultChart> li, List<ResultStockQuote> liStock)
         {
             int chartListIndex = -1;
 
             while (chartListIndex == -1)
             {
-                for (int x = 0; x < liC.Count; x++)
+                for (int x = 0; x < li.Count; x++)
                 { 
 
-                    if (liC[x].meta.symbol.Equals(liSQWatch[i].symbol))
+                    if (li[x].meta.symbol.Equals(liStock[i].symbol))
                     {
                         chartListIndex = x;
                         goto chartCreation; //break out of loop & skip new list entry
                     }
                 }
                 //Create new List Entry if Symbol doesn't exist
-                Task t = getChartData(i);
+                Task t = getChartData(i, li, liStock);
                 await t;
             }
 
@@ -410,14 +438,14 @@ namespace MyTrade
             
             //Convert Timestamp to dateTime
             List<DateTime> dateTime = new List<DateTime>();
-            foreach (int o in liC[chartListIndex].timestamp)
+            foreach (int o in li[chartListIndex].timestamp)
             {
                 dateTime.Add(DateTimeOffset.FromUnixTimeSeconds(o).DateTime);
             }
 
-            series.Points.DataBindXY(dateTime, liC[chartListIndex].indicators.quote[0].close);
+            series.Points.DataBindXY(dateTime, li[chartListIndex].indicators.quote[0].close);
 
-            chartArea.AxisY.LabelStyle.Format = decimalsFormat + " " + liSQWatch[chartListIndex].currency;
+            chartArea.AxisY.LabelStyle.Format = decimalsFormat + " " + liStock[chartListIndex].currency;
 
             series.ChartType = SeriesChartType.Line;
 
@@ -430,8 +458,8 @@ namespace MyTrade
             c.ChartAreas.Clear();
             c.ChartAreas.Add(chartArea);
             c.ChartAreas[0].Axes[0].MajorGrid.Enabled = false; //x axis
-            c.ChartAreas[0].AxisY.Maximum = liC[chartListIndex].indicators.quote[0].high.Max();
-            c.ChartAreas[0].AxisY.Minimum = liC[chartListIndex].indicators.quote[0].low.Min();
+            c.ChartAreas[0].AxisY.Maximum = li[chartListIndex].indicators.quote[0].high.Max();
+            c.ChartAreas[0].AxisY.Minimum = li[chartListIndex].indicators.quote[0].low.Min();
             panelExtra.Controls.Add(c);
         }
         #endregion
@@ -622,11 +650,6 @@ namespace MyTrade
             }
         }
 
-        private void btn_showData_Click(object sender, EventArgs e)
-        {
-            visualizeDataWL();
-        }
-
         private void btn_data_Click(object sender, EventArgs e)
         {
             //start Task
@@ -636,6 +659,9 @@ namespace MyTrade
         private void sendNewHTTPRequestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _ = getStockQuoteData(StoreVariables.GetTickerWL());
+            visualizeDataWL();
+            _ = getStockQuoteData(StoreVariables.GetTickerIV());
+            visualizeDataIV();
         }
         #endregion
 
@@ -727,61 +753,61 @@ namespace MyTrade
         #region Set Range (in Menu-Strip) SHOULDN'T BE AS FREELY CHOOSABLE 
         private void dToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "1d";
         }
 
         private void dToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "5d";
         }
 
         private void moToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "1mo";
         }
 
         private void moToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "3mo";
         }
 
         private void moToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "6mo";
         }
 
         private void yToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "1y";
         }
 
         private void yToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "5y";
         }
 
         private void yToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "10y";
         }
 
         private void ytdToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "ytd";
         }
 
         private void maxToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             range = "max";
         }
         #endregion  
@@ -789,37 +815,37 @@ namespace MyTrade
         #region Set Interval (in Menu-Strip)
         private void mToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             interval = "1m";
         }
 
         private void mToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             interval = "5m";
         }
 
         private void mToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             interval = "15m";
         }
 
         private void dToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             interval = "1d";
         }
 
         private void wkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             interval = "1wk";
         }
 
         private void moToolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            liC.Clear();
+            liCWatch.Clear();
             interval = "1mo";
         }
         #endregion
@@ -841,7 +867,6 @@ namespace MyTrade
 
             Task t = getStockQuoteData(StoreVariables.GetTickerWL());
             await t;
-
             visualizeDataWL();
         }
 
@@ -854,8 +879,7 @@ namespace MyTrade
         }
         #endregion
 
-
-        //Investment Tab (not finished!!!!)
+        //Investment Window
         #region Investment Tab
         private void createInvestmentOverview()
         {
@@ -874,7 +898,6 @@ namespace MyTrade
                 overviewPictureBoxCreation(i, panelInvest);
             }
         }
-
         private void visualizeDataIV()
         {
             liSQInvest = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
@@ -884,8 +907,8 @@ namespace MyTrade
             createInvestmentOverview();
 
             //Change Size of Panel
-            panelInvest.Height = panelIVHeightExtended;
-            lastClickedBtn = "";
+            panelInvest.Height = panelHeightExtended;
+            lastClickedBtnIV = "";
         }
         private string getStockNameIV(int i)
         {
@@ -899,22 +922,49 @@ namespace MyTrade
             }
 
         }
+        #endregion
 
-        public static double ConvertCurrency(double price)
+        #region Currency conversion
+        //1. Method to get all Currencies
+        public void GetAllCurrencies()
         {
-            List<string> liCurrency = new List<string>();
-            int temp = liSQInvest.Count;
-            for(int i = 0; i < temp; i++)
+            for(int i = 0; i < liSQInvest.Count; i++)
             {
-                if (!liCurrency.Contains(liSQInvest[i].currency))
+                //Check if Currency is already in List (no need to get current exchange rate)
+                if (!StoreVariables.liCurrency.Contains(liSQInvest[i].currency))
                 {
-                    liCurrency.Add(liSQInvest[i].currency);
+                    StoreVariables.liCurrency.Add(liSQInvest[i].currency);
                 }
             }
 
-            return price;
+            GetAllExchangeRates();
         }
 
+        //2. Method to get all exchange rates
+        public async void GetAllExchangeRates()
+        {
+            _ = await getStockQuoteData(StoreVariables.RequestCurrencies(liSQInvest));
+
+            liSQCurrency = DeserialzeStockQuote(webDataStockQuote).quoteResponse.result;
+        }
+
+        //3. Method to convert currencies
+        public double ConvertCurrency(ResultStockQuote stock)
+        {
+            string tempCurrency = stock.currency;
+            double exchangeRate = 1;
+            for (int i = 0; i < liSQCurrency.Count; i++)
+            {
+                if(liSQCurrency[i].currency == tempCurrency)
+                {
+                    exchangeRate = liSQCurrency[i].regularMarketPrice;
+                }
+            }
+            return stock.regularMarketPrice / exchangeRate;
+        }
+        #endregion
+
+        #region Invest Overview Creation
         private void investLabelsCreation(int i, int j)
         {
             //Create Labels for Overview
@@ -965,20 +1015,31 @@ namespace MyTrade
             panelInvest.Show();
             panelInvest.BringToFront();
             changeMenuStripColor(1);
-            createInvestmentOverview();
+            panelInvest.Height = panelHeightExtended;
+
+            foreach (Button b in this.Controls.OfType<Button>())
+            {
+                b.Hide();
+            }
+            foreach (Label l in this.Controls.OfType<Label>())
+            {
+                l.Show();
+            }
         }
 
         private void ms_showWatchlist_Click(object sender, EventArgs e)
         {
             changeMenuStripColor(0);
             panelInvest.Hide();
-        }
 
-        private async void testToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Task t = getStockQuoteData(StoreVariables.GetTickerIV());
-            await t;
-            visualizeDataIV();
+            foreach (Button b in this.Controls.OfType<Button>())
+            {
+                b.Show();
+            }
+            foreach (Label l in this.Controls.OfType<Label>())
+            {
+                l.Hide();
+            }
         }
 
         private async void addStockToolStripMenuItem_Click(object sender, EventArgs e)
@@ -986,16 +1047,80 @@ namespace MyTrade
             frm_IvAddStocks frm_IvAddStocks = new frm_IvAddStocks();
             frm_IvAddStocks.ShowDialog();
 
-            Task t = getStockQuoteData(StoreVariables.GetTickerIV());
-            await t;
+            _ = await getStockQuoteData(StoreVariables.GetTickerIV());
             visualizeDataIV();
+
+            GetAllCurrencies();
         }
         #endregion
 
-        private void removeStockToolStripMenuItem1_Click(object sender, EventArgs e)
+        private async void removeStockToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frm_IvRemoveStock frm_IvRemoveStock = new frm_IvRemoveStock();
             frm_IvRemoveStock.ShowDialog();
+            
+            _ = await getStockQuoteData(StoreVariables.GetTickerIV());
+            visualizeDataIV();
+        }
+
+        private void btn_MoreInfoIV(object sender, EventArgs e)
+        {
+            string name = "";
+            if (sender is Button)
+            {
+                name = ((Button)sender).Name;
+            }
+            else if (sender is PictureBox)
+            {
+                name = ((PictureBox)sender).Name;
+            }
+
+            if (lastClickedBtnIV.Equals(name))
+            {
+                //Change Size of Panel
+                panelInvest.Height = panelHeightExtended;
+                lastClickedBtnIV = "";
+                panelInvest.BringToFront();
+            }
+            else
+            {
+                panelInvest.Height = panelHeightCropped;
+                Button btn = sender as Button;
+                int i = Int32.Parse(name);
+
+                //show 2nd panel with further information
+
+                panelExtra.Controls.Clear();
+
+                MessageBox.Show(liSQInvest[i].regularMarketPrice + " " + liSQInvest[i].currency + " --> " + String.Format(decimalsFormat, ConvertCurrency(liSQInvest[i])) + " EUR" );
+
+                moreInfoCreateLabel(getStockNameIV(i) + " (" + liSQInvest[i].symbol + ")", 10, 10, 14, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQInvest[i].regularMarketPrice) + " " + liSQInvest[i].currency, 10, 40, 20, Color.Black);
+                moreInfoCreateLabel(setLabelStringPosOrNeg(liSQInvest[i].regularMarketChange) + " (" + String.Format(decimalsFormat, liSQInvest[i].regularMarketChangePercent) + " %)", 10, 70, 11, setLabelColorPosOrNeg(liSQInvest[i].regularMarketChangePercent));
+
+                moreInfoCreateLabel("Open", 10, 110, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQInvest[i].regularMarketOpen), 100, 110, 11, Color.Black);
+
+                moreInfoCreateLabel("High", 10, 140, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQInvest[i].regularMarketDayHigh), 100, 140, 11, Color.Black);
+
+                moreInfoCreateLabel("Low", 10, 170, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQInvest[i].regularMarketDayLow), 100, 170, 11, Color.Black);
+
+                moreInfoCreateLabel("MarketCap", 10, 230, 11, Color.Black);
+                moreInfoCreateLabel(formatHugeNumbers(liSQInvest[i].marketCap), 100, 230, 11, Color.Black);
+
+                moreInfoCreateLabel("P/E", 10, 260, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQInvest[i].trailingPE), 100, 260, 11, Color.Black);
+
+                moreInfoCreateLabel("Yield", 10, 290, 11, Color.Black);
+                moreInfoCreateLabel(String.Format(decimalsFormat, liSQInvest[i].trailingAnnualDividendRate) + " (" + String.Format(decimalsFormat, liSQInvest[i].trailingAnnualDividendYield * 100) + "%)", 100, 290, 11, Color.Black);
+
+                moreInfoCreateChart(i, liCInvest, liSQInvest);
+                lastClickedBtnIV = name;
+
+                panelExtra.BringToFront();
+            }
         }
     }
 }
